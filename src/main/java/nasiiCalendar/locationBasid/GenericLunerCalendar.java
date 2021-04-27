@@ -31,7 +31,7 @@ public class GenericLunerCalendar extends LunerCalendar {
     private final static long STARTLONG = FIRST_BLACK;//-METONIC353 * 4000 + START_SAMI +1 * MONTH-DAY;
  //   Location location;
   //  BasicYear locationYear;
-    BasicCalendar calendar = new Omari30YearLoop();
+    BasicCalendar calendar;
     int minutes = 30;
     private final LunerIdentifier lunerIdentifier;
     
@@ -41,7 +41,7 @@ public class GenericLunerCalendar extends LunerCalendar {
     }
     
     public GenericLunerCalendar(String name, MyBasicCalendar  b,LunerIdentifier li) {
-        super(name, b.getLongCycleTime(), b.getLongCycleYear(), b.getMatchTime(), b.getMatchYear());
+        super(name, b.getLongCycleTime(), b.getLongCycleYear(), b.getMatchTime(), b.getMatchYear(), b.getZoneId());
         calendar=b;
         //locationYear = new BasicYear("Luner Year", "Luner Year", false, false, new PeriodType[]{Months.MUHARRAM, Months.SAFAR, Months.RABEI1, Months.RABEI2, Months.JAMAD1, Months.JAMAD2,
           //  Months.RAJAB, Months.SHAABAN, Months.RAMADHAN, Months.SHAWWAL, Months.THO_QIDAH, Months.THO_HIJA});

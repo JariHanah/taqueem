@@ -40,7 +40,7 @@ public class SamiView extends Div {
 
         //add(new Div(new H3(getT("converts-to"))));
         //add(new Div(new H3(getT("converts-to"))));
-        BasicCalendar bcUmm = CalendarFactory.getInstance().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423);
+        BasicCalendar bcUmm = Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423);
         DateHeader h3 = new DateHeader(bcUmm.getDate(time));
         add(new Div(
                 new H1(getT("today-date")),

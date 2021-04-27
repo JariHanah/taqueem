@@ -1,5 +1,6 @@
 package com.alhanah.webcalendar.views;
 
+import com.alhanah.webcalendar.Application;
 import static com.alhanah.webcalendar.Application.getT;
 import com.alhanah.webcalendar.view.AgeOfMoon;
 import com.alhanah.webcalendar.view.CalendarGrid;
@@ -44,7 +45,7 @@ public class FatimiView extends VerticalLayout {
     public FatimiView() {
         reader = new MyRequestReader(VaadinRequest.getCurrent().getParameterMap());
         addClassName("fatimi-view");
-        BasicDate bd = CalendarFactory.getInstance().getCalendar(BasicCalendar.FATIMI_ID).getDate(reader.getSelectedTime());
+        BasicDate bd = Application.getFactory().getCalendar(BasicCalendar.FATIMI_ID).getDate(reader.getSelectedTime());
         box = new ControllerBox(bd);
         selector = box.getCalendarToSelect();
         selector.setValue(CalendarFactory.getGregoryCalendar());
@@ -87,7 +88,7 @@ public class FatimiView extends VerticalLayout {
         box.addDatable(hil);
         accordMoon.add(new AccordionPanel(new H4(getT("moon-bearth-on-selected-date")), hil));
         accord.add(new AccordionPanel(new H4(getT("moon-info")), accordMoon));
-        CalendarGrid g=new CalendarGrid(bd, 6, (BasicCalendar[]) CalendarFactory.getInstance().getCalendars().toArray(new BasicCalendar[CalendarFactory.getInstance().getCalendars().size()]));
+        CalendarGrid g=new CalendarGrid(bd, 6, (BasicCalendar[]) Application.getFactory().getCalendars().toArray(new BasicCalendar[Application.getFactory().getCalendars().size()]));
         DisplayCalendarControlBox calendarList=new DisplayCalendarControlBox();
         calendarList.addListener(g);
         accord.add(new AccordionPanel(new H4(getT("selectAndSortCalendars")), calendarList));

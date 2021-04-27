@@ -5,6 +5,7 @@
  */
 package com.alhanah.webcalendar.info;
 
+import com.alhanah.webcalendar.Application;
 import com.vaadin.flow.component.UI;
 import java.time.ZoneId;
 import java.util.Date;
@@ -36,6 +37,7 @@ public class ClientTimeZone {
             clientZoneId= extendedClientDetails.getTimeZoneId();
             TimeZone zone=TimeZone.getTimeZone(clientZoneId);
             CalendarFactory.setTimeZone(zone);
+            Application.setUserZoneId(zone.toZoneId());
             flag=true;
             
         });

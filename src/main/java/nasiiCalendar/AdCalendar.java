@@ -5,6 +5,7 @@
  */
 package nasiiCalendar;
 
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,10 +17,11 @@ public class AdCalendar extends SolarCalendar{
     GregoryCalendar gregCalc;
     JulianCalendar julCalc;
     long  split;
-    AdCalendar(){
-        super(BasicCalendar.AD_ID, BasicCalendar.YEAR_SIDEREAL, 1, 0 , 0);
-        gregCalc=new GregoryCalendar();
-        julCalc=new JulianCalendar();
+    AdCalendar(ZoneId zone){
+        super(BasicCalendar.AD_ID, BasicCalendar.YEAR_SIDEREAL, 1, 0 , 0, zone);
+        
+        gregCalc=new GregoryCalendar(zone);
+        julCalc=new JulianCalendar(zone);
         BasicDate b=gregCalc.getDate(1582, 10, 14);
         split=b.getDate();
         //super.calcTimes();

@@ -5,6 +5,7 @@
  */
 package com.alhanah.webcalendar.view;
 
+import com.alhanah.webcalendar.Application;
 import com.alhanah.webcalendar.info.Datable;
 import static com.alhanah.webcalendar.view.Util.dateToString;
 import com.vaadin.flow.component.html.Label;
@@ -30,7 +31,7 @@ public class ConversionsList extends Span implements Datable{
         this.date = date;
         this.cals = conversions;
         for (BasicCalendar bctemp : conversions) {
-            ConvertSelector selector=new ConvertSelector(date, nasiiCalendar.CalendarFactory.getInstance().getCalendars());
+            ConvertSelector selector=new ConvertSelector(date, Application.getFactory().getCalendars());
             map.put(bctemp, selector);
             add(selector);
             

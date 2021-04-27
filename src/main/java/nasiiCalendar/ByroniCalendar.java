@@ -5,6 +5,7 @@
  */
 package nasiiCalendar;
 
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,7 +13,6 @@ import java.util.Map;
 import static nasiiCalendar.BasicCalendar.DAY;
 import static nasiiCalendar.BasicCalendar.METONIC;
 import static nasiiCalendar.BasicCalendar.MONTH;
-import static nasiiCalendar.BasicCalendar.START_SAMI;
 
 /**
  *
@@ -23,8 +23,8 @@ public class ByroniCalendar extends LunerCalendar {
     int startDate = -105;//- 4000 * 18*19;
     static final long BYRONI_START = -45866649599000L;
 
-    ByroniCalendar() {
-        super(BasicCalendar.BYRONI_ID,  METONIC, 19, BYRONI_START, -105);//START_SAMI+6*MONTH
+    ByroniCalendar(ZoneId zone) {
+        super(BasicCalendar.BYRONI_ID,  METONIC, 19, BYRONI_START, -105, zone);//START_SAMI+6*MONTH
         setupMap(new int[]{1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0});
     }
 

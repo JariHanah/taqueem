@@ -5,6 +5,7 @@
  */
 package com.alhanah.webcalendar.view;
 
+import com.alhanah.webcalendar.Application;
 import com.alhanah.webcalendar.info.Datable;
 import static com.alhanah.webcalendar.Application.getT;
 import com.vaadin.flow.component.button.Button;
@@ -38,7 +39,7 @@ public class DisplayCalendarControlBox extends Div implements Datable{
         setWidthFull();
     }
     public DisplayCalendarControlBox(){
-        this(Arrays.asList(CalendarFactory.getSamiCalendar(),CalendarFactory.getGregoryCalendar(), CalendarFactory.getInstance().getCalendar(BasicCalendar.OMARI_ID_16)));
+        this(Arrays.asList(CalendarFactory.getSamiCalendar(),CalendarFactory.getGregoryCalendar(), Application.getFactory().getCalendar(BasicCalendar.OMARI_ID_16)));
     }
     public void addListener(CalendarsUpdatedListerner l){
         listeners.add(l);

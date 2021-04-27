@@ -5,7 +5,7 @@
  */
 package nasiiCalendar;
 
-import java.util.ArrayList;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +13,6 @@ import static nasiiCalendar.BasicCalendar.DAY;
 import static nasiiCalendar.BasicCalendar.METONIC;
 import static nasiiCalendar.BasicCalendar.MONTH;
 import static nasiiCalendar.BasicCalendar.START_SAMI;
-import static nasiiCalendar.SamiCalendar.METONIC353;
 
 /**
  *
@@ -36,8 +35,8 @@ public class QazwiniCalendar extends LunerCalendar{
                 Months.RAMADHAN, Months.SHAWWAL, Months.JAMAD1, Months.JAMAD2, Months.RABEI1, Months.RABEI2, 
                 Months.RAJAB, Months.THO_QIDAH, Months.THO_HIJA, Months.MUHARRAM, Months.SAFAR, Months.ALHARAM, Months.SHAABAN});
    
-    public QazwiniCalendar() {
-        super(BasicCalendar.QAZWINI_ID, METONIC*8, 19*8,1067126400000L , 1383);//1067201999999L-10800000L
+    public QazwiniCalendar(ZoneId zone) {
+        super(BasicCalendar.QAZWINI_ID, METONIC*8, 19*8,1067126400000L , 1383, zone);//1067201999999L-10800000L
         setupMap(new int[]{0,0,1,0,0,1,0,1});
     }
     

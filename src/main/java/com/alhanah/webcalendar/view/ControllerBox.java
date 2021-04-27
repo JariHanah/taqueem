@@ -5,6 +5,7 @@
  */
 package com.alhanah.webcalendar.view;
 
+import com.alhanah.webcalendar.Application;
 import com.alhanah.webcalendar.info.Datable;
 import static com.alhanah.webcalendar.Application.getT;
 import static com.alhanah.webcalendar.view.Util.dateToString;
@@ -47,7 +48,7 @@ public class ControllerBox extends Span implements Datable {
 
         Select<BasicCalendar> calSelect = new Select<BasicCalendar>();
 
-        calSelect.setItems(CalendarFactory.getInstance().getCalendars());
+        calSelect.setItems(Application.getFactory().getCalendars());
         calSelect.setValue(selectedDate.getCalendar());
         calSelect.setLabel(getT("cal-type"));
         calSelect.setItemLabelGenerator(

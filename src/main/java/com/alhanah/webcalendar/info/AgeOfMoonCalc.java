@@ -5,9 +5,8 @@
  */
 package com.alhanah.webcalendar.info;
 
-import com.alhanah.webcalendar.CityList;
+import com.alhanah.webcalendar.Application;
 import com.alhanah.webcalendar.view.CalendarsUpdatedListerner;
-import com.alhanah.webcalendar.views.main.MainView;
 import com.vaadin.flow.component.UI;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -48,16 +47,16 @@ public class AgeOfMoonCalc implements Datable , CalendarsUpdatedListerner{
         base=show.getDate(System.currentTimeMillis());
         displayCalendar=show;
         calHilal30 = new GenericLunerCalendar(
-                (MyBasicCalendar) CalendarFactory.getInstance().getCalendar(BasicCalendar.OMARI_ID_16),
+                (MyBasicCalendar) Application.getFactory().getCalendar(BasicCalendar.OMARI_ID_16),
                 new HilalByMinutesStandard(city));
         calHilal_0 = new GenericLunerCalendar(
-                (MyBasicCalendar) CalendarFactory.getInstance().getCalendar(BasicCalendar.OMARI_ID_16),
+                (MyBasicCalendar) Application.getFactory().getCalendar(BasicCalendar.OMARI_ID_16),
                 new HilalByMinutesStandard(0,city));
         calBlack = new GenericLunerCalendar(
-                (MyBasicCalendar) CalendarFactory.getInstance().getCalendar(BasicCalendar.OMARI_ID_16),
+                (MyBasicCalendar) Application.getFactory().getCalendar(BasicCalendar.OMARI_ID_16),
                 new UmAlquraStandardV1423(city));
         calBlackFajr = new GenericLunerCalendar(
-                (MyBasicCalendar) CalendarFactory.getInstance().getCalendar(BasicCalendar.OMARI_ID_16),
+                (MyBasicCalendar) Application.getFactory().getCalendar(BasicCalendar.OMARI_ID_16),
                 new BlackFajrStandard(city));
   
         

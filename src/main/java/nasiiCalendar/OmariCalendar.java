@@ -5,13 +5,11 @@
  */
 package nasiiCalendar;
 
-import java.util.ArrayList;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.List;
 import static nasiiCalendar.BasicCalendar.DAY;
 import static nasiiCalendar.BasicCalendar.MONTH;
-import static nasiiCalendar.SamiCalendar.METONIC353;
-import static nasiiCalendar.SamiCalendar.START_SAMI;
 
 /**
  *
@@ -104,8 +102,8 @@ public class OmariCalendar extends LunerCalendar {
         return Arrays.asList(new BasicYear[]{Y_LEAP, Y_NORMAL});
     }
 
-    OmariCalendar() {
-        super(BasicCalendar.OMARI_ID,MONTH*12, 1, STARTLONG, STARTDATE);
+    OmariCalendar(ZoneId zone) {
+        super(BasicCalendar.OMARI_ID,MONTH*12, 1, STARTLONG, STARTDATE, zone);
         setupMap(new int[]{0});
     }
 

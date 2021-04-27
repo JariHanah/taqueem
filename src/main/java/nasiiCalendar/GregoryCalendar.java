@@ -5,9 +5,9 @@
  */
 package nasiiCalendar;
 
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -27,8 +27,8 @@ static final long CYCLE400 = DAY * ((365 * 3 + 366) * 100 - 3);
     private static final int BASE_YEAR = 2001;//- 353*4000;
     public static final long BASE_TIME = 978339600000L-9*HOUR;//978382799999L-10800000L;//-126289975230000000l;//-62135521200001l ;//- DAY*4000 * (((365*3+366)*100)-3);
      
-    public GregoryCalendar() {
-        super(BasicCalendar.GREG_ID , CYCLE400, 400, BASE_TIME, BASE_YEAR);
+    public GregoryCalendar(ZoneId zone) {
+        super(BasicCalendar.GREG_ID , CYCLE400, 400, BASE_TIME, BASE_YEAR, zone);
   //      hussam.println("GregBase: "+new Date(BASE_TIME)+" Year: "+BASE_YEAR);
         Calendar c=Calendar.getInstance();
         c.set(Calendar.YEAR, 1999);

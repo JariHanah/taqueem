@@ -6,9 +6,9 @@
 package nasiiCalendar;
 
 //import static com.alhanah.samicalapp.SamiApplication.getStore;
+import com.alhanah.webcalendar.Application;
 import java.io.Serializable;
 import java.time.ZoneId;
-import nasiiCalendar.locationBasid.LunerLocationCalendar;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,7 +28,6 @@ import nasiiCalendar.locationBasid.UmAlquraStandardV1423;
  */
 public class CalendarFactory {
 
-    
     static final SeasonIdentifier season128 = new SeasonSolar128();
     static final SeasonIdentifier seasonJalali = new SeasonJalali();
     static final SeasonIdentifier seasonfalak = new SeasonSunCalc();
@@ -37,29 +36,35 @@ public class CalendarFactory {
     List<BasicCalendar> mySortedCals = new ArrayList<>();
     Map<String, BasicCalendar> calMap = new HashMap<String, BasicCalendar>();
     SeasonIdentifier defaultSeasonIdentifier;
- 
-    static CalendarFactory instance = new CalendarFactory();
+
+    static CalendarFactory instance;
 
     public static long dayEnd(long time2) {
-         Calendar c = getGreg();
+        Calendar c = getGreg();
         Date d = new Date(time2);
         c.setTime(d);
 
         c.set(Calendar.HOUR_OF_DAY, 23);
         c.set(Calendar.MINUTE, 59);
         c.set(Calendar.SECOND, 59);
-        c.set(Calendar.MILLISECOND,999);
+        c.set(Calendar.MILLISECOND, 999);
 
         long time = c.getTime().getTime();
         return time;
     }
-    
+
+    /*
     public static CalendarFactory getInstance() {
         return instance;
+    }//*/
+    public String getName() {
+        return zoneId.getId();
     }
 
-    
-    public CalendarFactory() {
+    public CalendarFactory(ZoneId zone) {
+        this.zoneId = zone;
+        System.err.println("zoneId: .........................."+zone);
+        System.err.println(Application.getUserZoneId());
         instance = this;
         defaultSeasonIdentifier = season128;
         greg = Calendar.getInstance();
@@ -69,34 +74,34 @@ public class CalendarFactory {
 
     protected void prepare() {
 
-        addCalendar(new SamiFixed());
+        addCalendar(new SamiFixed(zoneId));
         //addCalendar(new WsmiCalendar());
-        addCalendar(new GenericLunerCalendar(new WsmiCalendar(), new UmAlquraStandardV1423()));
-        addCalendar(new GenericLunerCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423,  new Omari30YearLoop(), new UmAlquraStandardV1423()));
+        addCalendar(new GenericLunerCalendar(new WsmiCalendar(zoneId), new UmAlquraStandardV1423()));
+        addCalendar(new GenericLunerCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423, new Omari30YearLoop(zoneId), new UmAlquraStandardV1423()));
 
-        addCalendar(new Omari30YearLoop(Omari30YearLoop.HijriCalc30.Type16));
-        addCalendar(new Omari30YearLoop(Omari30YearLoop.HijriCalc30.Type15));
-        addCalendar(new Omari30YearLoop(Omari30YearLoop.HijriCalc30.TypeHindi));
-        addCalendar(new Omari30YearLoop(Omari30YearLoop.HijriCalc30.TypeHaseb));
-        addCalendar(new FatimiCalendar());
-        addCalendar(new JahhafCalendar());
-        addCalendar(new GenericLunerCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1420,  new Omari30YearLoop(), new HilalByMinutesStandard(0)));
-        addCalendar(new GenericLunerCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1419,  new Omari30YearLoop(), new UmAlquraStandardV1419()));
+        addCalendar(new Omari30YearLoop(Omari30YearLoop.HijriCalc30.Type16, zoneId));
+        addCalendar(new Omari30YearLoop(Omari30YearLoop.HijriCalc30.Type15, zoneId));
+        addCalendar(new Omari30YearLoop(Omari30YearLoop.HijriCalc30.TypeHindi, zoneId));
+        addCalendar(new Omari30YearLoop(Omari30YearLoop.HijriCalc30.TypeHaseb, zoneId));
+        addCalendar(new FatimiCalendar(zoneId));
+        addCalendar(new JahhafCalendar(zoneId));
+        addCalendar(new GenericLunerCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1420, new Omari30YearLoop(zoneId), new HilalByMinutesStandard(0)));
+        addCalendar(new GenericLunerCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1419, new Omari30YearLoop(zoneId), new UmAlquraStandardV1419()));
 
-        addCalendar(new GenericLunerCalendar(new QazwiniCalendar(), new BlackFajrStandard()));
-        addCalendar(new ByroniCalendar());
-        addCalendar(new AdCalendar());
-        addCalendar(new GregoryCalendar());
+        addCalendar(new GenericLunerCalendar(new QazwiniCalendar(zoneId), new BlackFajrStandard()));
+        addCalendar(new ByroniCalendar(zoneId));
+        addCalendar(new AdCalendar(zoneId));
+        addCalendar(new GregoryCalendar(zoneId));
 
-        addCalendar(new JulianCalendar());
+        addCalendar(new JulianCalendar(zoneId));
         //       addCalendar(new OmariCalendar());
         //    addCalendar(new QazwiniCalendar());
-        addCalendar(new JalaliCalendarIR());
-        addCalendar(new Solar128Calendar());
-        addCalendar(new SolarStationsCalendar());
-        addCalendar(new Zodiac13Calendar());
-        addCalendar(new HebrewCalendar());
-        addCalendar(new CopticCalendar());//addCalendar(new SamiCalendar());
+        addCalendar(new JalaliCalendarIR(zoneId));
+        addCalendar(new Solar128Calendar(zoneId));
+        addCalendar(new SolarStationsCalendar(zoneId));
+        addCalendar(new Zodiac13Calendar(zoneId));
+        addCalendar(new HebrewCalendar(zoneId));
+        addCalendar(new CopticCalendar(zoneId));//addCalendar(new SamiCalendar());
     }
 
     public List<BasicCalendar> getCalendars() {
@@ -175,12 +180,8 @@ public class CalendarFactory {
         return instance.greg;
     }
 
-    public void setCityLunerCalendar(LunerLocationCalendar cal) {
-        addCalendar(cal);
-    }
-
-    public static void test(CalendarTester test) {
-        for (BasicCalendar cal : getInstance().getCalendars()) {
+    public static void test(CalendarFactory fac, CalendarTester test) {
+        for (BasicCalendar cal : fac.getCalendars()) {
             test.test(cal);
         }
     }

@@ -5,8 +5,8 @@
  */
 package nasiiCalendar;
 
+import java.time.ZoneId;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import static nasiiCalendar.BasicCalendar.DAY;
 import static nasiiCalendar.BasicCalendar.START_SAMI;
@@ -54,8 +54,8 @@ public class SamiFixed extends SolarCalendar implements BasicCalendar {
         return p1;
             }
 
-    SamiFixed() {
-        this(BasicCalendar.SAMI_FIXED_ID, LONG_CYCLES, BIG_CYCLE, STARTTIME, STARTDATE);
+    SamiFixed(ZoneId zone) {
+        this(BasicCalendar.SAMI_FIXED_ID, LONG_CYCLES, BIG_CYCLE, STARTTIME, STARTDATE, zone);
         
     }
 
@@ -164,8 +164,8 @@ public class SamiFixed extends SolarCalendar implements BasicCalendar {
         
     }
 
-    private SamiFixed(String eng,long cycleTime, int cycleYear, long matchTime, int matchYear) {
-        super(eng, cycleTime, cycleYear, matchTime, matchYear);
+    private SamiFixed(String eng,long cycleTime, int cycleYear, long matchTime, int matchYear, ZoneId zone) {
+        super(eng, cycleTime, cycleYear, matchTime, matchYear, zone);
        
         prepareYearTypes();
         

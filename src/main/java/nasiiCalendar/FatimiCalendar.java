@@ -5,14 +5,16 @@
  */
 package nasiiCalendar;
 
+import java.time.ZoneId;
+
 /**
  *
  * @author hmulh
  */
 public class FatimiCalendar extends Omari30YearLoop{
 
-    public FatimiCalendar() {
-        super(BasicCalendar.FATIMI_ID, HijriCalc30.TypeHindi, -24883199000L ,1389);
+    public FatimiCalendar(ZoneId zone) {
+        super(BasicCalendar.FATIMI_ID, HijriCalc30.TypeHindi, -24883199000L ,1389, zone);
     }
     
 }

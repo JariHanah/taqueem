@@ -5,6 +5,7 @@
  */
 package nasiiCalendar;
 
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -45,8 +46,8 @@ public class Zodiac13Calendar extends SolarCalendar {
         }
         
     }
-    public Zodiac13Calendar() {
-        super(BasicCalendar.ZODIAC13_ID,BasicCalendar.YEAR_SIDEREAL*4, 4, STARTTIME, STARTYEAR);
+    public Zodiac13Calendar(ZoneId zone) {
+        super(BasicCalendar.ZODIAC13_ID,BasicCalendar.YEAR_SIDEREAL*4, 4, STARTTIME, STARTYEAR, zone);
 
     }
 

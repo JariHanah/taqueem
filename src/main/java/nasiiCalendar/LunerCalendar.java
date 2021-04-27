@@ -5,13 +5,9 @@
  */
 package nasiiCalendar;
 
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.TreeMap;
-import nasiiCalendar.BasicCalendar;
-import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
-import nasiiCalendar.MyBasicCalendar;
-import nasiiCalendar.PeriodType;
 import static nasiiCalendar.BasicCalendar.DAY;
 import static nasiiCalendar.BasicCalendar.MONTH;
 
@@ -29,8 +25,8 @@ public abstract class LunerCalendar extends MyBasicCalendar implements BasicCale
     String englishName;
     
     
-    public LunerCalendar(String eng,long cycleTime, int cycleYear, long matchTime, int matchYear) {
-        super(cycleTime, cycleYear, matchTime, matchYear);
+    public LunerCalendar(String eng,long cycleTime, int cycleYear, long matchTime, int matchYear, ZoneId zone) {
+        super(cycleTime, cycleYear, matchTime, matchYear, zone);
         englishName = eng;
         
     }

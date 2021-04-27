@@ -14,7 +14,6 @@ import nasiiCalendar.BasicDate;
 import nasiiCalendar.CalendarFactory;
 import nasiiCalendar.JalaliCalendarIR;
 import nasiiCalendar.LeapMonth;
-import nasiiCalendar.locationBasid.LunerLocationCalendar;
 import nasiiCalendar.PeriodType;
 import nasiiCalendar.Months;
 import nasiiCalendar.SamiCalendar;
@@ -319,49 +318,6 @@ Updated 2020-03-18
             //comp.getUnselectedStyle().setFgColor(0x000000);
             //    return;
         }
-
-    }
-
-    protected void prepareTodayMonth(Component comp, BasicDate cellDate) {
-        if (cellDate.getCalendar() instanceof LunerLocationCalendar) {
-            return;
-        }
-
-        if (cellDate.equals(cellDate.getCalendar().getMaximumDate())) {
-            return;
-        }
-        BasicDate today = cellDate.getCalendar().getDate(new Date().getTime());
-        BasicDate s1 = cellDate.getCalendar().getDate(cellDate.getYear(), cellDate.getMonth(), 1);
-        BasicDate s2 = cellDate.getCalendar().getDate(cellDate.getYear(), cellDate.getMonth(), cellDate.getCalendar().getMonthLength(cellDate));
-
-        if (today.getDate() >= s1.getDate() && today.getDate() <= s2.getDate()) {
-
-            comp.getElement().getStyle().set("color", "yellow");
-
-        }
-        //   hussam.println("YES: "+today+" "+cellDate);
-
-    }
-
-    protected void prepareTodayYear(Component comp, BasicDate cellDate) {
-        if (cellDate.getCalendar() instanceof LunerLocationCalendar) {
-            return;
-        }
-
-        if (cellDate.equals(cellDate.getCalendar().getMaximumDate())) {
-            return;
-        }
-        BasicDate today = cellDate.getCalendar().getDate(new Date().getTime());
-        BasicDate s1 = cellDate.getCalendar().getDate(cellDate.getYear(), 1, 1);
-        BasicDate s2 = cellDate.getCalendar().getDate(cellDate.getYear() + 1, 1, 1);
-
-        if (today.getDate() >= s1.getDate() && today.getDate() <= s2.getDate()) {
-            //    comp.getUnselectedStyle().setBgColor(0xffff00);
-            //  comp.getUnselectedStyle().setFgColor(0x000000);
-            comp.getElement().getStyle().set("color", "yellow");
-
-        }
-        //   hussam.println("YES: "+today+" "+cellDate);
 
     }
 

@@ -5,6 +5,7 @@
  */
 package nasiiCalendar;
 
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
@@ -22,8 +23,8 @@ public class Solar128Calendar extends JulianCalendar{
     private static final int BASE_YEAR = 2001;//- 353*4000;
     private static final long BASE_TIME =978307200000L;// 978382799999L-10800000L;//-126289975230000000l;//-62135521200001l ;//- DAY*4000 * (((365*3+366)*100)-3);
     
-    public Solar128Calendar() {
-        super(BasicCalendar.SOLAR_128_ID, CYCLE128, 128, BASE_TIME, BASE_YEAR);
+    public Solar128Calendar(ZoneId zone) {
+        super(BasicCalendar.SOLAR_128_ID, CYCLE128, 128, BASE_TIME, BASE_YEAR, zone);
     }
     
     

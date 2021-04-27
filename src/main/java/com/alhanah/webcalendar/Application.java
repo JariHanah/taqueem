@@ -8,19 +8,18 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.server.VaadinServlet;
 import com.vaadin.flow.server.VaadinSession;
 import static java.lang.System.setProperty;
-import java.util.Collection;
+import java.time.ZoneId;
 import java.util.Locale;
 import static java.util.Locale.ENGLISH;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import nasiiCalendar.locationBasid.City;
+import nasiiCalendar.CalendarFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.vaadin.artur.helpers.LaunchUtil;
-import org.vaadin.elmot.flow.sensors.GeoLocation;
 
 /**
  * The entry point of the Spring Boot application.
@@ -40,7 +39,25 @@ public class Application extends SpringBootServletInitializer {
         LaunchUtil.launchBrowserInDevelopmentMode(SpringApplication.run(Application.class, args));
        
     }
-    
+    public static CalendarFactory getFactory(){
+        CalendarFactory fac=(CalendarFactory) VaadinSession.getCurrent().getAttribute("factory");
+        if(fac==null){
+            fac=new CalendarFactory(getUserZoneId());
+            VaadinSession.getCurrent().setAttribute("factory", fac);
+        }
+        return fac;
+    }
+    public static void setUserZoneId(ZoneId zone){
+        VaadinSession.getCurrent().setAttribute("userZoneId", zone);
+    }
+    public static ZoneId getUserZoneId(){
+        ZoneId zone=(ZoneId) VaadinSession.getCurrent().getAttribute("userZoneId");
+        if(zone==null){
+            zone=ZoneId.systemDefault();
+            VaadinSession.getCurrent().setAttribute("userZoneId", zone);
+        }
+        return zone;
+    }
     public static CityList getCityList() {
         CityList list = (CityList) VaadinServlet.getCurrent().getServletConfig().getServletContext().getAttribute("cities"); // add to application context
         if (list == null) {

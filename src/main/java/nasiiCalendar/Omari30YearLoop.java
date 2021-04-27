@@ -5,7 +5,7 @@
  */
 package nasiiCalendar;
 
-import java.util.ArrayList;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -51,17 +51,17 @@ public class Omari30YearLoop extends SolarCalendar{
         
     }
     //String eng,  String shE, long cycleTime, int cycleYear, long matchTime, int matchYear
-    public Omari30YearLoop(HijriCalc30 type) {
-        this(type.getName(),  type, START,1);
+    public Omari30YearLoop(HijriCalc30 type, ZoneId zone) {
+        this(type.getName(),  type, START,1, zone);
         
     }
-    protected Omari30YearLoop(String name, HijriCalc30 type, long matchTime, int matchYear){
-        super(name, CYCLE, 30, matchTime, matchYear);
+    protected Omari30YearLoop(String name, HijriCalc30 type, long matchTime, int matchYear, ZoneId zone){
+        super(name, CYCLE, 30, matchTime, matchYear, zone);
         this.type=type;
         prepareYears();
     }
-    public Omari30YearLoop() {
-        this(HijriCalc30.Type16);
+    public Omari30YearLoop(ZoneId zone) {
+        this(HijriCalc30.Type16, zone);
     }
     
     private void prepareYears(){

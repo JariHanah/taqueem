@@ -5,6 +5,7 @@
  */
 package nasiiCalendar;
 
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +34,8 @@ public class JalaliCalendarIR extends SolarCalendar {
 
     private static final long START_MATCH = -27542332799000L;//-27542257200001L-10800000L;//-27573793200001L;// -27573793200001L;
     private static final int START_YEAR=476;
-    public JalaliCalendarIR() {
-        super(BasicCalendar.JALALI_IR_ID, CYCLE2820, 2820, START_MATCH, START_YEAR);
+    public JalaliCalendarIR(ZoneId zone) {
+        super(BasicCalendar.JALALI_IR_ID, CYCLE2820, 2820, START_MATCH, START_YEAR, zone);
     }
 
     public enum JalalYearType implements PeriodType {

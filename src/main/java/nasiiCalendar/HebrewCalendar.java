@@ -5,15 +5,13 @@
  */
 package nasiiCalendar;
 
-import java.util.ArrayList;
+import java.time.ZoneId;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import static nasiiCalendar.BasicCalendar.DAY;
 import static nasiiCalendar.BasicCalendar.METONIC;
 import static nasiiCalendar.BasicCalendar.MONTH;
-import static nasiiCalendar.BasicCalendar.START_SAMI;
 
 /**
  *
@@ -29,8 +27,8 @@ public class HebrewCalendar extends LunerCalendar {
     static final BasicYear Y_LEAP=new BasicYear("LunerLeap", false, true, new PeriodType[]{
             Months.TISHREI, Months.CHESHVAN, Months.KISLEV, Months.TEVET, Months.SHEVAT, Months.ADAR, Months.ADAR2,
             Months.NISAN, Months.IYAR, Months.SIVAN, Months.TAMMUZ, Months.AV, Months.ELUH});
-    HebrewCalendar() {
-        super(BasicCalendar.HEWBREW_ID, METONIC, 19, START_LONG, 4275);
+    HebrewCalendar(ZoneId zone) {
+        super(BasicCalendar.HEWBREW_ID, METONIC, 19, START_LONG, 4275, zone);
         setupMap(new int[]{1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0});
     }
 /*

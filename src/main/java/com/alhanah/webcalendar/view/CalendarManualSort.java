@@ -5,6 +5,7 @@
  */
 package com.alhanah.webcalendar.view;
 
+import com.alhanah.webcalendar.Application;
 import com.alhanah.webcalendar.info.Datable;
 import static com.alhanah.webcalendar.Application.getT;
 import com.alhanah.webcalendar.beans.CalendarBean;
@@ -29,7 +30,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.binder.Binder;
 import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
 
 /**
  *
@@ -45,7 +45,7 @@ public class CalendarManualSort extends Grid<CalendarBean> implements Datable {
     public CalendarManualSort(List<BasicCalendar> list, BasicDate b) {
         super(CalendarBean.class, false);
         base = b;
-        gridItems = CalendarBean.getBeans(CalendarFactory.getInstance().getCalendars(), list);
+        gridItems = CalendarBean.getBeans(Application.getFactory().getCalendars(), list);
         setItems(gridItems);
         setRowsDraggable(true);
         setSelectionMode(SelectionMode.NONE);

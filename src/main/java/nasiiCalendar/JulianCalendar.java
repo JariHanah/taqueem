@@ -5,13 +5,11 @@
  */
 package nasiiCalendar;
 
+import java.time.ZoneId;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeMap;
-import static nasiiCalendar.SamiCalendar.METONIC353;
 
 /**
  *
@@ -27,14 +25,14 @@ public class JulianCalendar extends SolarCalendar{
     static final BasicYear Y_LEAP=new BasicYear("JulianLeap", true, false, new PeriodType[]{Months.JANUARY, new LeapMonth(29,Months.FEBUARY), Months.MARCH, Months.APRIL, Months.MAY, Months.JUNE,
             Months.JULY, Months.AUGUST, Months.SEPTEMBER, Months.OCTOBER, Months.NOVEMBER, Months.DECEMBER});
     
-    JulianCalendar(){
-        this(BasicCalendar.JULIAN_ID);
+    JulianCalendar(ZoneId zone){
+        this(BasicCalendar.JULIAN_ID, zone);
     }
-    JulianCalendar(String eng){
-        super(eng, CYCLELENGTH, 4, BASE_TIME, BASE_YEAR);
+    JulianCalendar(String eng, ZoneId zone){
+        super(eng, CYCLELENGTH, 4, BASE_TIME, BASE_YEAR, zone);
     } 
-    JulianCalendar(String eng, long cycleTime, int cycleYear, long matchTime, int matchYear){
-        super(eng, cycleTime, cycleYear, matchTime, matchYear);
+    JulianCalendar(String eng, long cycleTime, int cycleYear, long matchTime, int matchYear, ZoneId zone){
+        super(eng, cycleTime, cycleYear, matchTime, matchYear, zone);
     
     }
     

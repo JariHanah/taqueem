@@ -5,6 +5,7 @@
  */
 package com.alhanah.webcalendar.view;
 
+import com.alhanah.webcalendar.Application;
 import com.alhanah.webcalendar.info.Datable;
 import static com.alhanah.webcalendar.Application.getT;
 import com.alhanah.webcalendar.beans.ConvertedDayCell;
@@ -41,7 +42,7 @@ public class CalendarGrid extends Grid implements Datable, CalendarsUpdatedListe
     public CalendarGrid() {
         this(CalendarFactory.getSamiCalendar().getDate(System.currentTimeMillis()), 6,
                 CalendarFactory.getSamiCalendar(), CalendarFactory.getGregoryCalendar(),
-                CalendarFactory.getInstance().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423));
+                Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423));
     }
 
     public CalendarGrid(BasicDate d, int pageSize, BasicCalendar... list) {
@@ -179,7 +180,7 @@ public class CalendarGrid extends Grid implements Datable, CalendarsUpdatedListe
         return new MyRenderedCalendarCell(t, type, list);
     }
     private VerticalLayout getCell(long t){
-        return getCell(t, NORMAL, CalendarFactory.getSamiCalendar(), CalendarFactory.getAdCalendar(), CalendarFactory.getInstance().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423));
+        return getCell(t, NORMAL, CalendarFactory.getSamiCalendar(), CalendarFactory.getAdCalendar(), Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423));
     }
     
 }

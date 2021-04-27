@@ -5,8 +5,8 @@
  */
 package nasiiCalendar;
 
+import java.time.ZoneId;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -94,8 +94,8 @@ public class SolarStationsCalendar extends SolarCalendar {
         
     }
 //*/
-    public SolarStationsCalendar() {
-        super(BasicCalendar.SOLAR_STATIONS_ID,  BasicCalendar.YEAR_SIDEREAL*4,4,STARTTIME, STARTYEAR);
+    public SolarStationsCalendar(ZoneId zone) {
+        super(BasicCalendar.SOLAR_STATIONS_ID,  BasicCalendar.YEAR_SIDEREAL*4,4,STARTTIME, STARTYEAR, zone);
     }
     
     

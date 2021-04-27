@@ -45,8 +45,8 @@ public class TodaydateView extends VerticalLayout {
         reader = new MyRequestReader(VaadinRequest.getCurrent().getParameterMap());
         long time = System.currentTimeMillis();
         //BasicDate bd = reader.getCalendar().getDate(System.currentTimeMillis());
-        BasicCalendar bcUmm = CalendarFactory.getInstance().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423);
-        BasicCalendar samiCal = CalendarFactory.getInstance().getCalendar(BasicCalendar.SAMI_FIXED_ID);
+        BasicCalendar bcUmm = Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423);
+        BasicCalendar samiCal = Application.getFactory().getCalendar(BasicCalendar.SAMI_FIXED_ID);
         
         BasicDate bd = bcUmm.getDate(time);
         //add(new WeekDay(bd));

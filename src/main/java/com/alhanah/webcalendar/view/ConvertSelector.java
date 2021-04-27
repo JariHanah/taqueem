@@ -5,6 +5,7 @@
  */
 package com.alhanah.webcalendar.view;
 
+import com.alhanah.webcalendar.Application;
 import com.alhanah.webcalendar.info.Datable;
 import static com.alhanah.webcalendar.Application.getT;
 import static com.alhanah.webcalendar.view.Util.dateToString;
@@ -50,7 +51,7 @@ public class ConvertSelector extends Span implements Datable{
         return calTextMap.getValue().getDate(date.getDate());
     }
     public ConvertSelector(BasicDate b) {
-        this(b, nasiiCalendar.CalendarFactory.getInstance().getCalendars());
+        this(b, Application.getFactory().getCalendars());
     }
     public void addCalendarChangeListener(CalendarsUpdatedListerner l){
         listeners.add(l);

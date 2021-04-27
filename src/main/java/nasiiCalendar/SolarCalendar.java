@@ -5,9 +5,8 @@
  */
 package nasiiCalendar;
 
-import java.util.List;
+import java.time.ZoneId;
 import java.util.TreeMap;
-import static nasiiCalendar.LunerCalendar.START_SAMI;
 
 /**
  *
@@ -20,8 +19,8 @@ public abstract class SolarCalendar extends MyBasicCalendar implements BasicCale
     final TreeMap<Integer, Long> LEAP_YEAR_DURATION = new TreeMap<Integer, Long>();
     String engName;
    
-    public SolarCalendar(String eng,  long cycleTime, int cycleYear, long matchTime, int matchYear) {
-        super(cycleTime, cycleYear, matchTime, matchYear);
+    public SolarCalendar(String eng,  long cycleTime, int cycleYear, long matchTime, int matchYear, ZoneId zone) {
+        super(cycleTime, cycleYear, matchTime, matchYear, zone);
         this.engName=eng;
         setup();
     }

@@ -5,20 +5,18 @@
  */
 package com.alhanah.webcalendar.beans;
 
+import com.alhanah.webcalendar.Application;
 import static com.alhanah.webcalendar.Application.getT;
 import com.alhanah.webcalendar.view.CalendarsUpdatedListerner;
 import com.alhanah.webcalendar.view.CellFormatter;
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import nasiiCalendar.BasicCalendar;
-import static nasiiCalendar.BasicCalendar.DAY;
 import nasiiCalendar.BasicDate;
 import nasiiCalendar.CalendarFactory;
 
@@ -33,7 +31,7 @@ public class ConvertedDayCell extends ComponentRenderer<Component, WeekBean> imp
     int weekDay;
 
     public ConvertedDayCell(int weekDay) {
-        this(weekDay, CalendarFactory.getSamiCalendar(), CalendarFactory.getAdCalendar(), CalendarFactory.getInstance().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423));
+        this(weekDay, CalendarFactory.getSamiCalendar(), CalendarFactory.getAdCalendar(), Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423));
     }
 
     public ConvertedDayCell(int weekDay, BasicCalendar... list) {

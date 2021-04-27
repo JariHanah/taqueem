@@ -5,17 +5,10 @@
  */
 package com.alhanah.webcalendar.info;
 
-import com.batoulapps.adhan.CalculationMethod;
-import com.batoulapps.adhan.CalculationParameters;
-import com.batoulapps.adhan.Coordinates;
-import com.batoulapps.adhan.Madhab;
-import com.batoulapps.adhan.PrayerTimes;
-import com.batoulapps.adhan.data.DateComponents;
-import java.text.SimpleDateFormat;
+import com.alhanah.webcalendar.Application;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 import nasiiCalendar.BasicCalendar;
 import static nasiiCalendar.BasicCalendar.DAY;
 import static nasiiCalendar.BasicCalendar.START_SAMI;
@@ -26,7 +19,6 @@ import nasiiCalendar.GregoryCalendar;
 import nasiiCalendar.MyBasicCalendar;
 import nasiiCalendar.Omari30YearLoop;
 import nasiiCalendar.SamiFixed;
-import nasiiCalendar.locationBasid.City;
 
 /**
  *
@@ -77,14 +69,15 @@ public class Tester {
     }
 
     public static void test3() {
+        ZoneId zone=ZoneId.systemDefault();
         SamiFixed s = CalendarFactory.getSamiCalendar();
-        Omari30YearLoop o = new Omari30YearLoop();
-        BasicCalendar umm = CalendarFactory.getInstance().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423);
+        Omari30YearLoop o = new Omari30YearLoop(zone);
+        BasicCalendar umm = Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423);
         BasicDate bd = s.getDate(0, 9, 1);
         long time = bd.getDate();
         System.err.println("starting......");
 
-        CalendarFactory.test(new CalendarTester() {
+        CalendarFactory.test(Application.getFactory(), new CalendarTester() {
             public void test(BasicCalendar c) {
                 MyBasicCalendar cal = (MyBasicCalendar) c;
                 System.err.println(cal.getMatchTime() + "\t" + new Date(cal.getMatchTime()) + "\t" + cal.getStartTime() + "\t" + new Date(cal.getStartTime()) + "\t" + cal.getName());
@@ -118,7 +111,7 @@ public class Tester {
     
     public static void testFatimi(){ 
         int weekday[]=new int[] {6,4,1,5,3,4,5,2,6,4,1,5,3,4,4,2,6,4,1,5,3,4,4,2,6,4,1,5,3,2,4,2,6,3,1,5,3,4,4,2,6,3,1,5,2,4,4,2,6,3,1,5,2,4,4,2,6,3,1,5,2,4,4,1,6,3,1,5,2,4,4,1,6,3,4,5,2,4,4,1,6,3,4,5,2,4,4,1,6,3,4,5,2,6,4,1,6,3,4,5};
-        BasicCalendar fat=CalendarFactory.getInstance().getCalendar(BasicCalendar.FATIMI_ID);
+        BasicCalendar fat=Application.getFactory().getCalendar(BasicCalendar.FATIMI_ID);
         int yearStart=1101;
         for(int i=0;i<weekday.length;i++){
             BasicDate b=fat.getDate(i+yearStart,1,1);
@@ -133,7 +126,7 @@ public class Tester {
         final BasicDate bd = s.getDate(0, 1, 1);
         System.err.println("starting......" + bd.getDate());
 
-        CalendarFactory.test(new CalendarTester() {
+        CalendarFactory.test(Application.getFactory(), new CalendarTester() {
             public void test(BasicCalendar c) {
                 long time = bd.getDate();
                 MyBasicCalendar cal = (MyBasicCalendar) c;

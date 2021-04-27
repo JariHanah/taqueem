@@ -5,6 +5,7 @@
  */
 package nasiiCalendar;
 
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,6 @@ import static nasiiCalendar.BasicCalendar.DAY;
 import static nasiiCalendar.BasicCalendar.METONIC;
 import static nasiiCalendar.BasicCalendar.MONTH;
 import static nasiiCalendar.BasicCalendar.START_SAMI;
-import nasiiCalendar.SamiCalendar;
 
 /**
  *
@@ -22,8 +22,8 @@ public class WsmiCalendar extends LunerCalendar{
     private final static int STARTDATE=-105 ;//- 4000 * 19 * 18;
     private final static long STARTLONG= START_SAMI ;//-METONIC*4000*18 + START_SAMI;
 
-    WsmiCalendar() {
-        super(BasicCalendar.WSMI_ID, METONIC, 19, STARTLONG, STARTDATE);
+    WsmiCalendar(ZoneId zone) {
+        super(BasicCalendar.WSMI_ID, METONIC, 19, STARTLONG, STARTDATE, zone);
         setupMap(new int[]{1,0,0,1,0,0,1,0,1,0,0,1,0,0,1,0,1,0,0});
     }
     

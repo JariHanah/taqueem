@@ -5,10 +5,9 @@
  */
 package nasiiCalendar;
 
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.List;
-import static nasiiCalendar.JulianCalendar.Y_LEAP;
-import static nasiiCalendar.JulianCalendar.Y_NORMAL;
 
 /**
  *
@@ -22,8 +21,8 @@ public class CopticCalendar extends JulianCalendar{
     static final BasicYear CY_LEAP=new BasicYear("LunerLeap", true, false, new PeriodType[]{Months.COP_1, Months.COP_2, Months.COP_3, Months.COP_4, Months.COP_5, Months.COP_6,
             Months.COP_7, Months.COP_8, Months.COP_9, Months.COP_10, Months.COP_11, Months.COP_12, new LeapMonth(6,Months.COP_13)});
     
-    public CopticCalendar() {
-        super(BasicCalendar.COMPTIC_ID, CYCLELENGTH,4, 1063324800000L,1720);
+    public CopticCalendar(ZoneId zone) {
+        super(BasicCalendar.COMPTIC_ID, CYCLELENGTH,4, 1063324800000L,1720, zone);
     }
     
     protected int[] getNormalYearMonthLength(){

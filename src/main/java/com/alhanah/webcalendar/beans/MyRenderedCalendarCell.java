@@ -5,6 +5,7 @@
  */
 package com.alhanah.webcalendar.beans;
 
+import com.alhanah.webcalendar.Application;
 import static com.alhanah.webcalendar.Application.getT;
 import com.alhanah.webcalendar.view.CalendarsUpdatedListerner;
 import com.alhanah.webcalendar.view.CellFormatter;
@@ -37,7 +38,7 @@ public class MyRenderedCalendarCell extends VerticalLayout implements CalendarsU
     String width = "50px";
 
     public MyRenderedCalendarCell(long t) {
-        this(t, NORMAL, CalendarFactory.getSamiCalendar(), CalendarFactory.getAdCalendar(), CalendarFactory.getInstance().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423));
+        this(t, NORMAL, CalendarFactory.getSamiCalendar(), CalendarFactory.getAdCalendar(), Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423));
     }
 
     public MyRenderedCalendarCell(long t, int type, BasicCalendar... list) {

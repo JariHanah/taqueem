@@ -5,7 +5,7 @@
  */
 package nasiiCalendar;
 
-import java.util.ArrayList;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map.Entry;
@@ -105,8 +105,8 @@ public class SamiCalendar extends LunerCalendar implements BasicCalendar{
         
     }
     //*/
-    SamiCalendar() {
-        super(BasicCalendar.SAMI_ID,  METONIC353, 353, STARTTIME, STARTDATE);
+    SamiCalendar(ZoneId zone) {
+        super(BasicCalendar.SAMI_ID,  METONIC353, 353, STARTTIME, STARTDATE, zone);
         setupMap(new int[]{1,0,0,1,0,0,1,0,1,0,0,1,0,0,1,0,1,0,0});
     }
    

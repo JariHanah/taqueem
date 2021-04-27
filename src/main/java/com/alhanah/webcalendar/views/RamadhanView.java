@@ -29,7 +29,6 @@ import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
 import nasiiCalendar.CalendarFactory;
 import nasiiCalendar.Months;
-import org.vaadin.elmot.flow.sensors.GeoLocation;
 
 @Route(value = "ramadhan", layout = MainView.class)
 @PageTitle("موعد رمضان")
@@ -45,7 +44,7 @@ public class RamadhanView extends Div {
     public RamadhanView() {
         addClassName("ramadhan-view");
         List<BasicCalendar> calsList = new ArrayList<BasicCalendar>();
-        for (BasicCalendar btemp : CalendarFactory.getInstance().getCalendars()) {
+        for (BasicCalendar btemp : Application.getFactory().getCalendars()) {
             if (btemp.getYearType(1400).getSubPeriods().contains(Months.RAMADHAN)) {
                 calsList.add(btemp);
 

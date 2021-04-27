@@ -5,14 +5,16 @@
  */
 package nasiiCalendar;
 
+import java.time.ZoneId;
+
 /**
  *
  * @author hmulh
  */
 public class JahhafCalendar extends Omari30YearLoop{
 
-    public JahhafCalendar() {
-        super(BasicCalendar.JAHHAF_ID,  Omari30YearLoop.HijriCalc30.Type15, -8658921599000L ,1107);
+    public JahhafCalendar(ZoneId zone) {
+        super(BasicCalendar.JAHHAF_ID,  Omari30YearLoop.HijriCalc30.Type15, -8658921599000L ,1107, zone);
     }
     
 }

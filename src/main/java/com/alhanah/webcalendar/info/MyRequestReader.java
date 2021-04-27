@@ -5,13 +5,10 @@
  */
 package com.alhanah.webcalendar.info;
 
+import com.alhanah.webcalendar.Application;
 import com.alhanah.webcalendar.view.MyParameters;
 import static com.alhanah.webcalendar.HanahI18NProvider.AR;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.page.BrowserWindowResizeEvent;
-import com.vaadin.flow.component.page.BrowserWindowResizeListener;
-import com.vaadin.flow.component.page.ExtendedClientDetails;
-import com.vaadin.flow.component.page.Page;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -88,14 +85,14 @@ public class MyRequestReader {
         if (cals != null) {
             for (String x : cals) {
             //    System.err.println("\t" + x);
-                BasicCalendar bc = CalendarFactory.getInstance().getCalendar(x);
+                BasicCalendar bc = Application.getFactory().getCalendar(x);
            //     System.err.println("bc: " + bc);
                 if (bc != null) {
                     conversions.add(bc);
                 }
             }
         } else {
-            conversions.addAll(CalendarFactory.getInstance().getCalendars());
+            conversions.addAll(Application.getFactory().getCalendars());
         }
         String[] myTime = params.get(MyParameters.MILI_TIME);
         selectedTime = System.currentTimeMillis();
@@ -104,7 +101,7 @@ public class MyRequestReader {
         }
         String[] type = params.get(MyParameters.CAL_TYPE);
         if (type != null) {
-            base = CalendarFactory.getInstance().getCalendar(type[0]);//getAdCalendar();
+            base = Application.getFactory().getCalendar(type[0]);//getAdCalendar();
         }
         if (base == null) {
             base = CalendarFactory.getAdCalendar();

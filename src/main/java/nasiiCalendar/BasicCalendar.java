@@ -5,8 +5,8 @@
  */
 package nasiiCalendar;
 
+import java.time.ZoneId;
 import java.util.List;
-import java.util.TimeZone;
 
 /**
  *
@@ -104,6 +104,6 @@ public interface BasicCalendar {
     public int getLongCycleYear();
     
     public String getName();
-    //public String getShortName();
+    public ZoneId getZoneId();
     
 }
