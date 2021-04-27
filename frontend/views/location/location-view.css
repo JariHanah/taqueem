@@ -1,0 +1,8 @@
+.location-view {
+  display: flex;
+  height: 100%;
+}
+
+.location-view .map {
+  flex: 1;
+}

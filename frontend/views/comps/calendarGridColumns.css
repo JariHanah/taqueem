@@ -1,0 +1,371 @@
+[part~="header-cell"] {
+  padding: 0px;
+  width: 50px;
+}
+/*[part~="cell"] ::slotted(vaadin-grid-cell-content) {
+    cursor: default;
+    padding: 0;
+    width: 50px;
+    
+}
+[part~="cell"].longcalendar ::slotted(vaadin-grid-cell-content) {
+    cursor: default;
+    padding: 0;
+    width: 400px;
+    
+}*/
+[part~="content"] {
+   padding: 0px;
+    --lumo-font-size: 1rem;
+    --lumo-font-size-xxxl: 1.375rem;
+    --lumo-font-size-xxl: 1.125rem;
+    --lumo-font-size-xl: 1rem;
+    --lumo-font-size-l: 0.0rem;
+    --lumo-font-size-m: 0.0rem;
+    --lumo-font-size-s: 0.0rem;
+    --lumo-font-size-xs: 0.0rem;
+    --lumo-line-height-m: 1.0;
+    --lumo-line-height-s: 1.2;
+    --lumo-line-height-xs: 1.1;
+    --lumo-border-radius: 0.0em;
+    --lumo-size-xl: 0rem;
+    --lumo-size-l: 0rem;
+    --lumo-size-m: 0rem;
+    --lumo-size-s: 0rem;
+    --lumo-size-xs: 0rem;
+    --lumo-space-xl: 0rem;
+    --lumo-space-l: 0rem;
+    --lumo-space-m: 0rem;
+    --lumo-space-s: 0rem;
+    --lumo-space-xs: 0rem;
+    margin-top:0;
+    margin-right:0;
+}
+.gridLabel{
+    background: white;
+    color: wheat;
+}
+
+[part~="cell"].gridcalendar {
+    /*  background: rgb(245, 245, 255);*/
+    padding: 0px;
+    width: 50px;
+    --lumo-font-size: 1rem;
+    --lumo-font-size-xxxl: 1.375rem;
+    --lumo-font-size-xxl: 1.125rem;
+    --lumo-font-size-xl: 1rem;
+    --lumo-font-size-l: 0.0rem;
+    --lumo-font-size-m: 0.0rem;
+    --lumo-font-size-s: 0.0rem;
+    --lumo-font-size-xs: 0.0rem;
+    --lumo-line-height-m: 1.0;
+    --lumo-line-height-s: 1.2;
+    --lumo-line-height-xs: 1.1;
+    --lumo-border-radius: 0.0em;
+    --lumo-size-xl: 0rem;
+    --lumo-size-l: 0rem;
+    --lumo-size-m: 0rem;
+    --lumo-size-s: 0rem;
+    --lumo-size-xs: 0rem;
+    --lumo-space-xl: 0rem;
+    --lumo-space-l: 0rem;
+    --lumo-space-m: 0rem;
+    --lumo-space-s: 0rem;
+    --lumo-space-xs: 0rem;
+    margin-top:0;
+    margin-right:0;
+    margin-bottom:0;
+    margin-left:0
+}
+label.month-haram{
+    background: red;
+}
+label.month-no-hunting{
+    background: cyan;
+}
+label.month-hajj-season{
+    background: blueviolet;
+}
+label.month-ramadhan{
+    background: pink;
+}
+label.day-eid{
+    background: greenyellow;
+}
+label.day-arafah{
+    background: pink;
+}
+label.day-aashora{
+    background: black;
+}
+
+label.day-today{
+    background: yellow;
+}
+
+            
+
+
+/*SPRING("spring"),
+[part~="cell"].gridcalendar {
+    /*  background: rgb(245, 245, 255);
+    padding: 0px;
+    --lumo-font-size: 1rem;
+    --lumo-font-size-xxxl: 1.375rem;
+    --lumo-font-size-xxl: 1.125rem;
+    --lumo-font-size-xl: 1rem;
+    --lumo-font-size-l: 0.875rem;
+    --lumo-font-size-m: 0.75rem;
+    --lumo-font-size-s: 0.6875rem;
+    --lumo-font-size-xs: 0.625rem;
+    --lumo-line-height-m: 1.4;
+    --lumo-line-height-s: 1.2;
+    --lumo-line-height-xs: 1.1;
+    --lumo-border-radius: 0.125em;
+    --lumo-size-xl: 2.5rem;
+    --lumo-size-l: 2rem;
+    --lumo-size-m: 1.75rem;
+    --lumo-size-s: 1.5rem;
+    --lumo-size-xs: 1.25rem;
+    --lumo-space-xl: 1.75rem;
+    --lumo-space-l: 1.125rem;
+    --lumo-space-m: 0.5rem;
+    --lumo-space-s: 0.25rem;
+    --lumo-space-xs: 0.125rem;
+}
+        SUMMER("summer"),
+        FALL("autumn"),
+        WINTER("winter");
+        /*/
+[part~="cell"].seasonautumn {
+
+    background: rgb(255, 204, 179);
+    
+    --lumo-secondary-text-color: black;
+    padding: 0px;
+    --lumo-font-size: 1rem;
+    --lumo-font-size-xxxl: 1.375rem;
+    --lumo-font-size-xxl: 1.125rem;
+    --lumo-font-size-xl: 1rem;
+    --lumo-font-size-l: 0.875rem;
+    --lumo-font-size-m: 0.75rem;
+    --lumo-font-size-s: 0.6875rem;
+    --lumo-font-size-xs: 0.625rem;
+    --lumo-line-height-m: 1.4;
+    --lumo-line-height-s: 1.2;
+    --lumo-line-height-xs: 1.1;
+    --lumo-border-radius: 0.125em;
+    --lumo-size-xl: 2.5rem;
+    --lumo-size-l: 2rem;
+    --lumo-size-m: 1.75rem;
+    --lumo-size-s: 1.5rem;
+    --lumo-size-xs: 1.25rem;
+    --lumo-space-xl: 1.75rem;
+    --lumo-space-l: 1.125rem;
+    --lumo-space-m: 0.5rem;
+    --lumo-space-s: 0.25rem;
+    --lumo-space-xs: 0.125rem;
+}
+
+[part~="cell"].seasonwinter {
+    background: rgb(204, 230, 255);
+    
+    --lumo-secondary-text-color: black;
+    padding: 0px;
+    --lumo-font-size: 1rem;
+    --lumo-font-size-xxxl: 1.375rem;
+    --lumo-font-size-xxl: 1.125rem;
+    --lumo-font-size-xl: 1rem;
+    --lumo-font-size-l: 0.875rem;
+    --lumo-font-size-m: 0.75rem;
+    --lumo-font-size-s: 0.6875rem;
+    --lumo-font-size-xs: 0.625rem;
+    --lumo-line-height-m: 1.4;
+    --lumo-line-height-s: 1.2;
+    --lumo-line-height-xs: 1.1;
+    --lumo-border-radius: 0.125em;
+    --lumo-size-xl: 2.5rem;
+    --lumo-size-l: 2rem;
+    --lumo-size-m: 1.75rem;
+    --lumo-size-s: 1.5rem;
+    --lumo-size-xs: 1.25rem;
+    --lumo-space-xl: 1.75rem;
+    --lumo-space-l: 1.125rem;
+    --lumo-space-m: 0.5rem;
+    --lumo-space-s: 0.25rem;
+    --lumo-space-xs: 0.125rem;
+}
+[part~="cell"].seasonsummer {
+    background: rgb(255, 255, 204);
+    
+    --lumo-secondary-text-color: black;
+    padding: 0px;
+    --lumo-font-size: 1rem;
+    --lumo-font-size-xxxl: 1.375rem;
+    --lumo-font-size-xxl: 1.125rem;
+    --lumo-font-size-xl: 1rem;
+    --lumo-font-size-l: 0.875rem;
+    --lumo-font-size-m: 0.75rem;
+    --lumo-font-size-s: 0.6875rem;
+    --lumo-font-size-xs: 0.625rem;
+    --lumo-line-height-m: 1.4;
+    --lumo-line-height-s: 1.2;
+    --lumo-line-height-xs: 1.1;
+    --lumo-border-radius: 0.125em;
+    --lumo-size-xl: 2.5rem;
+    --lumo-size-l: 2rem;
+    --lumo-size-m: 1.75rem;
+    --lumo-size-s: 1.5rem;
+    --lumo-size-xs: 1.25rem;
+    --lumo-space-xl: 1.75rem;
+    --lumo-space-l: 1.125rem;
+    --lumo-space-m: 0.5rem;
+    --lumo-space-s: 0.25rem;
+    --lumo-space-xs: 0.125rem;
+}
+
+[part~="cell"].seasonspring , [part~="cell"].seasonspring > textarea,  [part~="cell"].seasonspring > textArea{
+    background: rgb(204, 255, 204);
+    
+    --lumo-secondary-text-color: black;
+    padding: 0px;
+    --lumo-font-size: 1rem;
+    --lumo-font-size-xxxl: 1.375rem;
+    --lumo-font-size-xxl: 1.125rem;
+    --lumo-font-size-xl: 1rem;
+    --lumo-font-size-l: 0.875rem;
+    --lumo-font-size-m: 0.75rem;
+    --lumo-font-size-s: 0.6875rem;
+    --lumo-font-size-xs: 0.625rem;
+    --lumo-line-height-m: 1.4;
+    --lumo-line-height-s: 1.2;
+    --lumo-line-height-xs: 1.1;
+    --lumo-border-radius: 0.125em;
+    --lumo-size-xl: 2.5rem;
+    --lumo-size-l: 2rem;
+    --lumo-size-m: 1.75rem;
+    --lumo-size-s: 1.5rem;
+    --lumo-size-xs: 1.25rem;
+    --lumo-space-xl: 1.75rem;
+    --lumo-space-l: 1.125rem;
+    --lumo-space-m: 0.5rem;
+    --lumo-space-s: 0.25rem;
+    --lumo-space-xs: 0.125rem;
+    
+}
+.seasonautumn {
+
+    background: rgb(255, 204, 179);
+    
+    --lumo-secondary-text-color: black;
+    padding: 0px;
+    --lumo-font-size: 1rem;
+    --lumo-font-size-xxxl: 1.375rem;
+    --lumo-font-size-xxl: 1.125rem;
+    --lumo-font-size-xl: 1rem;
+    --lumo-font-size-l: 0.875rem;
+    --lumo-font-size-m: 0.75rem;
+    --lumo-font-size-s: 0.6875rem;
+    --lumo-font-size-xs: 0.625rem;
+    --lumo-line-height-m: 1.4;
+    --lumo-line-height-s: 1.2;
+    --lumo-line-height-xs: 1.1;
+    --lumo-border-radius: 0.125em;
+    --lumo-size-xl: 2.5rem;
+    --lumo-size-l: 2rem;
+    --lumo-size-m: 1.75rem;
+    --lumo-size-s: 1.5rem;
+    --lumo-size-xs: 1.25rem;
+    --lumo-space-xl: 1.75rem;
+    --lumo-space-l: 1.125rem;
+    --lumo-space-m: 0.5rem;
+    --lumo-space-s: 0.25rem;
+    --lumo-space-xs: 0.125rem;
+}
+
+.seasonwinter {
+    background: rgb(204, 230, 255);
+    
+    --lumo-secondary-text-color: black;
+    padding: 0px;
+    --lumo-font-size: 1rem;
+    --lumo-font-size-xxxl: 1.375rem;
+    --lumo-font-size-xxl: 1.125rem;
+    --lumo-font-size-xl: 1rem;
+    --lumo-font-size-l: 0.875rem;
+    --lumo-font-size-m: 0.75rem;
+    --lumo-font-size-s: 0.6875rem;
+    --lumo-font-size-xs: 0.625rem;
+    --lumo-line-height-m: 1.4;
+    --lumo-line-height-s: 1.2;
+    --lumo-line-height-xs: 1.1;
+    --lumo-border-radius: 0.125em;
+    --lumo-size-xl: 2.5rem;
+    --lumo-size-l: 2rem;
+    --lumo-size-m: 1.75rem;
+    --lumo-size-s: 1.5rem;
+    --lumo-size-xs: 1.25rem;
+    --lumo-space-xl: 1.75rem;
+    --lumo-space-l: 1.125rem;
+    --lumo-space-m: 0.5rem;
+    --lumo-space-s: 0.25rem;
+    --lumo-space-xs: 0.125rem;
+}
+.seasonsummer {
+    background: rgb(255, 255, 204);
+    
+    --lumo-secondary-text-color: black;
+    padding: 0px;
+    --lumo-font-size: 1rem;
+    --lumo-font-size-xxxl: 1.375rem;
+    --lumo-font-size-xxl: 1.125rem;
+    --lumo-font-size-xl: 1rem;
+    --lumo-font-size-l: 0.875rem;
+    --lumo-font-size-m: 0.75rem;
+    --lumo-font-size-s: 0.6875rem;
+    --lumo-font-size-xs: 0.625rem;
+    --lumo-line-height-m: 1.4;
+    --lumo-line-height-s: 1.2;
+    --lumo-line-height-xs: 1.1;
+    --lumo-border-radius: 0.125em;
+    --lumo-size-xl: 2.5rem;
+    --lumo-size-l: 2rem;
+    --lumo-size-m: 1.75rem;
+    --lumo-size-s: 1.5rem;
+    --lumo-size-xs: 1.25rem;
+    --lumo-space-xl: 1.75rem;
+    --lumo-space-l: 1.125rem;
+    --lumo-space-m: 0.5rem;
+    --lumo-space-s: 0.25rem;
+    --lumo-space-xs: 0.125rem;
+}
+
+.seasonspring , .seasonspring > textarea, .seasonspring > textArea{
+    background: rgb(204, 255, 204);
+    
+    --lumo-secondary-text-color: black;
+    padding: 0px;
+    --lumo-font-size: 1rem;
+    --lumo-font-size-xxxl: 1.375rem;
+    --lumo-font-size-xxl: 1.125rem;
+    --lumo-font-size-xl: 1rem;
+    --lumo-font-size-l: 0.875rem;
+    --lumo-font-size-m: 0.75rem;
+    --lumo-font-size-s: 0.6875rem;
+    --lumo-font-size-xs: 0.625rem;
+    --lumo-line-height-m: 1.4;
+    --lumo-line-height-s: 1.2;
+    --lumo-line-height-xs: 1.1;
+    --lumo-border-radius: 0.125em;
+    --lumo-size-xl: 2.5rem;
+    --lumo-size-l: 2rem;
+    --lumo-size-m: 1.75rem;
+    --lumo-size-s: 1.5rem;
+    --lumo-size-xs: 1.25rem;
+    --lumo-space-xl: 1.75rem;
+    --lumo-space-l: 1.125rem;
+    --lumo-space-m: 0.5rem;
+    --lumo-space-s: 0.25rem;
+    --lumo-space-xs: 0.125rem;
+    
+}

@@ -1,0 +1,22 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package nasiiCalendar;
+
+/**
+ *
+ * @author hmulh
+ */
+public class DateConfigException extends RuntimeException {
+    DateConfigException(String s){
+        super(s);
+    }
+
+    DateConfigException() {
+        super("Date is Configured wrong, check date!");
+    }
+    
+    
+}

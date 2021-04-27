@@ -1,0 +1,25 @@
+label.month-haram{
+    background: red;
+}
+.month-no-hunting{
+    background: cyan;
+}
+label.month-hajj-season{
+    background: blueviolet;
+}
+.month-ramadhan{
+    background: pink;
+}
+.day-eid{
+    background: greenyellow;
+}
+.day-arafah{
+    background: pink;
+}
+.day-aashora{
+    background: black;
+}
+
+.day-today{
+    background: yellow;
+}

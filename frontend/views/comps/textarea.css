@@ -1,0 +1,55 @@
+
+.seasonautumn {
+
+    background: rgb(255, 204, 179);
+    color: rgb(0, 0, 0);
+    --lumo-secondary-text-color: black;
+
+}
+
+.seasonwinter {
+    background: rgb(204, 230, 255);
+    color: rgb(0, 0, 0);
+    --lumo-secondary-text-color: black;
+
+}
+.seasonsummer {
+    background: rgb(255, 255, 204);
+    color: rgb(0, 0, 0);
+    --lumo-secondary-text-color: black;
+}
+
+.seasonspring {
+    background: rgb(204, 255, 204);
+    color: rgb(0, 0, 0);
+    --lumo-secondary-text-color: black;
+
+}
+/*
+[part="input-field"].seasonautumn {
+
+    background: rgb(255, 204, 179);
+    color: rgb(0, 0, 0);
+    --lumo-secondary-text-color: black;
+    
+}
+
+[part="input-field"].seasonwinter {
+    background: rgb(204, 230, 255);
+    color: rgb(0, 0, 0);
+--lumo-secondary-text-color: black;
+    
+}
+[part="input-field"].seasonsummer {
+    background: rgb(255, 255, 204);
+    color: rgb(0, 0, 0);
+    --lumo-secondary-text-color: black;
+}
+
+[part="input-field"].seasonspring {
+    background: rgb(204, 255, 204);
+    color: rgb(0, 0, 0);
+    --lumo-secondary-text-color: black;
+}
+
+*/
