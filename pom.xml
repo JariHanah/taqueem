@@ -259,6 +259,7 @@
                                 </goals>
                             </execution>
                         </executions>
+                        
                     </plugin>
 
                     <!-- Runs the integration tests (*IT) after the server is started -->

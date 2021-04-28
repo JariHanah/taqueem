@@ -48,6 +48,8 @@ public class MyFooter extends Div {
         Image image=new Image("images/logo.png", getT("app-logo-text"));
         image.setWidth("250px");
         add(image);
+        testMemory();
+        
         // extra();
     }
 
@@ -89,5 +91,35 @@ public class MyFooter extends Div {
             localTime.setValue(value2+" "+zone2);
         
         });
+    }
+    
+    private static final long MEGABYTE = 1024L * 1024L;
+
+    public static long bytesToMegabytes(long bytes) {
+        return bytes / MEGABYTE;
+    }
+    TextField memoryText=new TextField("Used Memory");
+    TextField memoryTotal=new TextField("Totao Memory");
+    TextField memoryFree=new TextField("Free Memory");
+    TextField memoryMax=new TextField("Max Memory");
+    public void testMemory() {
+        add(memoryText);
+        add(memoryFree);
+        add(memoryTotal);
+        add(memoryMax);
+        
+        Runtime runtime = Runtime.getRuntime();
+        
+        //runtime.gc();
+        
+        long memory = runtime.totalMemory() - runtime.freeMemory();
+        System.out.println("Used memory is bytes: " + memory);
+        System.out.println("Used memory is megabytes: "
+                + bytesToMegabytes(memory));
+        memoryText.setValue(bytesToMegabytes(memory)+"");
+        memoryFree.setValue(bytesToMegabytes(runtime.freeMemory())+"");
+        memoryTotal.setValue(bytesToMegabytes(runtime.totalMemory())+"");
+        memoryMax.setValue(bytesToMegabytes(runtime.maxMemory())+"");
+        
     }
 }
