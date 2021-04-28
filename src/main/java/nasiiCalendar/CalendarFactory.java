@@ -32,6 +32,16 @@ public class CalendarFactory {
     static final SeasonIdentifier seasonJalali = new SeasonJalali();
     static final SeasonIdentifier seasonfalak = new SeasonSunCalc();
     ZoneId zoneId;
+
+    public ZoneId getZoneId() {
+        return zoneId;
+    }
+    public void setZoneId(ZoneId zone){
+        mySortedCals.forEach((BasicCalendar t) -> {
+            t.setZoneId(zone);
+        });
+    }
+    
     Calendar greg;
     List<BasicCalendar> mySortedCals = new ArrayList<>();
     Map<String, BasicCalendar> calMap = new HashMap<String, BasicCalendar>();

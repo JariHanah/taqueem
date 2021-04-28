@@ -72,7 +72,7 @@ public class ConvertDateView extends VerticalLayout {
         //smtLocal=new SunMoonSetTime();
         new MyGeoLocation(smtText).addValueChangeListener((event) -> {
             //smtLocal.setCity(MyGeoLocation.getCity());
-            //local.setCity(MyGeoLocation.getCity());
+            local.setCity(MyGeoLocation.getCity());
             //smtLocal.setDate(box.getDate());
             smtGrid.setDate(box.getDate());
             //infoLocal.setText(getT("moon-set-local")+" "+Util.getCityName(smtLocal.getCity()));

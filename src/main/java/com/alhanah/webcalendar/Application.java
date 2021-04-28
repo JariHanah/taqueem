@@ -49,6 +49,9 @@ public class Application extends SpringBootServletInitializer {
     }
     public static void setUserZoneId(ZoneId zone){
         VaadinSession.getCurrent().setAttribute("userZoneId", zone);
+        getFactory().setZoneId(zone);
+        //VaadinSession.getCurrent().setAttribute("factory", null);
+        
     }
     public static ZoneId getUserZoneId(){
         ZoneId zone=(ZoneId) VaadinSession.getCurrent().getAttribute("userZoneId");

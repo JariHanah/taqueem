@@ -49,7 +49,7 @@ public class Util {
     static void makeLTR(Component com) {
         com.getElement().setAttribute("dir", "ltr");
     }
-    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss a");
     //static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLL dd yyyy HH:mm:ss");
 
     public static DateTimeFormatter getTimeFormatter() {

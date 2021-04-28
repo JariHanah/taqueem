@@ -5,6 +5,7 @@
  */
 package com.alhanah.webcalendar.view;
 
+import com.alhanah.webcalendar.Application;
 import static com.alhanah.webcalendar.Application.getT;
 import com.alhanah.webcalendar.info.MyRequestReader;
 import com.alhanah.webcalendar.views.AboutView;
@@ -30,7 +31,7 @@ public class MyFooter extends Div {
     MyRequestReader reader;
     ZoneId zone;
     TextField localTime;
-
+    TextField localZoneText=new TextField("timezone");
     public MyFooter() {
         VaadinRequest vaadinRequest = VaadinService.getCurrentRequest();
         reader = new MyRequestReader(vaadinRequest.getParameterMap());
@@ -75,11 +76,18 @@ public class MyFooter extends Div {
     }
 
     private void showTime() {
+        final ZoneId zone=Application.getUserZoneId();
+        String value=Util.getTimeFormatter().format(LocalDateTime.now(zone)).toString();
+        localTime.setValue(value+" "+Application.getUserZoneId());
+        Util.makeLTR(localTime);
         UI.getCurrent().getPage().retrieveExtendedClientDetails((extendedClientDetails) -> {
-            zone=ZoneId.of(extendedClientDetails.getTimeZoneId());
-            String value=Util.getTimeFormatter().format(LocalDateTime.now(zone)).toString();
-            localTime.setValue(value);
-            Util.makeLTR(localTime);
+            ZoneId zone2=ZoneId.of(extendedClientDetails.getTimeZoneId());
+            if(zone.equals(zone2))return;
+            Application.setUserZoneId(zone2);
+            String value2=Util.getTimeFormatter().format(LocalDateTime.now(zone2)).toString();
+            
+            localTime.setValue(value2+" "+zone2);
+        
         });
     }
 }

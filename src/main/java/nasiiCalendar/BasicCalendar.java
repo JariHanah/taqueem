@@ -105,5 +105,6 @@ public interface BasicCalendar {
     
     public String getName();
     public ZoneId getZoneId();
+    public void setZoneId(ZoneId zone);
     
 }
