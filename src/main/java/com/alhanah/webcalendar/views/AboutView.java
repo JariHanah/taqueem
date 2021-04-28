@@ -45,7 +45,7 @@ public class AboutView extends Div {
         VerticalLayout c=new VerticalLayout();
         c.add(new H5(getT("taqueem-head")));
         c.add(new Paragraph(getT("taqueem-intro")));
-        c.add(new Paragraph(getT("last-version-update")));
+        c.add(new Paragraph(getT("version-last-update")));
         
         return c;
         

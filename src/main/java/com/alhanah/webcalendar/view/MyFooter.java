@@ -43,7 +43,7 @@ public class MyFooter extends Div {
         add(new Div(new Anchor("https://alhanah.com", getT("alhanah-web"))));
         add(new Div(new Text(getT("version") + " " + getT("VersionN"))));
         add(AboutView.getIntroHeader());
-        add(new Paragraph(getT("under-construction")+" "+getT("version")+" "+getT("VersionN")+" "+getT("beta-test")+" "+getT("last-version-update")));
+        add(new Paragraph(getT("under-construction")+" "+getT("version")+" "+getT("VersionN")+" "+getT("beta-test")+" "+getT("version-last-update")));
         
         Image image=new Image("images/logo.png", getT("app-logo-text"));
         image.setWidth("250px");
