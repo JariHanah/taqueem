@@ -15,6 +15,7 @@ import com.alhanah.webcalendar.view.MyFooter;
 import com.alhanah.webcalendar.info.MyRequestReader;
 import com.alhanah.webcalendar.info.NextSpecialDay;
 import com.alhanah.webcalendar.info.NextSpecialMonths;
+import com.alhanah.webcalendar.view.MyMemory;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
@@ -31,8 +32,10 @@ import nasiiCalendar.locationBasid.City;
 public class SamiView extends Div {
 
     public SamiView() {
-        addClassName("sami-view");
+        MyMemory m=new MyMemory();
         MyRequestReader reader = new MyRequestReader(VaadinRequest.getCurrent().getParameterMap());
+        if(reader.showMemory())add(m);
+        addClassName("sami-view");
         BasicCalendar samiCal = Application.getFactory().getSamiCalendar();
         long time = System.currentTimeMillis();
         BasicDate bd = samiCal.getDate(time);
@@ -61,6 +64,7 @@ public class SamiView extends Div {
         add(new CommentBox());
 
         add(new MyFooter());
+        m.append("stop");
     }
 
 }

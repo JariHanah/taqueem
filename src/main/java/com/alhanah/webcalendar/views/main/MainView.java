@@ -63,7 +63,6 @@ public class MainView extends AppLayout implements PageConfigurator {
         addToNavbar(true, createHeaderContent());
         menu = createMenu();
         addToDrawer(createDrawerContent(menu));
-        
     }
     
     private Component createHeaderContent() {

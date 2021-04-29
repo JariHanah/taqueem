@@ -9,6 +9,7 @@ import com.alhanah.webcalendar.view.CommentBox;
 import com.alhanah.webcalendar.view.ConvertSelector;
 import com.alhanah.webcalendar.view.DateHeader;
 import com.alhanah.webcalendar.info.MyRequestReader;
+import com.alhanah.webcalendar.view.MyMemory;
 import com.alhanah.webcalendar.view.Util;
 import com.alhanah.webcalendar.views.main.MainView;
 import com.vaadin.flow.router.Route;
@@ -41,7 +42,9 @@ public class TodaydateView extends VerticalLayout {
         
         addClassName("todaydate-view");
         
+        MyMemory m=new MyMemory();
         reader = new MyRequestReader(VaadinRequest.getCurrent().getParameterMap());
+        if(reader.showMemory())add(m);
         long time = System.currentTimeMillis();
         //BasicDate bd = reader.getCalendar().getDate(System.currentTimeMillis());
         BasicCalendar bcUmm = Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423);
@@ -66,14 +69,14 @@ public class TodaydateView extends VerticalLayout {
         new MyGeoLocation(localAge).addValueChangeListener((event) -> {
             ageCityText.setText(getT("age-of-moon")+ " "+getT("based-on")+" "+Util.getCityName(MyGeoLocation.getCity()));
             localAge.setCity(MyGeoLocation.getCity());
-            System.err.println("Today Geo Updated");
+            
         });
         add(accrd);
         add(new CommentBox());
         add(new MyFooter());
         
         //    add(new Span("<iframe src=\"https://taqueem.net\" height=300 width=300> </iframe>"));
-        
+        m.append("stop");
     }
 
     

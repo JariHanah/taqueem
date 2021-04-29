@@ -13,6 +13,7 @@ import com.alhanah.webcalendar.info.MyGeoLocation;
 import com.alhanah.webcalendar.info.SMTData;
 import com.alhanah.webcalendar.view.DisplayCalendarControlBox;
 import com.alhanah.webcalendar.view.MyFooter;
+import com.alhanah.webcalendar.view.MyMemory;
 import com.alhanah.webcalendar.view.SMTGrid;
 import com.alhanah.webcalendar.view.SunMoonSetTime;
 import com.alhanah.webcalendar.view.Util;
@@ -45,7 +46,9 @@ public class ConvertDateView extends VerticalLayout {
     //SunMoonSetTime smtLocal;
     //HtmlContainer infoLocal;
     public ConvertDateView() {
+        MyMemory m=new MyMemory();
         reader = new MyRequestReader(VaadinRequest.getCurrent().getParameterMap());
+        if(reader.showMemory())add(m);
         addClassName("convert-date-view");
         BasicDate bd = reader.getCalendar().getDate(reader.getSelectedTime());
         box = new ControllerBox(bd);
@@ -106,7 +109,7 @@ public class ConvertDateView extends VerticalLayout {
         add(new CommentBox());
         
         add(new MyFooter());
-        
+        m.append("stop");
     }
 
     class ResultSpan extends Span implements Datable{

@@ -231,6 +231,12 @@
                         </executions>
                         <configuration>
                             <productionMode>true</productionMode>
+                            <executable>true</executable>
+                            <jvmArguments>
+                                -Xms512m
+                                -Xmx512m  
+                            </jvmArguments>
+                        
                         </configuration>
                     </plugin>
                 </plugins>
@@ -264,8 +270,8 @@
                         <configuration>
                             <executable>true</executable>
                             <jvmArguments>
-                        <!--        -Xms64m
-                                -Xmx128m  -->
+                                -Xms512m
+                                -Xmx512m  -->
                             </jvmArguments>
                         </configuration>
                         

@@ -14,6 +14,7 @@ import com.alhanah.webcalendar.views.main.MainView;
 import com.alhanah.webcalendar.view.MyFooter;
 import com.alhanah.webcalendar.info.MyRequestReader;
 import com.alhanah.webcalendar.info.NextSpecialMonths;
+import com.alhanah.webcalendar.view.MyMemory;
 import com.alhanah.webcalendar.view.Util;
 import com.vaadin.flow.component.HtmlContainer;
 import com.vaadin.flow.component.button.Button;
@@ -41,6 +42,9 @@ public class RamadhanView extends Div {
     NextSpecialMonths next;
 
     public RamadhanView() {
+        MyMemory m=new MyMemory();
+        reader = new MyRequestReader(VaadinRequest.getCurrent().getParameterMap());
+        if(reader.showMemory())add(m);
         addClassName("ramadhan-view");
         List<BasicCalendar> calsList = new ArrayList<BasicCalendar>();
         for (BasicCalendar btemp : Application.getFactory().getCalendars()) {
@@ -61,7 +65,6 @@ public class RamadhanView extends Div {
             }
         });
         calsSelect.setItemLabelGenerator(new LabelCalendarGenerator());
-        reader = new MyRequestReader(VaadinRequest.getCurrent().getParameterMap());
         long time = System.currentTimeMillis();
         BasicCalendar bc = Application.getFactory().getSamiCalendar();
         BasicDate bd = bc.getDate(time);
@@ -91,6 +94,7 @@ public class RamadhanView extends Div {
 
         add(new CommentBox());
         add(new MyFooter());
+        m.append("stop");
     }
 
     public void updateView() {

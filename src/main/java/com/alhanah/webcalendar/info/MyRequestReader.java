@@ -9,6 +9,7 @@ import com.alhanah.webcalendar.Application;
 import com.alhanah.webcalendar.view.MyParameters;
 import static com.alhanah.webcalendar.HanahI18NProvider.AR;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.server.VaadinSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,7 +43,7 @@ public class MyRequestReader {
     List<BasicCalendar> conversions = new ArrayList<BasicCalendar>();
     long selectedTime = 0;
     Locale locale;
-
+    boolean showMemory=false;
     int raw = 0;
     int offset = 0;
     private Date clientDate;
@@ -117,10 +118,26 @@ public class MyRequestReader {
         } else {
             locale = AR;
         }
+        String []showM = params.get(MyParameters.SHOW_MEMORY);
+        System.err.println("show: "+showM);
+        if(showM==null)return;
+        System.err.println("show[0]: "+showM[0]);
+        if(showM[0].equals("t")){
+            VaadinSession.getCurrent().setAttribute(MyParameters.SHOW_MEMORY, true);
+        }else {
+            VaadinSession.getCurrent().setAttribute(MyParameters.SHOW_MEMORY, false);
+        }
 
     }
 
     public Locale getLocale() {
         return locale;
+    }
+
+    public boolean showMemory() {
+        Boolean s= (Boolean) VaadinSession.getCurrent().getAttribute(MyParameters.SHOW_MEMORY);
+        System.err.println("is show?: "+s);
+        if(s==null)return false;
+        return s;
     }
 }

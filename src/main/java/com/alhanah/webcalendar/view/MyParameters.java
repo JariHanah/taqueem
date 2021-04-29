@@ -10,6 +10,8 @@ package com.alhanah.webcalendar.view;
  * @author hmulh
  */
 public interface MyParameters {
+
+    public static String SHOW_MEMORY="mmr";
     
     String CAL_TYPE = "calType";
     String MILI_TIME = "miliTime";

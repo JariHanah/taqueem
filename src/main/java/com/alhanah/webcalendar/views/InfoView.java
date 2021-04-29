@@ -2,7 +2,6 @@ package com.alhanah.webcalendar.views;
 
 import static com.alhanah.webcalendar.Application.getT;
 import com.alhanah.webcalendar.view.AgeOfMoon;
-import com.alhanah.webcalendar.view.CalendarGrid;
 import com.alhanah.webcalendar.view.CommentBox;
 import com.alhanah.webcalendar.info.MyRequestReader;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -12,15 +11,14 @@ import com.alhanah.webcalendar.views.main.MainView;
 import com.alhanah.webcalendar.view.ControllerBox;
 import com.alhanah.webcalendar.view.ConvertSelector;
 import com.alhanah.webcalendar.info.Datable;
-import com.alhanah.webcalendar.view.DisplayCalendarControlBox;
 import com.alhanah.webcalendar.view.HilalBearth;
 import com.alhanah.webcalendar.view.MyFooter;
+import com.alhanah.webcalendar.view.MyMemory;
 import com.alhanah.webcalendar.view.SunMoonSetTime;
 import com.alhanah.webcalendar.view.Util;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.TextArea;
@@ -42,7 +40,10 @@ public class InfoView extends VerticalLayout {
     ResultSpan answer;
 
     public InfoView() {
+        MyMemory m=new MyMemory();
         reader = new MyRequestReader(VaadinRequest.getCurrent().getParameterMap());
+        if(reader.showMemory())add(m);
+        
         addClassName("info-view");
         BasicDate bd = reader.getCalendar().getDate(reader.getSelectedTime());
      
@@ -63,6 +64,7 @@ public class InfoView extends VerticalLayout {
         //addMyDiv(g);
         
         add(new H2(getT("special-page-for-developer")));
+        
         add(box.getDayChangePanel());
         add(box.getSelectDatePanel());
         add(new H2(getT("choose-calendar-to-convert-to")));
@@ -80,7 +82,8 @@ public class InfoView extends VerticalLayout {
         add(new CommentBox());
 
         add(new MyFooter());
-
+        m.append("done");
+        
     }
     class ResultSpan extends Span implements Datable {
 

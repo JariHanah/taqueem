@@ -17,6 +17,7 @@ import com.alhanah.webcalendar.view.DisplayCalendarControlBox;
 import com.alhanah.webcalendar.info.HijriSpecialDaysMatch;
 import com.alhanah.webcalendar.view.HilalBearth;
 import com.alhanah.webcalendar.view.MyFooter;
+import com.alhanah.webcalendar.view.MyMemory;
 import com.alhanah.webcalendar.view.SunMoonSetTime;
 import com.alhanah.webcalendar.view.Util;
 import com.vaadin.flow.component.accordion.Accordion;
@@ -42,7 +43,9 @@ public class FatimiView extends VerticalLayout {
     ResultSpan answer;
 
     public FatimiView() {
+        MyMemory m=new MyMemory();
         reader = new MyRequestReader(VaadinRequest.getCurrent().getParameterMap());
+        if(reader.showMemory())add(m);
         addClassName("fatimi-view");
         BasicDate bd = Application.getFactory().getCalendar(BasicCalendar.FATIMI_ID).getDate(reader.getSelectedTime());
         box = new ControllerBox(bd);
@@ -101,7 +104,7 @@ public class FatimiView extends VerticalLayout {
         add(new CommentBox());
 
         add(new MyFooter());
-
+m.append("stop");
     }
     
 
