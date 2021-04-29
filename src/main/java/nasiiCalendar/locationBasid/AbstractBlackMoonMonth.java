@@ -5,13 +5,14 @@
  */
 package nasiiCalendar.locationBasid;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.logging.Logger;
 import static nasiiCalendar.BasicCalendar.DAY;
 import nasiiCalendar.CalendarFactory;
 import org.shredzone.commons.suncalc.MoonPhase;
-import org.shredzone.commons.suncalc.SunTimes;
 
 /**
  *
@@ -20,19 +21,28 @@ import org.shredzone.commons.suncalc.SunTimes;
 public abstract class AbstractBlackMoonMonth implements LunerIdentifier{
  
      City city;
+     ZoneId zone;
 
-    public AbstractBlackMoonMonth() {
-        this(City.MAKKA);
+    public void setZone(ZoneId zone) {
+        this.zone = zone;
+    }
+    private static final Logger LOG = Logger.getLogger(AbstractBlackMoonMonth.class.getName());
+
+    public ZoneId getZone() {
+        return zone;
+    }
+    public AbstractBlackMoonMonth(ZoneId zone) {
+        this(City.MAKKA, zone);
+       
     }
 
-    public AbstractBlackMoonMonth(City city) {
+    public AbstractBlackMoonMonth(City city, ZoneId zone) {
         this.city = city;
+         this.zone=zone;
     }
-    
-    
     
     public long getNextMonth(long time) {
-        time = CalendarFactory.dayStart(time);
+        time = CalendarFactory.dayStart(time, zone);
         TimeZone zone = TimeZone.getDefault();
 
         MoonPhase phase = MoonPhase.compute().timezone(zone).on(new Date(time - 5 * DAY)).midnight().execute();

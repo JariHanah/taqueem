@@ -7,6 +7,10 @@ package nasiiCalendar;
 
 import java.time.Instant;
 import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+import static nasiiCalendar.CalendarFactory.getGreg;
 
 /**
  *
@@ -26,7 +30,7 @@ public abstract class MyBasicCalendar implements BasicCalendar, Comparable<Basic
     public static final long STARTTIME = -631158216466114979L; //-200M
     public static final long ENDTIME = 631132823551165020L; //200M
     private ZoneId zoneId;
-
+    Calendar greg;
     protected MyBasicCalendar(long cycleTime, int cycleYear, long matchTime, int matchYear, ZoneId zone) {//,  long bigOfTime, long maxInstant) {
         //   this.factory=fac;
         this.zoneId = zone;
@@ -38,7 +42,8 @@ public abstract class MyBasicCalendar implements BasicCalendar, Comparable<Basic
         this.maxInstant = ENDTIME;
 
         long bigOfTime = STARTTIME / 4;
-
+        greg=Calendar.getInstance(TimeZone.getTimeZone(getZoneId().getId()));
+        
         startYear = (int) (matchYear - ((matchTime - bigOfTime) / cycleTime) * cycleYear);
         startTime = matchTime - (matchYear - startYear) / cycleYear * cycleTime;// -3*HOUR;
 
@@ -188,6 +193,37 @@ public abstract class MyBasicCalendar implements BasicCalendar, Comparable<Basic
 
     public ZoneId getZoneId() {
         return zoneId;
+    }
+
+    public long cleanDate(long time2) {
+        
+        Date d = new Date(time2);
+        greg.setTime(d);
+
+        greg.set(Calendar.HOUR_OF_DAY, 12);
+        greg.set(Calendar.MINUTE, 0);
+        greg.set(Calendar.SECOND, 0);
+        greg.set(Calendar.MILLISECOND, 0);//*/
+
+        /*    c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);//*/
+        long time = greg.getTime().getTime();
+        return time;
+    }
+
+    public long dayStart(long time2) {
+        Date d = new Date(time2);
+        greg.setTime(d);
+
+        greg.set(Calendar.HOUR_OF_DAY, 0);
+        greg.set(Calendar.MINUTE, 0);
+        greg.set(Calendar.SECOND, 0);
+        greg.set(Calendar.MILLISECOND, 0);
+
+        long time = greg.getTime().getTime();
+        return time;
     }
 
     public void setZoneId(ZoneId zoneId) {

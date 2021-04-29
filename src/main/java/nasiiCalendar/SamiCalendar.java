@@ -137,7 +137,7 @@ public class SamiCalendar extends LunerCalendar implements BasicCalendar{
         //hussam.println("longC: "+longCycles+" C19: "+cycles19 + " year: "+year);
         
         long time = longCycles*METONIC353 + cycles19* METONIC + (long)LUNER_YEAR_DURATION.get(year) + month*MONTH + DAY * day + getStartTime();
-        time=CalendarFactory.cleanDate(time);
+        time=cleanDate(time);
         MyDate sd= new MyDate(time, ++day, ++month, year1, this);
         //hussam.print("calc: ");
       //  printSimpleMD(time);
@@ -151,7 +151,7 @@ public class SamiCalendar extends LunerCalendar implements BasicCalendar{
         //    hussam.println("something wrong!");
             return getMaximumDate();
         }
-        t=CalendarFactory.cleanDate(t);
+        t=cleanDate(t);
         long rest = t-getStartTime();
 
         int bigCycles = (int) (rest / METONIC353);

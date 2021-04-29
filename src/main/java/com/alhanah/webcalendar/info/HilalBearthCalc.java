@@ -5,6 +5,7 @@
  */
 package com.alhanah.webcalendar.info;
 
+import com.alhanah.webcalendar.Application;
 import com.vaadin.flow.component.html.Span;
 import static nasiiCalendar.BasicCalendar.DAY;
 import nasiiCalendar.BasicDate;
@@ -34,10 +35,10 @@ public class HilalBearthCalc extends Span implements Datable {
     }
 
     public HilalBearthCalc(City city) {
-        calHilal_0 = new HilalByMinutesStandard(0, city);
-        hilalCal = new HilalByMinutesStandard(city);
-        blackCal = new UmAlquraStandardV1423(city);
-        fajrCal = new BlackFajrStandard(city);
+        calHilal_0 = new HilalByMinutesStandard(0, city, Application.getUserZoneId());
+        hilalCal = new HilalByMinutesStandard(city, Application.getUserZoneId());
+        blackCal = new UmAlquraStandardV1423(city, Application.getUserZoneId());
+        fajrCal = new BlackFajrStandard(city, Application.getUserZoneId());
     }
     public long getNextHilal0(){
         return calHilal_0.getNextMonth(base.getDate()-margin*DAY);

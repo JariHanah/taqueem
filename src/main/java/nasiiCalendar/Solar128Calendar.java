@@ -33,7 +33,7 @@ public class Solar128Calendar extends JulianCalendar{
     
     @Override
     public BasicDate getDate(long t) {
-        long time2 = CalendarFactory.cleanDate(t);
+        long time2 = cleanDate(t);
         if(!isDateInRange(time2))return getMaximumDate();
         
         long time = time2 - getStartTime();

@@ -5,12 +5,12 @@
  */
 package com.alhanah.webcalendar.view;
 
+import com.alhanah.webcalendar.Application;
 import com.alhanah.webcalendar.info.Datable;
 import static com.alhanah.webcalendar.Application.getT;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.TextField;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
 
 /**
  *
@@ -32,7 +32,7 @@ public class WeekDay extends Span implements Datable{
     @Override
     public void setDate(BasicDate bd) {
         date = bd;
-        String dateString = CalendarFactory.getWeekDay(date);//getT(date.getCalendar().getMonthName(date).getName()) + " " + date.getDay() + " " + date.getYear() + " " + getT(date.getCalendar().getShortName());
+        String dateString = Application.getFactory().getWeekDay(date);//getT(date.getCalendar().getMonthName(date).getName()) + " " + date.getDay() + " " + date.getYear() + " " + getT(date.getCalendar().getShortName());
         dayOfWeek.setValue(getT(dateString));
     //    calendarLabel.setText(getT(date.getCalendar().getName()));
         dayOfWeek.setLabel(getT("weekday"));

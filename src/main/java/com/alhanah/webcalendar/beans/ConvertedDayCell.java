@@ -31,7 +31,7 @@ public class ConvertedDayCell extends ComponentRenderer<Component, WeekBean> imp
     int weekDay;
 
     public ConvertedDayCell(int weekDay) {
-        this(weekDay, CalendarFactory.getSamiCalendar(), CalendarFactory.getAdCalendar(), Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423));
+        this(weekDay, Application.getFactory().getSamiCalendar(), Application.getFactory().getAdCalendar(), Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423));
     }
 
     public ConvertedDayCell(int weekDay, BasicCalendar... list) {
@@ -52,7 +52,7 @@ public class ConvertedDayCell extends ComponentRenderer<Component, WeekBean> imp
         BasicDate date = cals.get(0).getDate(week.getDay(weekDay));//.getDay();
         String x = getFormated(date);
         TextArea textArea = new TextArea(x);
-        String myClass="season"+CellFormatter.prepareSeasons(date.getDate(), CalendarFactory.getDefaultSeasonIdentifier());
+        String myClass="season"+CellFormatter.prepareSeasons(date.getDate(), Application.getFactory().getDefaultSeasonIdentifier());
         textArea.addClassName(myClass);
         if (weekDay == 1) {
             textArea.setLabel(getFormatedWeek(date));

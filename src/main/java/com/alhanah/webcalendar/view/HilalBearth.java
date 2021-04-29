@@ -5,6 +5,7 @@
  */
 package com.alhanah.webcalendar.view;
 
+import com.alhanah.webcalendar.Application;
 import com.alhanah.webcalendar.info.Datable;
 import static com.alhanah.webcalendar.Application.getT;
 import com.alhanah.webcalendar.info.HilalBearthCalc;
@@ -15,7 +16,6 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.TextField;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
 import nasiiCalendar.locationBasid.City;
 
 /**
@@ -59,16 +59,16 @@ public class HilalBearth extends Span implements Datable {
         final BasicDate bd = calc.getDate();
         long hilalStart = calc.getNextHilal30();//hilalCal.getNextMonth(bd.getDate()-5*DAY);
         hilalAgeText.setValue(dateToString(bd.getCalendar().getDate(hilalStart)));
-        hilalAgeText.setHelperText(dateToString(CalendarFactory.getGregoryCalendar().getDate(hilalStart)));
+        hilalAgeText.setHelperText(dateToString(Application.getFactory().getGregoryCalendar().getDate(hilalStart)));
         long hilal0Start = calc.getNextHilal0();
         textHilalAge_0.setValue(dateToString(bd.getCalendar().getDate(hilal0Start)));
-        textHilalAge_0.setHelperText(dateToString(CalendarFactory.getGregoryCalendar().getDate(hilal0Start)));
+        textHilalAge_0.setHelperText(dateToString(Application.getFactory().getGregoryCalendar().getDate(hilal0Start)));
         long blackStart = calc.getNextBlack();
         blackAgeText.setValue(dateToString(bd.getCalendar().getDate(blackStart)));
-        blackAgeText.setHelperText(dateToString(CalendarFactory.getGregoryCalendar().getDate(blackStart)));
+        blackAgeText.setHelperText(dateToString(Application.getFactory().getGregoryCalendar().getDate(blackStart)));
         long fajrStart = calc.getNextBlackFajr();
         fajrAgeText.setValue(dateToString(bd.getCalendar().getDate(fajrStart)));
-        fajrAgeText.setHelperText(dateToString(CalendarFactory.getGregoryCalendar().getDate(fajrStart)));
+        fajrAgeText.setHelperText(dateToString(Application.getFactory().getGregoryCalendar().getDate(fajrStart)));
        
 
     }

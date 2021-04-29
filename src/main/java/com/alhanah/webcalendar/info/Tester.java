@@ -27,12 +27,12 @@ import nasiiCalendar.SamiFixed;
 public class Tester {
 
     public static void test2() {
-        GregoryCalendar s = CalendarFactory.getGregoryCalendar();
+        GregoryCalendar s = Application.getFactory().getGregoryCalendar();
         long time = s.getDate(2021, 1, 1).getDate();
-        System.err.println("starting......" + new Date(time) + "\toffset+" + CalendarFactory.getOffSet() + "\t" + new Date(s.getStartTime()) + "\t" + BasicCalendar.START_SAMI + "\t" + new Date(START_SAMI));
+        System.err.println("starting......" + new Date(time) + "\toffset+" + Application.getFactory().getOffSet() + "\t" + new Date(s.getStartTime()) + "\t" + BasicCalendar.START_SAMI + "\t" + new Date(START_SAMI));
         System.err.println("BaseTIme:\t" + GregoryCalendar.BASE_TIME + "\t" + new Date(GregoryCalendar.BASE_TIME));
-        System.err.println("cleandate: " + CalendarFactory.cleanDate(GregoryCalendar.BASE_TIME));
-        System.err.println("cleandate: " + new Date(CalendarFactory.cleanDate(GregoryCalendar.BASE_TIME)));
+        System.err.println("cleandate: " + Application.getFactory().cleanDate(GregoryCalendar.BASE_TIME));
+        System.err.println("cleandate: " + new Date(Application.getFactory().cleanDate(GregoryCalendar.BASE_TIME)));
         Calendar c = Calendar.getInstance();
         c.set(2003, 9, 26, 3, 0, 0);
         System.err.println("Qazwini Time: " + c.getTime().getTime() + "\t" + c.getTime());
@@ -57,9 +57,9 @@ public class Tester {
         
         for (int i = 0; i < 4; i++) {
             BasicDate bd = s.getDate(time);
-            System.err.print(bd.getYear() + "\t" + bd.getMonth() + "\t" + bd.getDay() + "\t" + CalendarFactory.getWeekDay(bd) + "\t" + bd.getDate() + "\t");
+            System.err.print(bd.getYear() + "\t" + bd.getMonth() + "\t" + bd.getDay() + "\t" + Application.getFactory().getWeekDay(bd) + "\t" + bd.getDate() + "\t");
             System.err.println("");
-            CalendarFactory.test(bd);
+            Application.getFactory().test(bd);
 
             time += DAY;
 
@@ -70,14 +70,14 @@ public class Tester {
 
     public static void test3() {
         ZoneId zone=ZoneId.systemDefault();
-        SamiFixed s = CalendarFactory.getSamiCalendar();
+        SamiFixed s = Application.getFactory().getSamiCalendar();
         Omari30YearLoop o = new Omari30YearLoop(zone);
         BasicCalendar umm = Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423);
         BasicDate bd = s.getDate(0, 9, 1);
         long time = bd.getDate();
         System.err.println("starting......");
 
-        CalendarFactory.test(Application.getFactory(), new CalendarTester() {
+        Application.getFactory().test(Application.getFactory(), new CalendarTester() {
             public void test(BasicCalendar c) {
                 MyBasicCalendar cal = (MyBasicCalendar) c;
                 System.err.println(cal.getMatchTime() + "\t" + new Date(cal.getMatchTime()) + "\t" + cal.getStartTime() + "\t" + new Date(cal.getStartTime()) + "\t" + cal.getName());
@@ -87,17 +87,17 @@ public class Tester {
         //    System.exit(0);
         for (int i = 0; i < 365 * 1410; i++) {
             bd = s.getDate(time);
-            CalendarFactory.test(bd);
-            System.err.print(bd.getYear() + "\t" + bd.getMonth() + "\t" + bd.getDay() + "\t" + CalendarFactory.getWeekDay(bd) + "\t" + bd.getDate() + "\t");
+            Application.getFactory().test(bd);
+            System.err.print(bd.getYear() + "\t" + bd.getMonth() + "\t" + bd.getDay() + "\t" + Application.getFactory().getWeekDay(bd) + "\t" + bd.getDate() + "\t");
             bd = o.getDate(time);
-            CalendarFactory.test(bd);
-            System.err.print(bd.getYear() + "\t" + bd.getMonth() + "\t" + bd.getDay() + "\t" + CalendarFactory.getWeekDay(bd) + "\t" + bd.getDate() + "\t");
+            Application.getFactory().test(bd);
+            System.err.print(bd.getYear() + "\t" + bd.getMonth() + "\t" + bd.getDay() + "\t" + Application.getFactory().getWeekDay(bd) + "\t" + bd.getDate() + "\t");
             bd = umm.getDate(time);
-            CalendarFactory.test(bd);
-            System.err.print(bd.getYear() + "\t" + bd.getMonth() + "\t" + bd.getDay() + "\t" + CalendarFactory.getWeekDay(bd) + "\t" + bd.getDate() + "\t");
-            bd = CalendarFactory.getGregoryCalendar().getDate(time);
-            CalendarFactory.test(bd);
-            System.err.print(bd.getYear() + "\t" + bd.getMonth() + "\t" + bd.getDay() + "\t" + CalendarFactory.getWeekDay(bd) + "\t" + bd.getDate() + "\t");
+            Application.getFactory().test(bd);
+            System.err.print(bd.getYear() + "\t" + bd.getMonth() + "\t" + bd.getDay() + "\t" + Application.getFactory().getWeekDay(bd) + "\t" + bd.getDate() + "\t");
+            bd = Application.getFactory().getGregoryCalendar().getDate(time);
+            Application.getFactory().test(bd);
+            System.err.print(bd.getYear() + "\t" + bd.getMonth() + "\t" + bd.getDay() + "\t" + Application.getFactory().getWeekDay(bd) + "\t" + bd.getDate() + "\t");
 
             System.err.println("");
             time += DAY;
@@ -115,18 +115,18 @@ public class Tester {
         int yearStart=1101;
         for(int i=0;i<weekday.length;i++){
             BasicDate b=fat.getDate(i+yearStart,1,1);
-            int week=CalendarFactory.getWeekDay(b.getDate());
+            int week=Application.getFactory().getWeekDay(b.getDate());
             System.err.print(yearStart+"\t"+week+"\t"+weekday[i]);
             if(week==weekday[i])System.err.println("\tOK");else System.err.println("\tWRONG");
         }
     }
 
     public static void test4() {
-        SamiFixed s = CalendarFactory.getSamiCalendar(); 
+        SamiFixed s = Application.getFactory().getSamiCalendar(); 
         final BasicDate bd = s.getDate(0, 1, 1);
         System.err.println("starting......" + bd.getDate());
 
-        CalendarFactory.test(Application.getFactory(), new CalendarTester() {
+        Application.getFactory().test(Application.getFactory(), new CalendarTester() {
             public void test(BasicCalendar c) {
                 long time = bd.getDate();
                 MyBasicCalendar cal = (MyBasicCalendar) c;
@@ -140,7 +140,7 @@ public class Tester {
                     if (bd2.getDate() != time) {
                         //    System.err.println("wow:" + ((time - bd2.getDate())) + "\t" + new Date(time) + "\t" + new Date(bd2.getDate()));
                     }
-                    //  CalendarFactory.test(bd2);
+                    //  Application.getFactory().test(bd2);
                     time += DAY;
 
                 }

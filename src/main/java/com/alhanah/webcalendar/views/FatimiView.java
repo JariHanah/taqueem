@@ -28,7 +28,6 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.server.VaadinRequest;
 import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
 import nasiiCalendar.locationBasid.City;
 
 @Route(value = "fatimi-view", layout = MainView.class)
@@ -48,7 +47,7 @@ public class FatimiView extends VerticalLayout {
         BasicDate bd = Application.getFactory().getCalendar(BasicCalendar.FATIMI_ID).getDate(reader.getSelectedTime());
         box = new ControllerBox(bd);
         selector = box.getCalendarToSelect();
-        selector.setValue(CalendarFactory.getGregoryCalendar());
+        selector.setValue(Application.getFactory().getGregoryCalendar());
         answer = new ResultSpan();
         answer.setDate(bd);
      //   box.add(new H2(getT("select-date-to-convert"))+" "+getT("based-on"));

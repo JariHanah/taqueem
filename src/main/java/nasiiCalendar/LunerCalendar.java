@@ -76,8 +76,8 @@ public abstract class LunerCalendar extends MyBasicCalendar implements BasicCale
         BasicDate from = getDate(bd.getYear(), 1, 1);
         BasicDate to = getDate(bd.getYear() + 1, 1, 1);
         
-        int result =1+(int)(CalendarFactory.cleanDate(to.getDate())/DAY) - (int)(CalendarFactory.cleanDate(from.getDate()) / DAY);
-        //hussam.println("\t"+from.getYear()+" "+result+" "+new Date(CalendarFactory.cleanDate(from.getDate()))+" "+new Date(CalendarFactory.cleanDate(to.getDate())));
+        int result =1+(int)(cleanDate(to.getDate())/DAY) - (int)(cleanDate(from.getDate()) / DAY);
+        //hussam.println("\t"+from.getYear()+" "+result+" "+new Date(cleanDate(from.getDate()))+" "+new Date(cleanDate(to.getDate())));
         return result;
     }
 

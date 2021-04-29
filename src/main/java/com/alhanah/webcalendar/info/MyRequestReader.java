@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import nasiiCalendar.BasicCalendar;
-import nasiiCalendar.CalendarFactory;
 
 /**
  *
@@ -104,7 +103,7 @@ public class MyRequestReader {
             base = Application.getFactory().getCalendar(type[0]);//getAdCalendar();
         }
         if (base == null) {
-            base = CalendarFactory.getAdCalendar();
+            base = Application.getFactory().getAdCalendar();
         }
         String[] loc = params.get(MyParameters.LANG);
         if (loc != null) {

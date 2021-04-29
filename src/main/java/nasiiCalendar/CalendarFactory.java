@@ -36,12 +36,14 @@ public class CalendarFactory {
     public ZoneId getZoneId() {
         return zoneId;
     }
-    public void setZoneId(ZoneId zone){
+
+    public void setZoneId(ZoneId zone) {
+        this.zoneId=zone;
         mySortedCals.forEach((BasicCalendar t) -> {
             t.setZoneId(zone);
         });
     }
-    
+
     Calendar greg;
     List<BasicCalendar> mySortedCals = new ArrayList<>();
     Map<String, BasicCalendar> calMap = new HashMap<String, BasicCalendar>();
@@ -73,11 +75,11 @@ public class CalendarFactory {
 
     public CalendarFactory(ZoneId zone) {
         this.zoneId = zone;
-        System.err.println("zoneId: .........................."+zone);
+        System.err.println("zoneId: .........................." + zone);
         System.err.println(Application.getUserZoneId());
         instance = this;
         defaultSeasonIdentifier = season128;
-        greg = Calendar.getInstance();
+        greg = Calendar.getInstance(TimeZone.getTimeZone(zone.getId()));
         prepare();
 
     }
@@ -86,8 +88,8 @@ public class CalendarFactory {
 
         addCalendar(new SamiFixed(zoneId));
         //addCalendar(new WsmiCalendar());
-        addCalendar(new GenericLunerCalendar(new WsmiCalendar(zoneId), new UmAlquraStandardV1423()));
-        addCalendar(new GenericLunerCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423, new Omari30YearLoop(zoneId), new UmAlquraStandardV1423()));
+        addCalendar(new GenericLunerCalendar(new WsmiCalendar(zoneId), new UmAlquraStandardV1423(zoneId)));
+        addCalendar(new GenericLunerCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423, new Omari30YearLoop(zoneId), new UmAlquraStandardV1423(zoneId)));
 
         addCalendar(new Omari30YearLoop(Omari30YearLoop.HijriCalc30.Type16, zoneId));
         addCalendar(new Omari30YearLoop(Omari30YearLoop.HijriCalc30.Type15, zoneId));
@@ -95,10 +97,10 @@ public class CalendarFactory {
         addCalendar(new Omari30YearLoop(Omari30YearLoop.HijriCalc30.TypeHaseb, zoneId));
         addCalendar(new FatimiCalendar(zoneId));
         addCalendar(new JahhafCalendar(zoneId));
-        addCalendar(new GenericLunerCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1420, new Omari30YearLoop(zoneId), new HilalByMinutesStandard(0)));
-        addCalendar(new GenericLunerCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1419, new Omari30YearLoop(zoneId), new UmAlquraStandardV1419()));
+        addCalendar(new GenericLunerCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1420, new Omari30YearLoop(zoneId), new HilalByMinutesStandard(0, zoneId)));
+        addCalendar(new GenericLunerCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1419, new Omari30YearLoop(zoneId), new UmAlquraStandardV1419(zoneId)));
 
-        addCalendar(new GenericLunerCalendar(new QazwiniCalendar(zoneId), new BlackFajrStandard()));
+        addCalendar(new GenericLunerCalendar(new QazwiniCalendar(zoneId), new BlackFajrStandard(zoneId)));
         addCalendar(new ByroniCalendar(zoneId));
         addCalendar(new AdCalendar(zoneId));
         addCalendar(new GregoryCalendar(zoneId));
@@ -332,46 +334,49 @@ public class CalendarFactory {
         return getLunerStartDays(c.getTime().getTime());
     }
 
-    public static void setTimeZone(TimeZone tz) {
-        getGreg().setTimeZone(tz);
-    }
-
     public static long getOffSet() {
         return getGreg().getTimeZone().getRawOffset();
     }
 
-    public static long cleanDate(long time2) {
-        Calendar c = getGreg();
-        //  c.setTimeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
+    public long cleanDate(long time2) {
         Date d = new Date(time2);
-        c.setTime(d);
+        greg.setTime(d);
 
-        c.set(Calendar.HOUR_OF_DAY, 12);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);//*/
+        greg.set(Calendar.HOUR_OF_DAY, 12);
+        greg.set(Calendar.MINUTE, 0);
+        greg.set(Calendar.SECOND, 0);
+        greg.set(Calendar.MILLISECOND, 0);//*/
 
-        /*    c.set(Calendar.HOUR_OF_DAY, 0);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);//*/
-        long time = c.getTime().getTime();
+        long time = greg.getTime().getTime();
         return time;
     }
-
-    public static long dayStart(long time2) {
-        Calendar c = getGreg();
+    public static long dayStart(long time2, ZoneId zone) {
+        Calendar greg=Calendar.getInstance(TimeZone.getTimeZone(zone.getId()));
         Date d = new Date(time2);
-        c.setTime(d);
+        greg.setTime(d);
 
-        c.set(Calendar.HOUR_OF_DAY, 0);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);
+        greg.set(Calendar.HOUR_OF_DAY, 0);
+        greg.set(Calendar.MINUTE, 0);
+        greg.set(Calendar.SECOND, 0);
+        greg.set(Calendar.MILLISECOND, 0);
 
-        long time = c.getTime().getTime();
+        long time = greg.getTime().getTime();
         return time;
     }
+    public long dayStart(long time2) {
+
+        Date d = new Date(time2);
+        greg.setTime(d);
+
+        greg.set(Calendar.HOUR_OF_DAY, 0);
+        greg.set(Calendar.MINUTE, 0);
+        greg.set(Calendar.SECOND, 0);
+        greg.set(Calendar.MILLISECOND, 0);
+
+        long time = greg.getTime().getTime();
+        return time;
+    }
+//*/
 
     public static void print(long t) {
         Calendar c = getGreg();

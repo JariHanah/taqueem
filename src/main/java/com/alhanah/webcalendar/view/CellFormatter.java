@@ -5,13 +5,13 @@
  */
 package com.alhanah.webcalendar.view;
 
+import com.alhanah.webcalendar.Application;
 import static com.alhanah.webcalendar.Application.getT;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.html.Label;
 import java.util.Date;
 import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
 import nasiiCalendar.JalaliCalendarIR;
 import nasiiCalendar.LeapMonth;
 import nasiiCalendar.PeriodType;
@@ -116,7 +116,7 @@ public class CellFormatter {
             l.getStyle().set("color", "white");
         
         }
-        if (b.getDate() == CalendarFactory.dayStart(System.currentTimeMillis())) {
+        if (b.getDate() == Application.getFactory().dayStart(System.currentTimeMillis())) {
             l.setClassName("day-today");
             l.getStyle().set("background", "yellow");
             l.getStyle().set("color", "black");
@@ -205,7 +205,7 @@ Updated 2020-03-18
     }
 
     public int getSeasonJalali(BasicDate bd2) {
-        JalaliCalendarIR jc = CalendarFactory.getJalaliIR();//getCalendar(BasicCalendar.JALALI_IR_ID);
+        JalaliCalendarIR jc = Application.getFactory().getJalaliIR();//getCalendar(BasicCalendar.JALALI_IR_ID);
         BasicDate bd = jc.getDate(bd2.getDate());
         if (bd.equals(bd.getCalendar().getMaximumDate())) {
             return 0;
@@ -236,7 +236,7 @@ Updated 2020-03-18
     }
 
     public int getSeasons128(BasicDate bd2) {
-        Solar128Calendar sc = CalendarFactory.getSolar128Calendar();//getCalendar(BasicCalendar.SOLAR_128_ID);
+        Solar128Calendar sc = Application.getFactory().getSolar128Calendar();//getCalendar(BasicCalendar.SOLAR_128_ID);
         BasicDate bd = sc.getDate(bd2.getDate());
         if (bd.equals(bd.getCalendar().getMaximumDate())) {
             return 0;
@@ -272,7 +272,7 @@ Updated 2020-03-18
     }
 
     public static String prepareSeasons(long time, SeasonIdentifier si) {
-        SeasonIdentifier.Season season = si.getSeason(CalendarFactory.getGregoryCalendar().getDate(time));
+        SeasonIdentifier.Season season = si.getSeason(Application.getFactory().getGregoryCalendar().getDate(time));
         if(season==null)System.err.println("why? "+new Date(time));
         return season.getName();
     }
@@ -350,7 +350,7 @@ Updated 2020-03-18
 //*/
     public static void prepareAll(Component labelDate, BasicDate selectedDate) {
 
-        prepareSeasons(labelDate, selectedDate, CalendarFactory.getDefaultSeasonIdentifier());
+        prepareSeasons(labelDate, selectedDate, Application.getFactory().getDefaultSeasonIdentifier());
         prepareReligious(labelDate, selectedDate);
         prepareToday(labelDate, selectedDate);
 

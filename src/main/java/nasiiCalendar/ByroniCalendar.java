@@ -104,13 +104,13 @@ public class ByroniCalendar extends LunerCalendar {
             return getMaximumDate();
         }
 
-        MyDate sd = new MyDate(CalendarFactory.cleanDate(time), ++day, ++month, year1, this);
+        MyDate sd = new MyDate(cleanDate(time), ++day, ++month, year1, this);
         return sd;
 
     }
 
     public BasicDate getDate(long t) {
-        t = CalendarFactory.cleanDate(t);
+        t = cleanDate(t);
         if (!isDateInRange(t)) {
             return getMaximumDate();
         }

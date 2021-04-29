@@ -5,6 +5,7 @@
  */
 package com.alhanah.webcalendar.info;
 
+import com.alhanah.webcalendar.Application;
 import static com.alhanah.webcalendar.Application.getT;
 import com.alhanah.webcalendar.view.Util;
 import com.vaadin.flow.component.UI;
@@ -16,7 +17,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import static nasiiCalendar.BasicCalendar.MINUTE;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
 import static nasiiCalendar.locationBasid.AbstractBlackMoonMonth.getTimeInstant;
 import nasiiCalendar.locationBasid.BlackFajrStandard;
 import nasiiCalendar.locationBasid.City;
@@ -151,15 +151,15 @@ public class SMTData implements Datable {
 
     public SMTData(City city) {
         this.city = city;
-        fajrStandard = new BlackFajrStandard();
-        date = CalendarFactory.getCurrentDate();
+        fajrStandard = new BlackFajrStandard(Application.getUserZoneId());
+        date = Application.getFactory().getCurrentDate();
         zoneId=ClientTimeZone.getClientZoneId();
     }
 
     @Override
     public void setDate(BasicDate bd) {
-        MoonTimes moon = MoonTimes.compute().on(new Date(CalendarFactory.dayStart(bd.getDate()))).at(getCity().getLat(), getCity().getLon()).timezone(zoneId).execute();
-        SunTimes sun = SunTimes.compute().on(new Date(CalendarFactory.dayStart(bd.getDate()))).at(getCity().getLat(), getCity().getLon()).timezone(zoneId).execute();
+        MoonTimes moon = MoonTimes.compute().on(new Date(Application.getFactory().dayStart(bd.getDate()))).at(getCity().getLat(), getCity().getLon()).timezone(zoneId).execute();
+        SunTimes sun = SunTimes.compute().on(new Date(Application.getFactory().dayStart(bd.getDate()))).at(getCity().getLat(), getCity().getLon()).timezone(zoneId).execute();
         try {
             setMoonText((Long) getTimeInstant(moon.getSet()));
         } catch (NullPointerException e) {
@@ -173,7 +173,7 @@ public class SMTData implements Datable {
         }
         setSunRiseText(getTimeInstant(sun.getRise()));
 
-        Instant fajrInstant = Instant.ofEpochMilli(fajrStandard.getFajrDate(CalendarFactory.dayStart(bd.getDate())).getTime());
+        Instant fajrInstant = Instant.ofEpochMilli(fajrStandard.getFajrDate(Application.getFactory().dayStart(bd.getDate())).getTime());
         setFajrRiseText(fajrInstant.toEpochMilli());
 
     }

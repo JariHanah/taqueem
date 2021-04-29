@@ -114,7 +114,7 @@ public class MainView extends AppLayout implements PageConfigurator {
             createTab(getT("samiView"), SamiView.class),
             createTab(getT("fatimiView"), FatimiView.class),
             createTab(getT("infoView"), InfoView.class),
-            createTab(getT("map-view"), MapView.class),
+          //  createTab(getT("map-view"), MapView.class),
             //    createTab(getT("calendarList"), CalendarListView.class),
             //   createTab(getT("Master-Detail"), MasterDetailView.class), 
             createTab(getT("About_page"), AboutView.class)};

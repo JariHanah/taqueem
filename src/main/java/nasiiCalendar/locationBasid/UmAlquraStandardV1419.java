@@ -5,6 +5,7 @@
  */
 package nasiiCalendar.locationBasid;
 
+import java.time.ZoneId;
 import java.util.Date;
 import static nasiiCalendar.BasicCalendar.DAY;
 import static nasiiCalendar.BasicCalendar.HOUR;
@@ -20,10 +21,14 @@ import org.shredzone.commons.suncalc.MoonTimes;
  */
 public class UmAlquraStandardV1419 extends AbstractBlackMoonMonth{
 
+    public UmAlquraStandardV1419(ZoneId zone) {
+        super(zone);
+    }
+    
     @Override
     protected long getNextMonth(MoonPhase phase) {
         long blackPhaseTime=getTimeInstant(phase.getTime());
-        long blackDay=CalendarFactory.dayStart(blackPhaseTime);
+        long blackDay=CalendarFactory.dayStart(blackPhaseTime, getZone());
         MoonTimes moontimes=MoonTimes.compute().at(getCity().getLat(), getCity().getLon()).on(new Date(blackDay)).execute();
         if(moontimes.getSet().compareTo(phase.getTime())<0){
             moontimes = MoonTimes.compute().at(getCity().getLat(), getCity().getLon()).on(new Date(blackDay+DAY)).execute();

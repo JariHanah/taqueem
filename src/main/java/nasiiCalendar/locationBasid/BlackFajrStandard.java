@@ -32,19 +32,19 @@ import org.shredzone.commons.suncalc.SunTimes;
 public class BlackFajrStandard extends AbstractBlackMoonMonth implements LunerIdentifier{
  
     
-    public BlackFajrStandard() {
-        super();
+    public BlackFajrStandard(ZoneId zone) {
+        super(zone);
     }
 
-    public BlackFajrStandard(City city) {
-        super(city);
+    public BlackFajrStandard(City city, ZoneId zone) {
+        super(city, zone);
     }
     
     
     
 
     protected long getNextMonth(MoonPhase phase) {
-        long blackPhaseDay = CalendarFactory.dayStart(getTime(phase));
+        long blackPhaseDay = CalendarFactory.dayStart(getTime(phase), getZone());
         MoonTimes mt = MoonTimes.compute().on(new Date(blackPhaseDay)).at(city.getLat(), city.getLon()).execute();
         SunTimes st = SunTimes.compute().on(new Date(blackPhaseDay)).at(city.getLat(), city.getLon()).execute();
         //   if(st.getSet()==null)return CalendarFactory.cleanDate(time);//time;
@@ -63,7 +63,7 @@ public class BlackFajrStandard extends AbstractBlackMoonMonth implements LunerId
         SunTimes st = SunTimes.compute().on(new Date(time)).at(city.getLat(), city.getLon()).execute();
         if (getTimeInstant(mt.getSet()) >= getTimeInstant(st.getSet())) {
 
-            return CalendarFactory.dayStart(time);
+            return CalendarFactory.dayStart(time, getZone());
         } else {
             return getNewHilalDay(time + DAY);
         }

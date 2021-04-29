@@ -5,6 +5,7 @@
  */
 package com.alhanah.webcalendar.view;
 
+import com.alhanah.webcalendar.Application;
 import com.alhanah.webcalendar.info.Datable;
 import com.alhanah.webcalendar.info.FutureEventCalc;
 import static com.alhanah.webcalendar.Application.getT;
@@ -13,7 +14,6 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.TextField;
 import static nasiiCalendar.BasicCalendar.DAY;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
 
 /**
  *
@@ -49,7 +49,7 @@ public class DayDifference extends Span implements Datable{
         int days=(int) (timeDiff/DAY);
         date.setLabel(label+" "+getT("after")+" "+days+" "+getT("days"));
         date.setValue(dateToString(ad));
-        String text=dateToString(CalendarFactory.getGregoryCalendar().getDate(ad.getDate()));
+        String text=dateToString(Application.getFactory().getGregoryCalendar().getDate(ad.getDate()));
         date.setHelperText(text);
         //daysCount.setValue(days+" "+getT("days"));
         

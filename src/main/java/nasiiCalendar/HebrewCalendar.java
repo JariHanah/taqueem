@@ -112,7 +112,7 @@ public class HebrewCalendar extends LunerCalendar {
             return getMaximumDate();
         }
 
-        MyDate sd = new MyDate(CalendarFactory.cleanDate(time), ++day, ++month, year1, this);
+        MyDate sd = new MyDate(cleanDate(time), ++day, ++month, year1, this);
 
         //  hussam.println(" C19: "+cycles19 + " year: "+year1 + " m:"+month+" d:"+day +" date: "+new Date(time));
         return sd;
@@ -120,7 +120,7 @@ public class HebrewCalendar extends LunerCalendar {
     }
 
     public BasicDate getDate(long t) {
-        t = CalendarFactory.cleanDate(t);
+        t = cleanDate(t);
         if (!isDateInRange(t)) {
             return getMaximumDate();
         }

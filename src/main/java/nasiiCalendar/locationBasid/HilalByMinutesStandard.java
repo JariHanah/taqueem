@@ -5,6 +5,7 @@
  */
 package nasiiCalendar.locationBasid;
 
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.TimeZone;
 import static nasiiCalendar.BasicCalendar.DAY;
@@ -22,29 +23,29 @@ public class HilalByMinutesStandard extends AbstractBlackMoonMonth implements Lu
 
     int min;
 
-    public HilalByMinutesStandard(int min, City differentCityThanMakkah) {
-        super(differentCityThanMakkah);
+    public HilalByMinutesStandard(int min, City differentCityThanMakkah, ZoneId zone) {
+        super(differentCityThanMakkah, zone);
      //   this.max = max;
         this.min = min;
     }
 
-    public HilalByMinutesStandard(City c) {
-        this(30,  c);
+    public HilalByMinutesStandard(City c, ZoneId zone) {
+        this(30,  c, zone);
     }
 
-    public HilalByMinutesStandard() {
-        this(30, City.MAKKA);
+    public HilalByMinutesStandard(ZoneId zone) {
+        this(30, City.MAKKA, zone);
     }
 
-    public HilalByMinutesStandard(int min) {
-        this(min, City.MAKKA);
+    public HilalByMinutesStandard(int min, ZoneId zone) {
+        this(min, City.MAKKA, zone);
     }
 
     
 
     @Override
     protected long getNextMonth(MoonPhase phase) {
-        long dayOfBlackMoon = CalendarFactory.dayStart(getTime(phase));
+        long dayOfBlackMoon = CalendarFactory.dayStart(getTime(phase), getZone());
         TimeZone zone = TimeZone.getDefault();
 
         MoonTimes m = MoonTimes.compute().timezone(zone).on(new Date(dayOfBlackMoon)).midnight().at(city.getLat(), city.getLon()).execute();
@@ -54,7 +55,7 @@ public class HilalByMinutesStandard extends AbstractBlackMoonMonth implements Lu
         while (true) {
 
             if (isMoonSetAfterSun(newmoon)) {
-                return CalendarFactory.dayStart(newmoon + DAY);
+                return CalendarFactory.dayStart(newmoon + DAY, getZone());
             }
             newmoon += DAY;
         }

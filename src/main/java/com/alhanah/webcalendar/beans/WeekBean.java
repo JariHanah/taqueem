@@ -1,5 +1,6 @@
 package com.alhanah.webcalendar.beans;
 
+import com.alhanah.webcalendar.Application;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -8,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import static nasiiCalendar.BasicCalendar.DAY;
 import static nasiiCalendar.BasicCalendar.WEEK;
-import nasiiCalendar.CalendarFactory;
+//import nasiiCalendar.CalendarFactory;
 
 //@Entity
 public class WeekBean {
@@ -50,9 +51,9 @@ public class WeekBean {
 
     public static List<WeekBean> getWeeks(long start, int number) {
         List<WeekBean> list = new ArrayList<WeekBean>();
-        int day = CalendarFactory.getWeekDay(start);
+        int day = Application.getFactory().getWeekDay(start);
         start = start - (day - 1) * DAY;
-        CalendarFactory.cleanDate(start);
+        Application.getFactory().cleanDate(start);
         for (int i = 0; i < number; i++) {
             list.add(new WeekBean(start));
             start += WEEK;

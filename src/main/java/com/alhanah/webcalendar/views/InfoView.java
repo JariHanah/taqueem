@@ -52,15 +52,15 @@ public class InfoView extends VerticalLayout {
         answer = new ResultSpan();
         answer.setDate(bd);
         
-        CalendarGrid g=new CalendarGrid();
-        DisplayCalendarControlBox conBox=new DisplayCalendarControlBox();
-        box.addDatable(conBox);
-        conBox.addListener(g);
+        //DisplayCalendarControlBox conBox=new DisplayCalendarControlBox();
+        //CalendarGrid g=conBox.getGrid(bd);
+        //box.addDatable(conBox);
+        //conBox.addListener(g);
         Accordion a=new Accordion();
-        a.add(getT("selectAndSortCalendars"), conBox);
+        //a.add(getT("selectAndSortCalendars"), conBox);
         a.close();
         add(a);
-        addMyDiv(g);
+        //addMyDiv(g);
         
         add(new H2(getT("special-page-for-developer")));
         add(box.getDayChangePanel());

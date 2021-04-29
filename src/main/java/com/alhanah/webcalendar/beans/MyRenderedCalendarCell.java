@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
+//import nasiiCalendar.CalendarFactory;
 
 /**
  *
@@ -38,7 +38,7 @@ public class MyRenderedCalendarCell extends VerticalLayout implements CalendarsU
     String width = "50px";
 
     public MyRenderedCalendarCell(long t) {
-        this(t, NORMAL, CalendarFactory.getSamiCalendar(), CalendarFactory.getAdCalendar(), Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423));
+        this(t, NORMAL, Application.getFactory().getSamiCalendar(), Application.getFactory().getAdCalendar(), Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423));
     }
 
     public MyRenderedCalendarCell(long t, int type, BasicCalendar... list) {
@@ -49,7 +49,7 @@ public class MyRenderedCalendarCell extends VerticalLayout implements CalendarsU
             areas.add(l);
             add(l);
         }
-        String myClass="season"+CellFormatter.prepareSeasons(t, CalendarFactory.getDefaultSeasonIdentifier());
+        String myClass="season"+CellFormatter.prepareSeasons(t, Application.getFactory().getDefaultSeasonIdentifier());
         addClassName(myClass);
         
         time = t;

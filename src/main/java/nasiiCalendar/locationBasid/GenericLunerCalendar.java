@@ -95,7 +95,7 @@ public class GenericLunerCalendar extends LunerCalendar {
             result=nextMoon;
            //System.err.println("next");
         }
-        result=CalendarFactory.cleanDate(result+(d-1)*DAY);
+        result=cleanDate(result+(d-1)*DAY);
         
         BasicDate r= new MyDate(result, d, m, y, this);
     //    System.err.println("calc: "+r);
@@ -111,10 +111,10 @@ public class GenericLunerCalendar extends LunerCalendar {
 
     @Override
     public BasicDate getDate(long origin) {
-        long time = CalendarFactory.dayStart(origin);
+        long time = dayStart(origin);
 
         long monthStart = lunerIdentifier.getPreviousMonth(time);
-        long dur = time - CalendarFactory.dayStart(monthStart);
+        long dur = time - dayStart(monthStart);
 
         int days = (int) ((dur) / DAY)+1;
     //    System.err.println(new Date(time)+"\t"+dur);

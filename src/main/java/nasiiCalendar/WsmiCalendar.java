@@ -46,13 +46,13 @@ public class WsmiCalendar extends LunerCalendar{
         long time =  cycles19* METONIC + (long)LUNER_YEAR_DURATION.get(year) + month*MONTH + DAY * day + getStartTime();
         if(!isDateInRange(time))return getMaximumDate();
 
-        MyDate sd= new MyDate(CalendarFactory.cleanDate(time), ++day, ++month, year1, this);
+        MyDate sd= new MyDate(cleanDate(time), ++day, ++month, year1, this);
         return sd;
         
     }
     
     public BasicDate getDate(long t){
-        t=CalendarFactory.cleanDate(t);
+        t=cleanDate(t);
         if(!isDateInRange(t))return getMaximumDate();
 
         long rest = t-getStartTime();

@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
 import nasiiCalendar.Months;
 
 @Route(value = "ramadhan", layout = MainView.class)
@@ -55,7 +54,7 @@ public class RamadhanView extends Div {
         bearthLocal = new HilalBearth(MyGeoLocation.getCity());
         BasicCalendar[] cals = new BasicCalendar[calsList.size()];
         calsSelect = new Select<BasicCalendar>(calsList.toArray(cals));
-        calsSelect.setValue(CalendarFactory.getSamiCalendar());
+        calsSelect.setValue(Application.getFactory().getSamiCalendar());
         calsSelect.addValueChangeListener((event) -> {
             if (event.isFromClient()) {
                 updateView();
@@ -64,7 +63,7 @@ public class RamadhanView extends Div {
         calsSelect.setItemLabelGenerator(new LabelCalendarGenerator());
         reader = new MyRequestReader(VaadinRequest.getCurrent().getParameterMap());
         long time = System.currentTimeMillis();
-        BasicCalendar bc = CalendarFactory.getSamiCalendar();
+        BasicCalendar bc = Application.getFactory().getSamiCalendar();
         BasicDate bd = bc.getDate(time);
         next = new NextSpecialMonths(Months.RAMADHAN);
         add(new H1(getT("ramadhan-starts")));

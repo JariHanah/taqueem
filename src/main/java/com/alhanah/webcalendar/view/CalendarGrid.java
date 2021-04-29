@@ -25,7 +25,6 @@ import java.util.List;
 import nasiiCalendar.BasicCalendar;
 import static nasiiCalendar.BasicCalendar.WEEK;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
 
 /**
  *
@@ -38,10 +37,10 @@ public class CalendarGrid extends Grid implements Datable, CalendarsUpdatedListe
     BasicDate base;
     DataProvider<WeekBean, Void> provider;
     List<BasicCalendar> cals;
-
+    //CalendarFactory fa;
     public CalendarGrid() {
-        this(CalendarFactory.getSamiCalendar().getDate(System.currentTimeMillis()), 6,
-                CalendarFactory.getSamiCalendar(), CalendarFactory.getGregoryCalendar(),
+        this(Application.getFactory().getSamiCalendar().getDate(System.currentTimeMillis()), 6,
+                Application.getFactory().getSamiCalendar(), Application.getFactory().getGregoryCalendar(),
                 Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423));
     }
 
@@ -73,7 +72,7 @@ public class CalendarGrid extends Grid implements Datable, CalendarsUpdatedListe
                 ConvertedDayCell r = (ConvertedDayCell) c.getRenderer();
                 int w = r.getWeekDay();
                 long time = t.getDay(w);
-                return CellFormatter.prepareSeasons(time, CalendarFactory.getDefaultSeasonIdentifier());
+                return CellFormatter.prepareSeasons(time, Application.getFactory().getDefaultSeasonIdentifier());
                 //return "gridcalendar"; //To change body of generated lambdas, choose Tools | Templates.
             });//*/
 
@@ -180,7 +179,7 @@ public class CalendarGrid extends Grid implements Datable, CalendarsUpdatedListe
         return new MyRenderedCalendarCell(t, type, list);
     }
     private VerticalLayout getCell(long t){
-        return getCell(t, NORMAL, CalendarFactory.getSamiCalendar(), CalendarFactory.getAdCalendar(), Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423));
+        return getCell(t, NORMAL, Application.getFactory().getSamiCalendar(), Application.getFactory().getAdCalendar(), Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423));
     }
     
 }

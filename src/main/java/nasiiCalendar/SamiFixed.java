@@ -206,7 +206,7 @@ public class SamiFixed extends SolarCalendar implements BasicCalendar {
         //     hussam.println("\tAfter              : "+new Date(t1+all.timeDuration));
         long time = t1 + all.timeDuration;
         //System.err.println("start:\t"+time+"\t'=\t"+getStartTime()+"\t"+c382_353+"\t"+LONG_CYCLES+"\t"+all.timeDuration);
-       time = CalendarFactory.cleanDate(time);
+       time = cleanDate(time);
         MyDate sd = new MyDate(time, ++day, ++month, year1, this);
         //hussam.print("calc: ");
         //  printSimpleMD(time);
@@ -221,7 +221,7 @@ public class SamiFixed extends SolarCalendar implements BasicCalendar {
             //    hussam.println("something wrong!");
             return getMaximumDate();
         }
-        t = CalendarFactory.cleanDate(t);
+        t = cleanDate(t);
         long rest = t - getStartTime();
         //    hussam.println(getLongCycleTime()/DAY/366);
         int bigCycles = (int) (rest / getLongCycleTime());

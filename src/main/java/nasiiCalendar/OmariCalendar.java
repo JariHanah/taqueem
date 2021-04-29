@@ -76,14 +76,14 @@ public class OmariCalendar extends LunerCalendar {
         int year = year1 - getStartYear();
         long time = year * MONTH * 12 + month * MONTH + DAY * day + getStartTime();
         if(!isDateInRange(time))return getMaximumDate();
-        time=CalendarFactory.cleanDate(time);
+        time=cleanDate(time);
         MyDate sd = new MyDate(time, ++day, ++month, year1, this);
         return sd;
     }
     @Override
     public BasicDate getDate(long time2) {
      //   hussam.println("CALLING.........................");
-        long time = CalendarFactory.cleanDate(time2);
+        long time = cleanDate(time2);
         if(!isDateInRange(time))return getMaximumDate();
 
         long rest = time - (getStartTime());

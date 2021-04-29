@@ -1,31 +1,28 @@
 package nasiiCalendar.locationBasid;
 
-import java.util.Calendar;
+import java.time.ZoneId;
 import java.util.Date;
-import java.util.TimeZone;
-import nasiiCalendar.BasicCalendar;
 import static nasiiCalendar.BasicCalendar.DAY;
-import static nasiiCalendar.BasicCalendar.MINUTE;
 import nasiiCalendar.CalendarFactory;
-import nasiiCalendar.RSSNames;
+import static nasiiCalendar.CalendarFactory.dayStart;
 import org.shredzone.commons.suncalc.MoonPhase;
 import org.shredzone.commons.suncalc.MoonTimes;
 import org.shredzone.commons.suncalc.SunTimes;
 
 public class UmAlquraStandardV1423 extends AbstractBlackMoonMonth implements LunerIdentifier {
 
-    public UmAlquraStandardV1423(City differentCityThanMakkah) {
-        super(differentCityThanMakkah);
+    public UmAlquraStandardV1423(City differentCityThanMakkah, ZoneId zone) {
+        super(differentCityThanMakkah, zone);
     }
 
-    public UmAlquraStandardV1423() {
-        super();
+    public UmAlquraStandardV1423(ZoneId zone) {
+        super(zone);
     }
 
     
     @Override
     protected long getNextMonth(MoonPhase phase) {
-        long blackPhaseDay = CalendarFactory.dayStart(getTimeInstant(phase.getTime()));
+        long blackPhaseDay = CalendarFactory.dayStart(getTimeInstant(phase.getTime()), getZone());
         MoonTimes mt = MoonTimes.compute().on(new Date(blackPhaseDay)).at(city.getLat(), city.getLon()).execute();
         SunTimes st = SunTimes.compute().on(new Date(blackPhaseDay)).at(city.getLat(), city.getLon()).execute();
         //   if(st.getSet()==null)return CalendarFactory.cleanDate(time);//time;
@@ -45,7 +42,7 @@ public class UmAlquraStandardV1423 extends AbstractBlackMoonMonth implements Lun
         SunTimes st = SunTimes.compute().on(new Date(time)).at(city.getLat(), city.getLon()).execute();
         if (getTimeInstant(mt.getSet()) >= getTimeInstant(st.getSet())) {
 
-            return CalendarFactory.dayStart(time);
+            return dayStart(time, getZone());
         } else {
             return getNewHilalDay(time + DAY);
         }

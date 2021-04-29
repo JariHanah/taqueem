@@ -149,7 +149,7 @@ public class Omari30YearLoop extends SolarCalendar{
     //    hussam.println("Month: "+m+" map: "+dur);
         if(!isDateInRange(time))return getMaximumDate();
 
-        MyDate md=new MyDate(CalendarFactory.cleanDate(time), d, m, y, this);
+        MyDate md=new MyDate(cleanDate(time), d, m, y, this);
         return md;
     
     }
@@ -170,7 +170,7 @@ public class Omari30YearLoop extends SolarCalendar{
     @Override
     public BasicDate getDate(long time) {
         //    hussam.print("cleaing: "+t);
-        time=CalendarFactory.cleanDate(time);
+        time=cleanDate(time);
         if(!isDateInRange(time))return getMaximumDate();
 
     //    hussam.println(" cleaned: "+ new Date(time) +" same: "+(t==time));

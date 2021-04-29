@@ -260,7 +260,7 @@ public class JalaliCalendarIR extends SolarCalendar {
     @Override
     public BasicDate getDate(long t) {
         
-        long time2 = CalendarFactory.cleanDate(t);
+        long time2 = cleanDate(t);
         if (!isDateInRange(time2)) {
             return getMaximumDate();
         }
@@ -351,7 +351,7 @@ public class JalaliCalendarIR extends SolarCalendar {
 /*
     public BasicDate getDate2(long t) {
 
-        long time2 = CalendarFactory.cleanDate(t);
+        long time2 = cleanDate(t);
         if (!isDateInRange(time2)) {
             return getDummyDate();
         }

@@ -82,7 +82,7 @@ public class QazwiniCalendar extends LunerCalendar{
         
     }
     public BasicDate getDate(long t){
-        t=CalendarFactory.cleanDate(t);
+        t=cleanDate(t);
         if(!isDateInRange(t))return getMaximumDate();
 
         long rest = t-getStartTime();
@@ -114,7 +114,7 @@ public class QazwiniCalendar extends LunerCalendar{
     }
 
     public BasicDate getDate2(long t){
-        t=CalendarFactory.cleanDate(t);
+        t=cleanDate(t);
         if(!isDateInRange(t))return getMaximumDate();
 
         long rest = t-getStartTime();

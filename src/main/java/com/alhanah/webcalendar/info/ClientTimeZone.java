@@ -10,7 +10,6 @@ import com.vaadin.flow.component.UI;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.TimeZone;
-import nasiiCalendar.CalendarFactory;
 
 /**
  *
@@ -36,7 +35,7 @@ public class ClientTimeZone {
             clientDate=extendedClientDetails.getCurrentDate();
             clientZoneId= extendedClientDetails.getTimeZoneId();
             TimeZone zone=TimeZone.getTimeZone(clientZoneId);
-            CalendarFactory.setTimeZone(zone);
+            Application.getFactory().setZoneId(zone.toZoneId());
             Application.setUserZoneId(zone.toZoneId());
             flag=true;
             

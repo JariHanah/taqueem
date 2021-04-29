@@ -5,6 +5,7 @@
  */
 package com.alhanah.webcalendar.view;
 
+import com.alhanah.webcalendar.Application;
 import com.alhanah.webcalendar.info.Datable;
 import com.alhanah.webcalendar.info.ClientTimeZone;
 import static com.alhanah.webcalendar.Application.getT;
@@ -17,7 +18,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import static nasiiCalendar.BasicCalendar.MINUTE;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
 import static nasiiCalendar.locationBasid.AbstractBlackMoonMonth.getTimeInstant;
 import nasiiCalendar.locationBasid.BlackFajrStandard;
 import nasiiCalendar.locationBasid.City;
@@ -45,7 +45,7 @@ public class SunMoonSetTime extends Span implements Datable{
     }
     public SunMoonSetTime(City city) {
         this.city=city;
-        fajrStandard=new BlackFajrStandard();
+        fajrStandard=new BlackFajrStandard( Application.getUserZoneId());
         sunText=new TextField(getT("sunset-time"));
         moonText=new TextField(getT("moonset-time"));
         sunRiseText=new TextField(getT("sunrise-time"));
@@ -64,15 +64,15 @@ public class SunMoonSetTime extends Span implements Datable{
         add(sunRiseText);
         add(moonRiseText);
         add(fajrRiseText);
-        date=CalendarFactory.getCurrentDate();
+        date=Application.getFactory().getCurrentDate();
         
     }
     
     @Override
     public void setDate(BasicDate bd) {
         UI.getCurrent().getPage().retrieveExtendedClientDetails((extendedClientDetails) -> {
-            MoonTimes moon=MoonTimes.compute().on(new Date(CalendarFactory.dayStart(bd.getDate()))).at(city.getLat(), city.getLon()).timezone(extendedClientDetails.getTimeZoneId()).execute();
-            SunTimes sun=SunTimes.compute().on(new Date(CalendarFactory.dayStart(bd.getDate()))).at(city.getLat(), city.getLon()).timezone(extendedClientDetails.getTimeZoneId()).execute();
+            MoonTimes moon=MoonTimes.compute().on(new Date(Application.getFactory().dayStart(bd.getDate()))).at(city.getLat(), city.getLon()).timezone(extendedClientDetails.getTimeZoneId()).execute();
+            SunTimes sun=SunTimes.compute().on(new Date(Application.getFactory().dayStart(bd.getDate()))).at(city.getLat(), city.getLon()).timezone(extendedClientDetails.getTimeZoneId()).execute();
             try{
                 moonText.setValue(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(getTimeInstant(moon.getSet())), ZoneId.of(ClientTimeZone.getClientZoneId()))));
             }catch(NullPointerException e){
@@ -87,7 +87,7 @@ public class SunMoonSetTime extends Span implements Datable{
             }
             sunRiseText.setValue(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(getTimeInstant(sun.getRise())), ZoneId.of(ClientTimeZone.getClientZoneId()))));
             
-            Instant fajrInstant=Instant.ofEpochMilli(fajrStandard.getFajrDate(CalendarFactory.dayStart(bd.getDate())).getTime());
+            Instant fajrInstant=Instant.ofEpochMilli(fajrStandard.getFajrDate(Application.getFactory().dayStart(bd.getDate())).getTime());
             LocalDateTime fajrLocal=LocalDateTime.ofInstant(fajrInstant, ZoneId.of(ClientTimeZone.getClientZoneId()));
             fajrRiseText.setValue(Util.getTimeFormatter().format(fajrLocal));
             Util.makeLTR(moonText);

@@ -41,7 +41,7 @@ public class JulianCalendar extends SolarCalendar{
     @Override
     public BasicDate getDate(long t) {
     //    hussam.print("cleaing: "+t);
-        long time=CalendarFactory.cleanDate(t);
+        long time=cleanDate(t);
         if(!isDateInRange(time))return getMaximumDate();
 
     //    hussam.println(" cleaned: "+ new Date(time) +" same: "+(t==time));
@@ -88,7 +88,7 @@ public class JulianCalendar extends SolarCalendar{
     //    hussam.println("Month: "+m+" map: "+dur);
         if(!isDateInRange(time))return getMaximumDate();
 
-        MyDate md=new MyDate(CalendarFactory.cleanDate(time), d, m, y, this);
+        MyDate md=new MyDate(cleanDate(time), d, m, y, this);
         return md;
         
     }

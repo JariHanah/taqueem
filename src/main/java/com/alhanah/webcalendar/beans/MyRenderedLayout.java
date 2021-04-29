@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
+//import nasiiCalendar.CalendarFactory;
 
 /**
  *
@@ -35,7 +35,7 @@ public class MyRenderedLayout extends VerticalLayout implements CalendarsUpdated
     long time;
     String width="50px";
     public MyRenderedLayout(long t) {
-        this(t,NORMAL,CalendarFactory.getSamiCalendar(), CalendarFactory.getAdCalendar(), Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423));
+        this(t,NORMAL,Application.getFactory().getSamiCalendar(), Application.getFactory().getAdCalendar(), Application.getFactory().getCalendar(BasicCalendar.UMM_ALQURA_CALENDAR_V1423));
     }
 
     public MyRenderedLayout(long t, int type,BasicCalendar... list) {
@@ -57,7 +57,7 @@ public class MyRenderedLayout extends VerticalLayout implements CalendarsUpdated
         BasicDate date = cals.get(0).getDate(time);//.getDay();
         String label = (type == HEAD_ROW)?getFormatedWeek(date):getFormated(date);
         
-        String myClass="season"+CellFormatter.prepareSeasons(date.getDate(), CalendarFactory.getDefaultSeasonIdentifier());
+        String myClass="season"+CellFormatter.prepareSeasons(date.getDate(), Application.getFactory().getDefaultSeasonIdentifier());
         areas.get(0).addClassName(myClass);
        // areas.get(0).getElement().getStyle().set("background", "red");
         areas.get(0).setLabel(label);

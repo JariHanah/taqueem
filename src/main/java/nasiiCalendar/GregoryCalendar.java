@@ -42,7 +42,7 @@ static final long CYCLE400 = DAY * ((365 * 3 + 366) * 100 - 3);
     @Override
     public BasicDate getDate(long t) {
         
-        long time2 = CalendarFactory.cleanDate(t);
+        long time2 = cleanDate(t);
         if(!isDateInRange(time2))return getMaximumDate();
 
         long time = time2 - getStartTime();

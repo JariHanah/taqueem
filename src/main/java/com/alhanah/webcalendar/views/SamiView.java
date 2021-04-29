@@ -22,7 +22,6 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.server.VaadinRequest;
 import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
 import nasiiCalendar.Months;
 import nasiiCalendar.locationBasid.City;
 
@@ -34,7 +33,7 @@ public class SamiView extends Div {
     public SamiView() {
         addClassName("sami-view");
         MyRequestReader reader = new MyRequestReader(VaadinRequest.getCurrent().getParameterMap());
-        BasicCalendar samiCal = CalendarFactory.getSamiCalendar();
+        BasicCalendar samiCal = Application.getFactory().getSamiCalendar();
         long time = System.currentTimeMillis();
         BasicDate bd = samiCal.getDate(time);
 

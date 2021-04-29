@@ -23,7 +23,6 @@ import java.util.List;
 import nasiiCalendar.BasicCalendar;
 import static nasiiCalendar.BasicCalendar.DAY;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
 import nasiiCalendar.PeriodType;
 
 /**
@@ -118,7 +117,7 @@ public class ControllerBox extends Span implements Datable {
 
             @Override
             public String apply(Integer item) {
-                return item + " " + getT(CalendarFactory.getWeekDay(selectedDate.getCalendar().getDate(selectedDate.getYear(), selectedDate.getMonth(), item)));
+                return item + " " + getT(Application.getFactory().getWeekDay(selectedDate.getCalendar().getDate(selectedDate.getYear(), selectedDate.getMonth(), item)));
             }
         });
 
@@ -205,10 +204,10 @@ public class ControllerBox extends Span implements Datable {
         weekDayText.setReadOnly(true);
         MySpan c = new MySpan() {
             public void setDate(BasicDate d) {
-                String dateString = CalendarFactory.getWeekDay(d);
+                String dateString = Application.getFactory().getWeekDay(d);
                 weekDayText.setLabel(getT("selected-date")+" "+getT(dateString));
                 weekDayText.setValue(dateToString(d));
-                weekDayText.setHelperText(dateToString(CalendarFactory.getGregoryCalendar().getDate(d.getDate())));
+                weekDayText.setHelperText(dateToString(Application.getFactory().getGregoryCalendar().getDate(d.getDate())));
             }
         };
         Button nextDay = new Button(getT("next-day"), (event) -> {

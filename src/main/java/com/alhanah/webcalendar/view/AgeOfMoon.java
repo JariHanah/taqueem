@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.TimeZone;
 import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
 import static nasiiCalendar.locationBasid.AbstractBlackMoonMonth.getTimeInstant;
 import nasiiCalendar.locationBasid.City;
 import org.shredzone.commons.suncalc.MoonPhase;
@@ -52,7 +51,7 @@ public class AgeOfMoon extends Span implements Datable , CalendarsUpdatedListern
     final String AGE_OF_FAJR="age-of-fajr";
     H3 h3;
     public AgeOfMoon() {
-        this(City.MAKKA, CalendarFactory.getGregoryCalendar());
+        this(City.MAKKA, Application.getFactory().getGregoryCalendar());
     }
 
     public AgeOfMoon(City city, BasicCalendar show) {
@@ -100,7 +99,7 @@ public class AgeOfMoon extends Span implements Datable , CalendarsUpdatedListern
         long black = moonCalc.getNextBlack();//calBlack.getLunerIdentifier().getNextMonth(bd.getDate());
         long fajr = moonCalc.getNextBlackFajr();//calBlackFajr.getLunerIdentifier().getNextMonth(bd.getDate());
         long hilal_0 = moonCalc.getNextHilal0();//calHilal_0.getLunerIdentifier().getNextMonth(bd.getDate());
-        BasicCalendar greg=CalendarFactory.getGregoryCalendar();
+        BasicCalendar greg=Application.getFactory().getGregoryCalendar();
         
         BasicDate h1=moonCalc.getHilalCycle().getDate(bd.getDate());
         textHilalAge.setLabel(getCalc(h1)+" "+ getT(AGE_OF_HILAL));
@@ -122,7 +121,7 @@ public class AgeOfMoon extends Span implements Datable , CalendarsUpdatedListern
         textHilalZeroAge.setValue(dateToString(displayCalendar.getDate(hilal_0)));
         textHilalZeroAge.setHelperText(dateToString(greg.getDate(hilal_0)));
   
-        long blackTime = getTimeInstant(MoonPhase.compute().on(new Date(CalendarFactory.dayStart(bd.getDate()))).execute().getTime());//.getTime();
+        long blackTime = getTimeInstant(MoonPhase.compute().on(new Date(Application.getFactory().dayStart(bd.getDate()))).execute().getTime());//.getTime();
         TimeZone client = TimeZone.getTimeZone(ClientTimeZone.getClientZoneId());
         Instant i = Instant.now();
         UI.getCurrent().getPage().retrieveExtendedClientDetails((extendedClientDetails) -> {

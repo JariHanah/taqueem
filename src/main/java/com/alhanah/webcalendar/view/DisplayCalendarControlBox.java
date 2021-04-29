@@ -16,7 +16,6 @@ import java.util.Arrays;
 import java.util.List;
 import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
 
 /**
  *
@@ -27,7 +26,7 @@ public class DisplayCalendarControlBox extends Div implements Datable{
     Button confirm;
     List<CalendarsUpdatedListerner>listeners;
     public DisplayCalendarControlBox(List<BasicCalendar>calendars) {
-        sorted=new CalendarManualSort(calendars, CalendarFactory.getCurrentDate());
+        sorted=new CalendarManualSort(calendars, Application.getFactory().getCurrentDate());
         confirm=new Button(getT("confirm"), (event) -> {
             Notification.show(getT("loading"));
             notifyMyListeners();
@@ -39,7 +38,12 @@ public class DisplayCalendarControlBox extends Div implements Datable{
         setWidthFull();
     }
     public DisplayCalendarControlBox(){
-        this(Arrays.asList(CalendarFactory.getSamiCalendar(),CalendarFactory.getGregoryCalendar(), Application.getFactory().getCalendar(BasicCalendar.OMARI_ID_16)));
+        this(Application.getFactory().getCalendars());
+        //this(Arrays.asList(Application.getFactory().getSamiCalendar(),Application.getFactory().getGregoryCalendar(), Application.getFactory().getCalendar(BasicCalendar.OMARI_ID_16)));
+    }
+    public CalendarGrid getGrid(BasicDate base){
+        return new CalendarGrid(base, 52, sorted.getMySortedList().stream().toArray(BasicCalendar[]::new));
+        
     }
     public void addListener(CalendarsUpdatedListerner l){
         listeners.add(l);

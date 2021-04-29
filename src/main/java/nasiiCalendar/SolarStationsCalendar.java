@@ -185,7 +185,7 @@ public class SolarStationsCalendar extends SolarCalendar {
 
     @Override
     public BasicDate getDate(long t) {
-        long time = CalendarFactory.cleanDate(t);
+      long time = cleanDate(t);
         if(!isDateInRange(time))return getMaximumDate();
 
         time -= getStartTime();
@@ -223,7 +223,7 @@ public class SolarStationsCalendar extends SolarCalendar {
         time += dur.get(m - 1) + (d - 1) * DAY + getStartTime();
         if(!isDateInRange(time))return getMaximumDate();
 
-        MyDate md = new MyDate(CalendarFactory.cleanDate(time), d, m, y, this);
+        MyDate md = new MyDate(cleanDate(time), d, m, y, this);
         return md;
 
     }

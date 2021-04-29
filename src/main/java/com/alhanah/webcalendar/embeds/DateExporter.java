@@ -8,7 +8,6 @@ package com.alhanah.webcalendar.embeds;
 import com.alhanah.webcalendar.view.DateHeader;
 import com.vaadin.flow.component.WebComponentExporter;
 import com.vaadin.flow.component.webcomponent.WebComponent;
-import nasiiCalendar.CalendarFactory;
 
 /**
  *

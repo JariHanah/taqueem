@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.TimeZone;
 import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
 import nasiiCalendar.MyBasicCalendar;
 import nasiiCalendar.locationBasid.AbstractBlackMoonMonth;
 import nasiiCalendar.locationBasid.BlackFajrStandard;
@@ -39,25 +38,26 @@ public class AgeOfMoonCalc implements Datable , CalendarsUpdatedListerner{
     City city;
     
     public AgeOfMoonCalc() {
-        this(City.MAKKA, CalendarFactory.getGregoryCalendar());
+        this(City.MAKKA, Application.getFactory().getGregoryCalendar());
     }
 
     public AgeOfMoonCalc(City city, BasicCalendar show) {
         this.city=city;
+        ZoneId zone=Application.getFactory().getZoneId();
         base=show.getDate(System.currentTimeMillis());
         displayCalendar=show;
         calHilal30 = new GenericLunerCalendar(
                 (MyBasicCalendar) Application.getFactory().getCalendar(BasicCalendar.OMARI_ID_16),
-                new HilalByMinutesStandard(city));
+                new HilalByMinutesStandard(city, zone));
         calHilal_0 = new GenericLunerCalendar(
                 (MyBasicCalendar) Application.getFactory().getCalendar(BasicCalendar.OMARI_ID_16),
-                new HilalByMinutesStandard(0,city));
+                new HilalByMinutesStandard(0,city, zone));
         calBlack = new GenericLunerCalendar(
                 (MyBasicCalendar) Application.getFactory().getCalendar(BasicCalendar.OMARI_ID_16),
-                new UmAlquraStandardV1423(city));
+                new UmAlquraStandardV1423(city, zone));
         calBlackFajr = new GenericLunerCalendar(
                 (MyBasicCalendar) Application.getFactory().getCalendar(BasicCalendar.OMARI_ID_16),
-                new BlackFajrStandard(city));
+                new BlackFajrStandard(city, zone));
   
         
     }
@@ -81,7 +81,7 @@ public class AgeOfMoonCalc implements Datable , CalendarsUpdatedListerner{
         long black = calBlack.getLunerIdentifier().getNextMonth(bd.getDate());
         long fajr = calBlackFajr.getLunerIdentifier().getNextMonth(bd.getDate());
         long hilal_0 = calHilal_0.getLunerIdentifier().getNextMonth(bd.getDate());
-        BasicCalendar greg=CalendarFactory.getGregoryCalendar();
+        BasicCalendar greg=Application.getFactory().getGregoryCalendar();
         
         BasicDate h1=calHilal30.getDate(bd.getDate());
         
@@ -94,7 +94,7 @@ public class AgeOfMoonCalc implements Datable , CalendarsUpdatedListerner{
        h1=calBlackFajr.getDate(bd.getDate());
         h1=calHilal_0.getDate(bd.getDate());
         
-        long blackTime = AbstractBlackMoonMonth.getTimeInstant(MoonPhase.compute().on(new Date(CalendarFactory.dayStart(bd.getDate()))).execute().getTime());
+        long blackTime = AbstractBlackMoonMonth.getTimeInstant(MoonPhase.compute().on(new Date(Application.getFactory().dayStart(bd.getDate()))).execute().getTime());
         TimeZone client = TimeZone.getTimeZone(ClientTimeZone.getClientZoneId());
         Instant i = Instant.now();
         UI.getCurrent().getPage().retrieveExtendedClientDetails((extendedClientDetails) -> {

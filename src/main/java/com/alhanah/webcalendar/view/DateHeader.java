@@ -5,6 +5,7 @@
  */
 package com.alhanah.webcalendar.view;
 
+import com.alhanah.webcalendar.Application;
 import com.alhanah.webcalendar.info.Datable;
 import static com.alhanah.webcalendar.Application.getT;
 import static com.alhanah.webcalendar.view.Util.dateToString;
@@ -12,7 +13,6 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.textfield.TextField;
 import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
-import nasiiCalendar.CalendarFactory;
 
 /**
  *
@@ -33,7 +33,7 @@ public class DateHeader extends Div implements Datable {
     }
 
     public DateHeader() {
-        this(CalendarFactory.getSamiCalendar().getDate(System.currentTimeMillis()));
+        this(Application.getFactory().getSamiCalendar().getDate(System.currentTimeMillis()));
     }
     
 
@@ -44,7 +44,7 @@ public class DateHeader extends Div implements Datable {
        // String dateString = getT(date.getCalendar().getMonthName(date).getName()) + " " + date.getDay() + " " + date.getYear() + " " + getT(date.getCalendar().getShortName());
         dateLabel.setValue(dateString);
         dateLabel.setLabel(getT(date.getCalendar().getName()+BasicCalendar.INFO_NAME));
-        dateLabel.setHelperText(dateToString(CalendarFactory.getGregoryCalendar().getDate(date.getDate())));
+        dateLabel.setHelperText(dateToString(Application.getFactory().getGregoryCalendar().getDate(date.getDate())));
     }
 
 }
