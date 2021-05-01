@@ -22,5 +22,5 @@ public interface MyParameters {
     String MINUTE = "min";
     String SECOND = "seoncd";
     String CONVERTS = "converts";
-    String LANG="loc";
+    String LANG="lang";
 }

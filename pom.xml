@@ -235,6 +235,7 @@
                             <jvmArguments>
                                 -Xms512m
                                 -Xmx512m  
+                                -XX:+HeapDumpOnOutOfMemoryError
                             </jvmArguments>
                         
                         </configuration>
@@ -289,7 +290,9 @@
                                 </goals>
                             </execution>
                         </executions>
+                        
                         <configuration>
+                            
                             <trimStackTrace>false</trimStackTrace>
                             <enableAssertions>true</enableAssertions>
                         </configuration>

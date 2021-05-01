@@ -29,7 +29,7 @@ import nasiiCalendar.PeriodType;
  *
  * @author hmulh
  */
-public class ControllerBox extends Span implements Datable {
+public class ControllerBox extends com.vaadin.flow.component.orderedlayout.HorizontalLayout implements Datable {
 
     BasicDate selectedDate;
     List<Datable> datableList;

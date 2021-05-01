@@ -11,6 +11,8 @@ import com.alhanah.webcalendar.views.main.MainView;
 import com.alhanah.webcalendar.view.ControllerBox;
 import com.alhanah.webcalendar.view.ConvertSelector;
 import com.alhanah.webcalendar.info.Datable;
+import com.alhanah.webcalendar.view.CalendarGrid;
+import com.alhanah.webcalendar.view.DisplayCalendarControlBox;
 import com.alhanah.webcalendar.view.HilalBearth;
 import com.alhanah.webcalendar.view.MyFooter;
 import com.alhanah.webcalendar.view.MyMemory;
@@ -21,7 +23,6 @@ import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.server.VaadinRequest;
 
@@ -40,31 +41,35 @@ public class InfoView extends VerticalLayout {
     ResultSpan answer;
 
     public InfoView() {
-        MyMemory m=new MyMemory();
+        MyMemory m = new MyMemory();
         reader = new MyRequestReader(VaadinRequest.getCurrent().getParameterMap());
-        if(reader.showMemory())add(m);
-        
+        if (reader.showMemory()) {
+            add(m);
+        }
+
         addClassName("info-view");
         BasicDate bd = reader.getCalendar().getDate(reader.getSelectedTime());
-     
+
         box = new ControllerBox(bd);
         selector = new ConvertSelector(bd);
         SunMoonSetTime smt = new SunMoonSetTime();
         answer = new ResultSpan();
         answer.setDate(bd);
-        
-        //DisplayCalendarControlBox conBox=new DisplayCalendarControlBox();
-        //CalendarGrid g=conBox.getGrid(bd);
-        //box.addDatable(conBox);
-        //conBox.addListener(g);
-        Accordion a=new Accordion();
-        //a.add(getT("selectAndSortCalendars"), conBox);
-        a.close();
-        add(a);
-        //addMyDiv(g);
-        
+        if (reader.showMemory()) {
+            DisplayCalendarControlBox conBox = new DisplayCalendarControlBox();
+            box.addDatable(conBox);
+            CalendarGrid g = conBox.getGrid(bd);
+            conBox.addListener(g);
+
+            addMyDiv(g);
+
+            Accordion a = new Accordion();
+            a.add(getT("selectAndSortCalendars"), conBox);
+            a.close();
+            add(a);
+        }
         add(new H2(getT("special-page-for-developer")));
-        
+
         add(box.getDayChangePanel());
         add(box.getSelectDatePanel());
         add(new H2(getT("choose-calendar-to-convert-to")));
@@ -78,13 +83,14 @@ public class InfoView extends VerticalLayout {
         HilalBearth hil = new HilalBearth();
         hil.setDate(bd);
         addMyDiv(hil);
-        
+
         add(new CommentBox());
 
         add(new MyFooter());
         m.append("done");
-        
+
     }
+
     class ResultSpan extends Span implements Datable {
 
         @Override
@@ -100,6 +106,7 @@ public class InfoView extends VerticalLayout {
     }
 }
 //@CssImport(value = "./views/comps/textAreaCell.css", themeFor = "vaadin-text-field")
+
 class MyTextField extends TextField {
 
     public MyTextField(String x) {

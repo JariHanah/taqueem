@@ -77,7 +77,7 @@ public abstract class AbstractBlackMoonMonth implements LunerIdentifier{
         return City.MAKKA;
     }
     public void setCity(City c){
-        this.city=city;
+        this.city=c;
     }
     @Override
     public boolean isLocationBased() {

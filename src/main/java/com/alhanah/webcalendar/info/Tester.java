@@ -11,11 +11,14 @@ import java.util.Calendar;
 import java.util.Date;
 import nasiiCalendar.BasicCalendar;
 import static nasiiCalendar.BasicCalendar.DAY;
+import static nasiiCalendar.BasicCalendar.MONTH;
 import static nasiiCalendar.BasicCalendar.START_SAMI;
 import nasiiCalendar.BasicDate;
 import nasiiCalendar.CalendarFactory;
 import nasiiCalendar.CalendarTester;
 import nasiiCalendar.GregoryCalendar;
+import nasiiCalendar.HashimiCalendar;
+import nasiiCalendar.Months;
 import nasiiCalendar.MyBasicCalendar;
 import nasiiCalendar.Omari30YearLoop;
 import nasiiCalendar.SamiFixed;
@@ -106,7 +109,7 @@ public class Tester {
     }
 
     public static void test() {
-        
+        testHashimi();
     }
     
     public static void testFatimi(){ 
@@ -150,5 +153,22 @@ public class Tester {
         //    System.exit(0);
         System.err.println("finished......");
 
+    }
+
+    private static void testHashimi() {
+        CalendarFactory fac=new CalendarFactory(ZoneId.systemDefault());
+        HashimiCalendar c=new HashimiCalendar(ZoneId.systemDefault());
+        SamiFixed s=(SamiFixed) fac.getCalendar(BasicCalendar.SAMI_FIXED_ID);
+        System.err.println("Hashimi Data: ");
+        
+        for(int i=0;i<200;i++){
+            BasicDate sn=s.getDate(1400, i+1,1);
+            BasicDate b=c.getDate(sn.getDate());
+            if(b.getCalendar().getMonthName(b)==Months.RAMADHAN)
+            System.err.println("\t"+b+" "+b.getCalendar().getMonthName(b)+"\t"+b.getCalendar().getYearType(b));
+        }
+            System.err.println("\t"+c.getDate(1,1,1400));
+        
+        
     }
 }

@@ -12,7 +12,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
@@ -38,7 +38,7 @@ public class DisplayCalendarControlBox extends Div implements Datable{
         setWidthFull();
     }
     public DisplayCalendarControlBox(){
-        this(Application.getFactory().getCalendars());
+        this(Collections.singletonList(Application.getFactory().getCalendar(BasicCalendar.SAMI_FIXED_ID)));
         //this(Arrays.asList(Application.getFactory().getSamiCalendar(),Application.getFactory().getGregoryCalendar(), Application.getFactory().getCalendar(BasicCalendar.OMARI_ID_16)));
     }
     public CalendarGrid getGrid(BasicDate base){

@@ -28,7 +28,7 @@ import org.shredzone.commons.suncalc.SunTimes;
  *
  * @author hmulh
  */
-public class SunMoonSetTime extends Span implements Datable{
+public class SunMoonSetTime extends com.vaadin.flow.component.orderedlayout.HorizontalLayout implements Datable{
 
     
     TextField sunText;

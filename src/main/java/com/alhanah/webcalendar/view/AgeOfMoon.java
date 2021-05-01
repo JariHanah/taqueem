@@ -17,6 +17,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.server.VaadinRequest;
 import java.time.Instant;
@@ -32,7 +33,7 @@ import static nasiiCalendar.locationBasid.AbstractBlackMoonMonth.getTimeInstant;
 import nasiiCalendar.locationBasid.City;
 import org.shredzone.commons.suncalc.MoonPhase;
 
-public class AgeOfMoon extends Span implements Datable , CalendarsUpdatedListerner{
+public class AgeOfMoon extends HorizontalLayout implements Datable , CalendarsUpdatedListerner{
     AgeOfMoonCalc moonCalc;
     TextField textHilalAge;
     TextField textHilalZeroAge;

@@ -73,14 +73,7 @@ public class ConvertDateView extends VerticalLayout {
         box.addDatable(smtGrid);
         //SunMoonSetTime smtMakkah=new SunMoonSetTime();
         //smtLocal=new SunMoonSetTime();
-        new MyGeoLocation(smtText).addValueChangeListener((event) -> {
-            //smtLocal.setCity(MyGeoLocation.getCity());
-            local.setCity(MyGeoLocation.getCity());
-            //smtLocal.setDate(box.getDate());
-            smtGrid.setDate(box.getDate());
-            //infoLocal.setText(getT("moon-set-local")+" "+Util.getCityName(smtLocal.getCity()));
-           // System.err.println("convertGeo Updated");
-        });;
+        
         
         //smtMakkah.setDate(bd);
         add(new H2(getT("conversion-result")));
@@ -94,14 +87,19 @@ public class ConvertDateView extends VerticalLayout {
         });
         Accordion accord=new Accordion();
         accord.add(new AccordionPanel(new H4(getT("show-result-multi-cals")), disp));
-      //  accord.add(new AccordionPanel(infoLocal, smtLocal));
-       // accord.add(new AccordionPanel(new H4(getT("moon-set-makkah")), smtMakkah));
         
         accord.add(new AccordionPanel(smtText,smtGrid));
         accord.setSizeFull();
         add(accord);
         
-        
+        new MyGeoLocation(answer).addValueChangeListener((event) -> {
+            //smtLocal.setCity(MyGeoLocation.getCity());
+            local.setCity(MyGeoLocation.getCity());
+            //smtLocal.setDate(box.getDate());
+            smtGrid.setDate(box.getDate());
+            //infoLocal.setText(getT("moon-set-local")+" "+Util.getCityName(smtLocal.getCity()));
+           // System.err.println("convertGeo Updated");
+        });;
    //     add(new H2(getT("moon-info-on-selected-date")));
      //   addMyDiv(smt);
      //   addMyDiv(new AgeOfMoon());

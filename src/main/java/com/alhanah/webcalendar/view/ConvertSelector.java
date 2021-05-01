@@ -22,7 +22,7 @@ import nasiiCalendar.BasicDate;
  *
  * @author hmulh
  */
-public class ConvertSelector extends Span implements Datable{
+public class ConvertSelector extends com.vaadin.flow.component.orderedlayout.HorizontalLayout implements Datable{
     Select<BasicCalendar> calTextMap = new Select<BasicCalendar>();
     TextField text=new TextField("");
     List<BasicCalendar>conversions;

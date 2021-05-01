@@ -26,7 +26,9 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
@@ -50,12 +52,12 @@ public class CalendarManualSort extends Grid<CalendarBean> implements Datable {
         setRowsDraggable(true);
         setSelectionMode(SelectionMode.NONE);
         setClassName("longcalendar");
-        Grid.Column<CalendarBean> sort = addComponentColumn((source) -> {
+  /*      Grid.Column<CalendarBean> sort = addComponentColumn((source) -> {
             Icon edit = new Icon(VaadinIcon.SORT);
             return edit;
 
         }).setHeader(getT("sort-rows")).setWidth("10px").setFrozen(true).setFlexGrow(0).setAutoWidth(true);
-
+//*/
         Grid.Column<CalendarBean> selectedColumn = addComponentColumn((source) -> {
             CalendarBean item = source;
             Checkbox c = new Checkbox(item.isSelected()); //To change body of generated methods, choose Tools | Templates.
@@ -71,13 +73,16 @@ public class CalendarManualSort extends Grid<CalendarBean> implements Datable {
 
         Grid.Column<CalendarBean> convertedResult = addComponentColumn((source) -> {
             CalendarBean item = source;
-            Label l = new Label();
-            l.setWidth("300px");
-            l.setText(Util.dateToString(item.getCalendar().getDate(base.getDate())));
-            return l;
+            HorizontalLayout h=new HorizontalLayout();
+            h.add(new Icon(VaadinIcon.SORT));
+            TextField f=new TextField(getT(item.getCalendar().getName() + BasicCalendar.INFO_NAME));
+            f.setValue(Util.dateToString(item.getCalendar().getDate(base.getDate())));
+            f.setReadOnly(true);
+            h.add(f);
+            return h;
 
         }).setHeader(getT("date")).setFlexGrow(1).setAutoWidth(true);
-        Grid.Column<CalendarBean> calendarNameColumn = addComponentColumn((source) -> {
+       /* Grid.Column<CalendarBean> calendarNameColumn = addComponentColumn((source) -> {
             CalendarBean item = source;
             Label l = new Label();
             l.setWidth("300px");
@@ -85,7 +90,7 @@ public class CalendarManualSort extends Grid<CalendarBean> implements Datable {
             return l;
 
         }).setHeader(getT("calendar")).setFlexGrow(1).setAutoWidth(true);
-        /*Grid.Column<CalendarBean> calendarNameColumn = addColumn(new ComponentRenderer<Label, CalendarBean>() {
+        Grid.Column<CalendarBean> calendarNameColumn = addColumn(new ComponentRenderer<Label, CalendarBean>() {
             @Override
             public Label createComponent(CalendarBean item) {
                 System.err.println("trying to create label: " + item);

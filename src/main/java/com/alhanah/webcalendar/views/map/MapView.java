@@ -11,6 +11,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import org.vaadin.elmot.flow.sensors.GeoLocation;
 
 @Route(value = "map", layout = MainView.class)
@@ -26,7 +27,7 @@ public class MapView extends VerticalLayout {
         map.setSizeFull();
         map.setView(55.0, 10.0, 4);
         add(map);
-        MyGeoLocation geo=new MyGeoLocation(null);
+        MyGeoLocation geo=new MyGeoLocation((HorizontalLayout)null);
         geo.addValueChangeListener((event) -> {
             map.setView(event.getValue().getLatitude(), event.getValue().getLongitude(), 20);
         });

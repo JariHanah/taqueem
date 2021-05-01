@@ -16,7 +16,7 @@ import nasiiCalendar.BasicDate;
  *
  * @author hmulh
  */
-public class WeekDay extends Span implements Datable{
+public class WeekDay extends com.vaadin.flow.component.orderedlayout.HorizontalLayout implements Datable{
     BasicDate date;
     TextField dayOfWeek = new TextField();
    // Label calendarLabel=new Label();

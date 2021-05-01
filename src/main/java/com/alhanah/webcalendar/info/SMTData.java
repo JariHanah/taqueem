@@ -151,7 +151,7 @@ public class SMTData implements Datable {
 
     public SMTData(City city) {
         this.city = city;
-        fajrStandard = new BlackFajrStandard(Application.getUserZoneId());
+        fajrStandard = new BlackFajrStandard(city,Application.getUserZoneId());
         date = Application.getFactory().getCurrentDate();
         zoneId=ClientTimeZone.getClientZoneId();
     }
@@ -175,7 +175,7 @@ public class SMTData implements Datable {
 
         Instant fajrInstant = Instant.ofEpochMilli(fajrStandard.getFajrDate(Application.getFactory().dayStart(bd.getDate())).getTime());
         setFajrRiseText(fajrInstant.toEpochMilli());
-
+        
     }
 
     /**
@@ -190,7 +190,7 @@ public class SMTData implements Datable {
      */
     public void setCity(City city) {
         this.city = city;
-
+        fajrStandard.setCity(city);
     }
 
 }

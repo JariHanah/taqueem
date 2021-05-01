@@ -119,9 +119,9 @@ public class MyRequestReader {
             locale = AR;
         }
         String []showM = params.get(MyParameters.SHOW_MEMORY);
-        System.err.println("show: "+showM);
+        //System.err.println("show: "+showM);
         if(showM==null)return;
-        System.err.println("show[0]: "+showM[0]);
+        //System.err.println("show[0]: "+showM[0]);
         if(showM[0].equals("t")){
             VaadinSession.getCurrent().setAttribute(MyParameters.SHOW_MEMORY, true);
         }else {
@@ -136,7 +136,7 @@ public class MyRequestReader {
 
     public boolean showMemory() {
         Boolean s= (Boolean) VaadinSession.getCurrent().getAttribute(MyParameters.SHOW_MEMORY);
-        System.err.println("is show?: "+s);
+        //System.err.println("is show?: "+s);
         if(s==null)return false;
         return s;
     }

@@ -66,7 +66,7 @@ public class TodaydateView extends VerticalLayout {
         AccordionPanel p=new AccordionPanel(ageCityText, localAge);
         accrd.add(p);
         accrd.add(new AccordionPanel(new H4(getT("age-of-moon")+ " "+getT("based-on")+" "+makkah.getCityName()), makkah));
-        new MyGeoLocation(localAge).addValueChangeListener((event) -> {
+        new MyGeoLocation(this).addValueChangeListener((event) -> {
             ageCityText.setText(getT("age-of-moon")+ " "+getT("based-on")+" "+Util.getCityName(MyGeoLocation.getCity()));
             localAge.setCity(MyGeoLocation.getCity());
             

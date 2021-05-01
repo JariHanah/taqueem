@@ -31,7 +31,7 @@ public class MyMemory extends Div{
         records.add(m);
         StringBuilder sb=new StringBuilder();
         for(MemoryRecord mr:records){
-            sb.append(mr.message+"\tU: "+mr.used+"\tF: "+mr.free+"\tT:"+mr.total+"\tM: "+mr.max+"\n");
+            sb.append(mr.message+"\tU: "+mr.used+"MB\tF: "+mr.free+"MB\tT:"+mr.total+"MB\tM: "+mr.max+"MB\n");
         }
         area.setValue(sb.toString());
     }

@@ -22,7 +22,7 @@ import nasiiCalendar.locationBasid.City;
  *
  * @author hmulh
  */
-public class HilalBearth extends Span implements Datable {
+public class HilalBearth extends com.vaadin.flow.component.orderedlayout.HorizontalLayout implements Datable {
     HilalBearthCalc calc;
     TextField hilalAgeText;
     TextField textHilalAge_0;

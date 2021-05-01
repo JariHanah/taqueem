@@ -75,8 +75,6 @@ public class CalendarFactory {
 
     public CalendarFactory(ZoneId zone) {
         this.zoneId = zone;
-        System.err.println("zoneId: .........................." + zone);
-        System.err.println(Application.getUserZoneId());
         instance = this;
         defaultSeasonIdentifier = season128;
         greg = Calendar.getInstance(TimeZone.getTimeZone(zone.getId()));

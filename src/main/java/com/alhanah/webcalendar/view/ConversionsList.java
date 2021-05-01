@@ -20,7 +20,7 @@ import nasiiCalendar.BasicDate;
  *
  * @author hmulh
  */
-public class ConversionsList extends Span implements Datable{
+public class ConversionsList extends com.vaadin.flow.component.orderedlayout.HorizontalLayout implements Datable{
     
     BasicDate date;
     List<BasicCalendar>cals;

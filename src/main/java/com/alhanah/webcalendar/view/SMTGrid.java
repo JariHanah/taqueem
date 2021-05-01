@@ -50,15 +50,26 @@ public class SMTGrid extends Grid<SMTData> implements Datable, CalendarsUpdatedL
         setRowsDraggable(true);
         setSelectionMode(Grid.SelectionMode.NONE);
         setClassName("longcalendar");
-        Grid.Column<SMTData> sort = addComponentColumn((source) -> {
+ /*       Grid.Column<SMTData> sort = addComponentColumn((source) -> {
             Icon edit = new Icon(VaadinIcon.SORT);
             return edit;
 
         }).setHeader(getT("sort-rows")).setWidth("10px").setFrozen(true).setFlexGrow(0).setAutoWidth(true);
-
+//*/
         Grid.Column<SMTData> selectedColumn = addComponentColumn((source) -> {
             SMTData item = source;
-            return new Label(Util.getCityName(item.getCity()));
+            //System.err.println("item: "+item.getCity()+" "+item.getFajrRiseText());
+            VerticalLayout v=new VerticalLayout();
+            v.add(new Icon(VaadinIcon.SORT));
+            v.add(new Label(Util.getCityName(item.getCity())));
+            Label l = new Label();
+        //    l.setWidth(width);
+            l.setText(new Date(item.getFajrRiseText()).toString());
+            l.setText(getT("fajrrise-time")+" "+Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(item.getFajrRiseText()), Application.getUserZoneId())));
+
+            Util.makeLTR(l);
+            v.add(l);
+            return v;
             //return new VerticalLayout(c);
 
         }).setHeader(getT("city")).setWidth("10px").setFrozen(true).setFlexGrow(0).setAutoWidth(true);
@@ -188,7 +199,7 @@ public class SMTGrid extends Grid<SMTData> implements Datable, CalendarsUpdatedL
             return l;
 
         }).setHeader(getT("moonrise-time")).setFlexGrow(1).setAutoWidth(true);
-        //*/
+        
         Grid.Column<SMTData> fajr = addComponentColumn((source) -> {
             SMTData item = source;
             Label l = new Label();
@@ -200,7 +211,7 @@ public class SMTGrid extends Grid<SMTData> implements Datable, CalendarsUpdatedL
             return l;
 
         }).setHeader(getT("fajrrise-time")).setFlexGrow(1).setAutoWidth(true);
-
+//*/
         /*Grid.Column<CalendarBean> calendarNameColumn = addColumn(new ComponentRenderer<Label, CalendarBean>() {
             @Override
             public Label createComponent(CalendarBean item) {

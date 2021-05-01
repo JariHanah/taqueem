@@ -19,7 +19,7 @@ import nasiiCalendar.BasicDate;
  *
  * @author hmulh
  */
-public class DayDifference extends Span implements Datable{
+public class DayDifference extends com.vaadin.flow.component.orderedlayout.HorizontalLayout implements Datable{
     BasicDate base;
     FutureEventCalc future;
     //TextField daysCount;

@@ -73,6 +73,7 @@ public class BlackFajrStandard extends AbstractBlackMoonMonth implements LunerId
     
     public Date getFajrDate(long time){
         Coordinates coordinates = new Coordinates(city.getLat(), city.getLon());
+       // System.err.println("reading: "+city+" "+getCity());
         DateComponents date = DateComponents.from(new Date(time));
 //DateComponents date = DateComponents.from(new Date());
         CalculationParameters params

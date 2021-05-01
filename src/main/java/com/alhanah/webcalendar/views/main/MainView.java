@@ -2,7 +2,6 @@ package com.alhanah.webcalendar.views.main;
 
 import com.alhanah.webcalendar.Application;
 import static com.alhanah.webcalendar.Application.getT;
-import com.alhanah.webcalendar.info.MyGeoLocation;
 import com.alhanah.webcalendar.info.MyRequestReader;
 import java.util.Optional;
 
@@ -28,21 +27,22 @@ import com.alhanah.webcalendar.views.AboutView;
 import com.alhanah.webcalendar.view.MyParameters;
 import com.alhanah.webcalendar.views.FatimiView;
 import com.alhanah.webcalendar.views.InfoView;
-import static com.alhanah.webcalendar.views.LeafletMap.print;
 import com.alhanah.webcalendar.views.RamadhanView;
 import com.alhanah.webcalendar.views.SamiView;
 import com.alhanah.webcalendar.views.TodaydateView;
-import com.alhanah.webcalendar.views.map.MapView;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.router.RouteConfiguration;
+import com.vaadin.flow.router.RouteData;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.flow.server.VaadinRequest;
-import com.vaadin.flow.server.VaadinSession;
-import java.util.Collection;
+import static com.vaadin.flow.server.VaadinRequest.getCurrent;
+import java.util.List;
 
 /**
  * The main view is a top-level placeholder for other views.
@@ -63,6 +63,8 @@ public class MainView extends AppLayout implements PageConfigurator {
         addToNavbar(true, createHeaderContent());
         menu = createMenu();
         addToDrawer(createDrawerContent(menu));
+        this.setDrawerOpened(true);
+        
     }
     
     private Component createHeaderContent() {
@@ -101,7 +103,14 @@ public class MainView extends AppLayout implements PageConfigurator {
         tabs.addThemeVariants(TabsVariant.LUMO_MINIMAL);
         tabs.setId("tabs");
         tabs.add(createMenuItems());
-        tabs.add(new Span(new Anchor("/?" + MyParameters.LANG + "=" + Application.getOtherLocale().getLanguage(), getT("change-lang"))));
+        final Anchor anchor =new Anchor("/?" + MyParameters.LANG + "=" + Application.getOtherLocale().getLanguage(), getT("change-lang"));
+        tabs.add(new Span(anchor));
+        UI.getCurrent().addAfterNavigationListener((ane) -> {
+            
+            anchor.setHref(ane.getLocation().getPath()+"?" + MyParameters.LANG + "=" + Application.getOtherLocale().getLanguage());
+        });
+        List<RouteData> routes = RouteConfiguration.forSessionScope().getAvailableRoutes();
+        
         return tabs;
     }
 
