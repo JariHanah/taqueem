@@ -23,6 +23,7 @@ import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.server.VaadinRequest;
 
@@ -41,6 +42,13 @@ public class InfoView extends VerticalLayout {
     ResultSpan answer;
 
     public InfoView() {
+        
+        setSizeFull();
+        // Wrapper to use up extra space
+        FlexLayout footerWrapper = new FlexLayout();
+        // Actual footer content
+        
+        
         MyMemory m = new MyMemory();
         reader = new MyRequestReader(VaadinRequest.getCurrent().getParameterMap());
         if (reader.showMemory()) {
@@ -86,7 +94,21 @@ public class InfoView extends VerticalLayout {
 
         add(new CommentBox());
 
-        add(new MyFooter());
+      //  add(new MyFooter());
+        
+        Component footer = box.getDayChangePanel();
+        //footer.setText("Footer");
+        // Align the footer to the end of the wrapper
+        footerWrapper.setAlignItems(Alignment.END);
+        // Make the footer always last in the parent using FlexBox order
+        footerWrapper.getElement().getStyle().set("order", "999");
+        footerWrapper.add(footer);
+        add(footerWrapper);
+        // expand the wrapper to take all remaining unused space
+        expand(footerWrapper);
+        
+                MainView.instance.setPanel(box.getQuickDateChangePanel());
+
         m.append("done");
 
     }

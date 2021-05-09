@@ -6,16 +6,10 @@
 package com.alhanah.webcalendar.info;
 
 import com.alhanah.webcalendar.Application;
-import static com.alhanah.webcalendar.Application.getT;
-import com.alhanah.webcalendar.view.Util;
-import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.textfield.TextField;
+import com.alhanah.webcalendar.view.HilalBearth;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
-import static nasiiCalendar.BasicCalendar.MINUTE;
+import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
 import static nasiiCalendar.locationBasid.AbstractBlackMoonMonth.getTimeInstant;
 import nasiiCalendar.locationBasid.BlackFajrStandard;
@@ -30,73 +24,73 @@ import org.shredzone.commons.suncalc.SunTimes;
 public class SMTData implements Datable {
 
     /**
-     * @return the sunText
+     * @return the sunSet
      */
     public long getSunText() {
-        return sunText;
+        return sunSet;
     }
 
     /**
-     * @param sunText the sunText to set
+     * @param sunText the sunSet to set
      */
-    public void setSunText(long sunText) {
-        this.sunText = sunText;
+    public void setSunSet(long sunText) {
+        this.sunSet = sunText;
     }
 
     /**
-     * @return the moonText
+     * @return the moonSet
      */
-    public Long getMoonText() {
-        return moonText;
+    public Long getMoonSet() {
+        return moonSet;
     }
 
     /**
-     * @param moonText the moonText to set
+     * @param moonText the moonSet to set
      */
-    public void setMoonText(Long moonText) {
-        this.moonText = moonText;
+    public void setMoonSet(Long moonText) {
+        this.moonSet = moonText;
     }
 
     /**
-     * @return the sunRiseText
+     * @return the sunRise
      */
-    public long getSunRiseText() {
-        return sunRiseText;
+    public long getSunRise() {
+        return sunRise;
     }
 
     /**
-     * @param sunRiseText the sunRiseText to set
+     * @param sunRiseText the sunRise to set
      */
-    public void setSunRiseText(long sunRiseText) {
-        this.sunRiseText = sunRiseText;
+    public void setSunRise(long sunRiseText) {
+        this.sunRise = sunRiseText;
     }
 
     /**
-     * @return the moonRiseText
+     * @return the moonRise
      */
-    public Long getMoonRiseText() {
-        return moonRiseText;
+    public Long getMoonRise() {
+        return moonRise;
     }
 
     /**
-     * @param moonRiseText the moonRiseText to set
+     * @param moonRiseText the moonRise to set
      */
-    public void setMoonRiseText(Long moonRiseText) {
-        this.moonRiseText = moonRiseText;
+    public void setMoonRise(Long moonRiseText) {
+        this.moonRise = moonRiseText;
     }
 
     /**
-     * @return the fajrRiseText
+     * @return the fajrRise
      */
-    public long getFajrRiseText() {
-        return fajrRiseText;
+    public long getFajrRise() {
+        return fajrRise;
     }
 
     /**
-     * @param fajrRiseText the fajrRiseText to set
+     * @param fajrRiseText the fajrRise to set
      */
-    public void setFajrRiseText(long fajrRiseText) {
-        this.fajrRiseText = fajrRiseText;
+    public void setFajrRise(long fajrRiseText) {
+        this.fajrRise = fajrRiseText;
     }
 
     /**
@@ -133,12 +127,23 @@ public class SMTData implements Datable {
     public BasicDate getDate() {
         return date;
     }
+    BasicCalendar showCalc;
 
-    private long sunText;
-    private Long moonText;
-    private long sunRiseText;
-    private Long moonRiseText;
-    private long fajrRiseText;
+    public BasicCalendar getShowCalc() {
+        return showCalc;
+    }
+
+    public void setShowCalc(BasicCalendar showCalc) {
+        this.showCalc = showCalc;
+        ageCalc.setDisplayCalendar(showCalc);
+    }
+    AgeOfMoonCalc ageCalc;
+    HilalBearth bearthCalc;
+    private long sunSet;
+    private Long moonSet;
+    private long sunRise;
+    private Long moonRise;
+    private long fajrRise;
     private long minDiff;
     private String zoneId;
     BlackFajrStandard fajrStandard;
@@ -146,36 +151,49 @@ public class SMTData implements Datable {
     private City city;
 
     public SMTData() {
-        this(City.MAKKA);
+        this(City.MAKKA, Application.getFactory().getCalendar(BasicCalendar.GREG_ID));
     }
 
-    public SMTData(City city) {
+    public SMTData(City city, BasicCalendar show) {
         this.city = city;
+        this.showCalc=show;
         fajrStandard = new BlackFajrStandard(city,Application.getUserZoneId());
         date = Application.getFactory().getCurrentDate();
         zoneId=ClientTimeZone.getClientZoneId();
+        bearthCalc=new HilalBearth(city);
+        ageCalc=new AgeOfMoonCalc(city, show);
+        
     }
-
+    public AgeOfMoonCalc getAgeMoonCalc(){
+        return ageCalc;
+    }
+    
+    public HilalBearth getBearth(){
+        return bearthCalc;
+    }
     @Override
     public void setDate(BasicDate bd) {
+        date=bd;
+        ageCalc.setDate(bd);
+        bearthCalc.setDate(bd);
         MoonTimes moon = MoonTimes.compute().on(new Date(Application.getFactory().dayStart(bd.getDate()))).at(getCity().getLat(), getCity().getLon()).timezone(zoneId).execute();
         SunTimes sun = SunTimes.compute().on(new Date(Application.getFactory().dayStart(bd.getDate()))).at(getCity().getLat(), getCity().getLon()).timezone(zoneId).execute();
         try {
-            setMoonText((Long) getTimeInstant(moon.getSet()));
+            setMoonSet((Long) getTimeInstant(moon.getSet()));
         } catch (NullPointerException e) {
-            setMoonText(null);
+            setMoonSet(null);
         }
-        setSunText(getTimeInstant(sun.getSet()));
+        setSunSet(getTimeInstant(sun.getSet()));
         try {
-            setMoonRiseText((Long) getTimeInstant(moon.getRise()));
+            setMoonRise((Long) getTimeInstant(moon.getRise()));
         } catch (NullPointerException e) {
-            setMoonRiseText(null);
+            setMoonRise(null);
         }
-        setSunRiseText(getTimeInstant(sun.getRise()));
+        setSunRise(getTimeInstant(sun.getRise()));
 
         Instant fajrInstant = Instant.ofEpochMilli(fajrStandard.getFajrDate(Application.getFactory().dayStart(bd.getDate())).getTime());
-        setFajrRiseText(fajrInstant.toEpochMilli());
-        
+        setFajrRise(fajrInstant.toEpochMilli());
+       
     }
 
     /**
@@ -189,8 +207,14 @@ public class SMTData implements Datable {
      * @param city the city to set
      */
     public void setCity(City city) {
+        
         this.city = city;
+        bearthCalc.setCity(city);
         fajrStandard.setCity(city);
+    }
+
+    public AgeOfMoonCalc getAgeOfMoonCalc() {
+        return ageCalc;
     }
 
 }

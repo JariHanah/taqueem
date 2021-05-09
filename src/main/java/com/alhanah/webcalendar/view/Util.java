@@ -42,7 +42,15 @@ public class Util {
     }
 
     public static String dateToString(BasicDate bd) {
-        return getT(bd.getCalendar().getMonthName(bd).getName()) + " " + bd.getDay() + " " + bd.getYear() + " " + getT(bd.getCalendar().getName()+BasicCalendar.INFO_SHORT);
+        return getT(bd.getCalendar().getMonthName(bd).getName()) + " " + bd.getDay() + " " + bd.getYear() + " " + getT(bd.getCalendar().getName()+BasicCalendar.INFO_REF);
+        
+    }
+    public static String dateToMonth(BasicDate bd) {
+        return getT(bd.getCalendar().getMonthName(bd).getName()) + " " + bd.getYear() + " " + getT(bd.getCalendar().getName()+BasicCalendar.INFO_SHORT);
+        
+    }
+    public static String dateToYear(BasicDate bd) {
+        return bd.getYear() + " " + getT(bd.getCalendar().getName()+BasicCalendar.INFO_SHORT);
         
     }
 
@@ -57,6 +65,15 @@ public class Util {
 
     public static String getCityName(City city) {
         return Application.getSelectedLocale().equals(AR) ? city.getArabName() : city.getName();//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public static String dateToDayMonthOnly(BasicDate result) {
+        return getT(result.getCalendar().getMonthName(result).getName()) + " " + result.getDay() ;
+        
+    }
+
+    public static String dateToYearType(BasicDate bd) {
+        return getT(bd.getCalendar().getYearType(bd).getName()) + " " + bd.getYear() + " " + getT(bd.getCalendar().getName()+BasicCalendar.INFO_REF);
     }
     
 }

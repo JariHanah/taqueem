@@ -34,6 +34,14 @@ public class AgeOfMoonCalc implements Datable , CalendarsUpdatedListerner{
     GenericLunerCalendar calBlackFajr;
     
     BasicCalendar displayCalendar;
+
+    public BasicCalendar getDisplayCalendar() {
+        return displayCalendar;
+    }
+
+    public void setDisplayCalendar(BasicCalendar displayCalendar) {
+        this.displayCalendar = displayCalendar;
+    }
     BasicDate base;
     City city;
     
@@ -77,7 +85,8 @@ public class AgeOfMoonCalc implements Datable , CalendarsUpdatedListerner{
     @Override
     public void setDate(BasicDate bd) {
         base=bd;
-        long hilal = calHilal30.getLunerIdentifier().getNextMonth(bd.getDate());
+        
+        /*long hilal = calHilal30.getLunerIdentifier().getNextMonth(bd.getDate());
         long black = calBlack.getLunerIdentifier().getNextMonth(bd.getDate());
         long fajr = calBlackFajr.getLunerIdentifier().getNextMonth(bd.getDate());
         long hilal_0 = calHilal_0.getLunerIdentifier().getNextMonth(bd.getDate());
@@ -99,13 +108,10 @@ public class AgeOfMoonCalc implements Datable , CalendarsUpdatedListerner{
         Instant i = Instant.now();
         UI.getCurrent().getPage().retrieveExtendedClientDetails((extendedClientDetails) -> {
             LocalDateTime bt = LocalDateTime.ofInstant(Instant.ofEpochMilli(blackTime), ZoneId.of(ClientTimeZone.getClientZoneId()));
-
             ZonedDateTime zoned = Instant.ofEpochMilli(blackTime).atZone(ZoneId.of(extendedClientDetails.getTimeZoneId()));
-            //nextBlackMoonTime.setValue(Util.getFormet().format(bt));
-            //zone.setValue(zoned.getZone().toString());
-
         });
         //currentDate.setValue(new Date(bd.getDate()).toString());
+//*/
     }
     
     @Override
@@ -136,6 +142,10 @@ public class AgeOfMoonCalc implements Datable , CalendarsUpdatedListerner{
 
     public void setCity(City city) {
         this.city=city;
+    }
+
+    public BasicDate getDate() {
+        return base;
     }
 
     

@@ -2,6 +2,8 @@ package com.alhanah.webcalendar.views;
 
 import com.alhanah.webcalendar.Application;
 import static com.alhanah.webcalendar.Application.getT;
+import static com.alhanah.webcalendar.HanahI18NProvider.AR;
+import com.alhanah.webcalendar.comments.CommentHTML;
 import com.alhanah.webcalendar.info.MyGeoLocation;
 import com.alhanah.webcalendar.view.MyFooter;
 import com.alhanah.webcalendar.view.AgeOfMoon;
@@ -15,6 +17,7 @@ import com.alhanah.webcalendar.views.main.MainView;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.component.HtmlContainer;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.accordion.Accordion;
 import com.vaadin.flow.component.accordion.AccordionPanel;
 import com.vaadin.flow.router.RouteAlias;
@@ -26,7 +29,6 @@ import com.vaadin.flow.server.VaadinRequest;
 import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
 import nasiiCalendar.locationBasid.City;
-import org.vaadin.elmot.flow.sensors.GeoLocation;
 
 @Route(value = "today-date", layout = MainView.class)
 @RouteAlias(value = "", layout = MainView.class)
@@ -39,7 +41,8 @@ public class TodaydateView extends VerticalLayout {
     AgeOfMoon localAge;
     HtmlContainer ageCityText;
     public TodaydateView() {
-        
+        add(CommentHTML.getMeta());
+        add(Application.getSelectedLocale().equals(AR)?CommentHTML.getArabicCommentImportHead():CommentHTML.getEnglishCommentImportHead());
         addClassName("todaydate-view");
         
         MyMemory m=new MyMemory();
@@ -61,14 +64,14 @@ public class TodaydateView extends VerticalLayout {
         Accordion accrd = new Accordion();
         accrd.add(new AccordionPanel(new H4(getT("show-other-calendars")), new ConvertSelector(bd)));
         AgeOfMoon makkah=new AgeOfMoon(City.MAKKA, samiCal);
-        localAge = new AgeOfMoon(MyGeoLocation.getCity(), samiCal);
+        localAge = new AgeOfMoon(Application.getUserCity(), samiCal);
         ageCityText=new H4(getT("city-not-found"));
         AccordionPanel p=new AccordionPanel(ageCityText, localAge);
         accrd.add(p);
         accrd.add(new AccordionPanel(new H4(getT("age-of-moon")+ " "+getT("based-on")+" "+makkah.getCityName()), makkah));
         new MyGeoLocation(this).addValueChangeListener((event) -> {
-            ageCityText.setText(getT("age-of-moon")+ " "+getT("based-on")+" "+Util.getCityName(MyGeoLocation.getCity()));
-            localAge.setCity(MyGeoLocation.getCity());
+            ageCityText.setText(getT("age-of-moon")+ " "+getT("based-on")+" "+Util.getCityName(Application.getUserCity()));
+            localAge.setCity(Application.getUserCity());
             
         });
         add(accrd);
@@ -77,6 +80,15 @@ public class TodaydateView extends VerticalLayout {
         
         //    add(new Span("<iframe src=\"https://taqueem.net\" height=300 width=300> </iframe>"));
         m.append("stop");
+                MainView.instance.setPanel(null);
+
+        UI.getCurrent().addAfterNavigationListener((ane) -> {
+            String page=ane.getLocation().getPath();
+            
+            add(CommentHTML.getCommmentBox(page));
+            //anchor.setHref(ane.getLocation().getPath()+"?" + MyParameters.LANG + "=" + Application.getOtherLocale().getLanguage());
+        });
+        
     }
 
     

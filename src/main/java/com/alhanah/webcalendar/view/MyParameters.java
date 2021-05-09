@@ -12,6 +12,8 @@ package com.alhanah.webcalendar.view;
 public interface MyParameters {
 
     public static String SHOW_MEMORY="mmr";
+    public static String LAT="lat";
+    public static String LONG="long";
     
     String CAL_TYPE = "calType";
     String MILI_TIME = "miliTime";

@@ -156,7 +156,7 @@ public class CalendarGrid extends Grid implements Datable, CalendarsUpdatedListe
             int limit = query.getLimit();
 
             List<WeekBean> weeks = WeekBean.getWeeks(base.getDate() + WEEK * offset, limit);
-            System.err.println("Loading weeks count: " + weeks.size() + " starting: " + offset);
+            //ystem.err.println("Loading weeks count: " + weeks.size() + " starting: " + offset);
 
             return weeks.stream();
         },//;
@@ -169,7 +169,7 @@ public class CalendarGrid extends Grid implements Datable, CalendarsUpdatedListe
 
     @Override
     public void calendarsUpdated(List<BasicCalendar> list) {
-        List<Grid.Column<WeekBean>> c = getColumns();
+        //List<Grid.Column<WeekBean>> c = getColumns();
         cals=new ArrayList<>(list);
         
         //c.forEach(e -> ((MyRenderedCalendarCell) e.getRenderer()).calendarsUpdated(list));

@@ -13,6 +13,7 @@ import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Footer;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Paragraph;
@@ -26,13 +27,14 @@ import java.time.ZoneId;
  *
  * @author hmulh
  */
-public class MyFooter extends Div {
+public class MyFooter extends Footer {
 
     MyRequestReader reader;
     ZoneId zone;
     TextField localTime;
     TextField localZoneText=new TextField("timezone");
     public MyFooter() {
+        
         VaadinRequest vaadinRequest = VaadinService.getCurrentRequest();
         reader = new MyRequestReader(vaadinRequest.getParameterMap());
         localTime = new TextField(getT("local-time"));

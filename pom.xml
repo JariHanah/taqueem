@@ -138,6 +138,7 @@
             <artifactId>vaadin-geo-location-flow-v14</artifactId>
             <version>2.0.1</version>
         </dependency>
+        
         <!-- https://mvnrepository.com/artifact/org.shredzone.commons/commons-suncalc -->
         <dependency>
             <groupId>org.shredzone.commons</groupId>

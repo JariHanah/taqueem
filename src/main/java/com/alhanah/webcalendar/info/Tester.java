@@ -109,7 +109,7 @@ public class Tester {
     }
 
     public static void test() {
-        testHashimi();
+        //testHashimi();
     }
     
     public static void testFatimi(){ 

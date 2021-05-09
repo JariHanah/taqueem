@@ -2,6 +2,7 @@ package com.alhanah.webcalendar.views;
 
 import com.alhanah.webcalendar.Application;
 import static com.alhanah.webcalendar.Application.getT;
+import com.alhanah.webcalendar.beans.Render1LineDate;
 import com.alhanah.webcalendar.info.MyGeoLocation;
 import com.alhanah.webcalendar.view.CommentBox;
 import com.alhanah.webcalendar.view.DayDifference;
@@ -14,6 +15,8 @@ import com.alhanah.webcalendar.views.main.MainView;
 import com.alhanah.webcalendar.view.MyFooter;
 import com.alhanah.webcalendar.info.MyRequestReader;
 import com.alhanah.webcalendar.info.NextSpecialMonths;
+import com.alhanah.webcalendar.view.CycleGrid;
+import com.alhanah.webcalendar.view.MonthStartGrid;
 import com.alhanah.webcalendar.view.MyMemory;
 import com.alhanah.webcalendar.view.Util;
 import com.vaadin.flow.component.HtmlContainer;
@@ -25,10 +28,12 @@ import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.server.VaadinRequest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
 import nasiiCalendar.Months;
+import nasiiCalendar.locationBasid.City;
 
 @Route(value = "ramadhan", layout = MainView.class)
 @PageTitle("موعد رمضان")
@@ -40,7 +45,8 @@ public class RamadhanView extends Div {
     HilalBearth bearth, bearthLocal;
     MyRequestReader reader;
     NextSpecialMonths next;
-
+    MonthStartGrid monthStartGrid;
+    CycleGrid monthGrid;
     public RamadhanView() {
         MyMemory m=new MyMemory();
         reader = new MyRequestReader(VaadinRequest.getCurrent().getParameterMap());
@@ -55,7 +61,7 @@ public class RamadhanView extends Div {
         }
         bearth = new HilalBearth();
 
-        bearthLocal = new HilalBearth(MyGeoLocation.getCity());
+        bearthLocal = new HilalBearth(Application.getUserCity());
         BasicCalendar[] cals = new BasicCalendar[calsList.size()];
         calsSelect = new Select<BasicCalendar>(calsList.toArray(cals));
         calsSelect.setValue(Application.getFactory().getSamiCalendar());
@@ -74,24 +80,34 @@ public class RamadhanView extends Div {
         add(calsSelect);
         difDay = new DayDifference(getT("difference"), bd, next);
         add(difDay);
-        HtmlContainer h = new H3(getT("start-of-fasting") + " " + getT("based-on") + " " + Util.getCityName(MyGeoLocation.getCity()));
+        HtmlContainer h = new H3(getT("start-of-fasting") + " " + getT("based-on") + " " + Util.getCityName(Application.getUserCity()));
         add(h);
         add(bearthLocal);
         add(new H3(getT("start-of-fasting") + " " + getT("based-on") + " " + Util.getCityName(bearth.getCalc().getCity())));
         add(bearth);
-
+        
+        List<BasicCalendar>list=calsList.subList(0, 1);
+        list.add(Application.getFactory().getAD());
+        monthGrid=new CycleGrid(bd, getT(Months.RAMADHAN.getName()), new Render1LineDate(), CycleGrid.Cycle.MONTH);
+        monthGrid.calendarsUpdated(list);
+        add(monthGrid);
+        
+        
         bearth.setDate(next.getNext(bd));
-
+        
         bearthLocal.setDate(next.getNext(bd));
         Button test = new Button("Hi");
         
         new MyGeoLocation(bearthLocal).addValueChangeListener((event) -> {
-            bearthLocal.setCity(MyGeoLocation.getCity());
-            h.setText(getT("start-of-fasting") + " " + getT("based-on") + " " + Util.getCityName(MyGeoLocation.getCity()));
+            City c=Application.getUserCity();
+            if(!c.equals(bearthLocal.getCity())){
+                bearthLocal.setCity(c);
+                h.setText(getT("start-of-fasting") + " " + getT("based-on") + " " + Util.getCityName(c));
+            }
 
         });
         
-
+        MainView.instance.setPanel(null);
         add(new CommentBox());
         add(new MyFooter());
         m.append("stop");
@@ -100,9 +116,10 @@ public class RamadhanView extends Div {
     public void updateView() {
         BasicDate bd = calsSelect.getValue().getDate(reader.getSelectedTime());
         difDay.setDate(bd);
-
+        monthStartGrid.calendarsUpdated(Arrays.asList(calsSelect.getValue()));
+        monthStartGrid.setDate(bd);
         bearth.setDate(next.getNext(bd));
-        bearthLocal.setCity(MyGeoLocation.getCity());
+        bearthLocal.setCity(Application.getUserCity());
         bearthLocal.setDate(next.getNext(bd));
     }
 

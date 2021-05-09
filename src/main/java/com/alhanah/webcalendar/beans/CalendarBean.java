@@ -42,9 +42,14 @@ public class CalendarBean {
     }
 
     public static List<CalendarBean> getBeans(List<BasicCalendar> list, List<BasicCalendar>show) {
+        list.removeAll(show);
         List<CalendarBean> result = new ArrayList<CalendarBean>();
+        for (BasicCalendar b : show) {
+            result.add(new CalendarBean(b, true));
+            //System.err.println(b+"\t"+show.contains(b));
+        }
         for (BasicCalendar b : list) {
-            result.add(new CalendarBean(b, show.contains(b)));
+            result.add(new CalendarBean(b, false));
             //System.err.println(b+"\t"+show.contains(b));
         }
         return result;

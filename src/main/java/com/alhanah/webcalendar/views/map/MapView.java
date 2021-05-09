@@ -27,10 +27,7 @@ public class MapView extends VerticalLayout {
         map.setSizeFull();
         map.setView(55.0, 10.0, 4);
         add(map);
-        MyGeoLocation geo=new MyGeoLocation((HorizontalLayout)null);
-        geo.addValueChangeListener((event) -> {
-            map.setView(event.getValue().getLatitude(), event.getValue().getLongitude(), 20);
-        });
+        
         map.addAttachListener(new ComponentEventListener<AttachEvent>(){
             @Override
             public void onComponentEvent(AttachEvent t) {
@@ -47,6 +44,6 @@ public class MapView extends VerticalLayout {
             }
             
         });
-        add(geo);
+        
     }
 }

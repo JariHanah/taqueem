@@ -8,6 +8,7 @@ package com.alhanah.webcalendar.info;
 import com.alhanah.webcalendar.Application;
 import com.alhanah.webcalendar.view.MyParameters;
 import static com.alhanah.webcalendar.HanahI18NProvider.AR;
+import com.helger.commons.locale.country.ECountry;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.server.VaadinSession;
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import nasiiCalendar.BasicCalendar;
+import nasiiCalendar.locationBasid.City;
+import org.hibernate.validator.internal.util.logging.Log;
 
 /**
  *
@@ -41,23 +44,24 @@ public class MyRequestReader {
 
     BasicCalendar base = null;
     List<BasicCalendar> conversions = new ArrayList<BasicCalendar>();
+    List<City> cities = new ArrayList<City>();
     long selectedTime = 0;
     Locale locale;
-    boolean showMemory=false;
+    boolean showMemory = false;
     int raw = 0;
     int offset = 0;
     private Date clientDate;
     private String clientZoneId;
+
     public MyRequestReader(Map<String, String[]> params) {
         UI.getCurrent().getPage().retrieveExtendedClientDetails(extendedClientDetails -> {
             raw = extendedClientDetails.getRawTimezoneOffset();
             offset = extendedClientDetails.getTimezoneOffset();
-            clientDate=extendedClientDetails.getCurrentDate();
-            clientZoneId= extendedClientDetails.getTimeZoneId();
-            
-            
+            clientDate = extendedClientDetails.getCurrentDate();
+            clientZoneId = extendedClientDetails.getTimeZoneId();
+
         });
-        
+
         this.params = params;
         readRequest();
     }
@@ -65,12 +69,15 @@ public class MyRequestReader {
     public BasicCalendar getCalendar() {
         return base;
     }
-    public int getOffSet(){
+
+    public int getOffSet() {
         return offset;
     }
-    public int getRaw(){
+
+    public int getRaw() {
         return raw;
     }
+
     public List<BasicCalendar> getCalendars() {
         return conversions;
     }
@@ -80,24 +87,43 @@ public class MyRequestReader {
     }
 
     void readRequest() {
+        String[] lats = params.get(MyParameters.LAT);
+        String[] longs = params.get(MyParameters.LONG);
+        List<City>cities=new ArrayList<>();
+        if(lats!=null&longs!=null)
+        for (int i = 0; i < Math.min(lats.length, longs.length); i++) {
+            try {
+                long lat = Long.parseLong(lats[i]);
+                long lon = Long.parseLong(longs[i]);
+                City c = Application.getCityList().getClosestCity(lat, lon);
+                cities.add(c);
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
+        }
+        if(cities.size()>0){
+            Application.setSelectedCities(cities);
+        }
         String[] cals = params.get(MyParameters.CONVERTS);
-    //    System.err.println("params converts: " + cals);
+        //    System.err.println("params converts: " + cals);
         if (cals != null) {
             for (String x : cals) {
-            //    System.err.println("\t" + x);
+                //    System.err.println("\t" + x);
                 BasicCalendar bc = Application.getFactory().getCalendar(x);
-           //     System.err.println("bc: " + bc);
+                //     System.err.println("bc: " + bc);
                 if (bc != null) {
                     conversions.add(bc);
                 }
             }
+            Application.setSelectedCalendars(conversions);
         } else {
-            conversions.addAll(Application.getFactory().getCalendars());
+            conversions.addAll(Application.getSelectedCalendars());
         }
         String[] myTime = params.get(MyParameters.MILI_TIME);
-        selectedTime = System.currentTimeMillis();
+        selectedTime = Application.getSelectedTime();
         if (myTime != null) {
             selectedTime = Long.parseLong(myTime[0]);
+            Application.setSelectedTime(selectedTime);
         }
         String[] type = params.get(MyParameters.CAL_TYPE);
         if (type != null) {
@@ -118,16 +144,35 @@ public class MyRequestReader {
         } else {
             locale = AR;
         }
-        String []showM = params.get(MyParameters.SHOW_MEMORY);
+        String[] showM = params.get(MyParameters.SHOW_MEMORY);
         //System.err.println("show: "+showM);
-        if(showM==null)return;
+        if (showM == null) {
+            return;
+        }
         //System.err.println("show[0]: "+showM[0]);
-        if(showM[0].equals("t")){
+        if (showM[0].equals("t")) {
             VaadinSession.getCurrent().setAttribute(MyParameters.SHOW_MEMORY, true);
-        }else {
+        } else {
             VaadinSession.getCurrent().setAttribute(MyParameters.SHOW_MEMORY, false);
         }
 
+    }
+
+    public String getLink() {
+        StringBuilder sb = new StringBuilder();
+
+        for (BasicCalendar b : Application.getSelectedCalendars()) {
+            sb.append("&" + MyParameters.CONVERTS + "=" + b.getName());
+        }
+        for(City c:Application.getSelectedCities()){
+            sb.append("&"+MyParameters.LAT+"="+c.getLat());
+            sb.append("&"+MyParameters.LONG+"="+c.getLon());
+            
+        }
+        sb.append("&"+MyParameters.MILI_TIME+"="+Application.getSelectedTime());
+        sb.append("&"+MyParameters.CAL_TYPE+"="+base.getName());
+        sb.append("&"+MyParameters.LANG+"="+Application.getSelectedLocale().getLanguage());
+        return sb.toString();
     }
 
     public Locale getLocale() {
@@ -135,9 +180,11 @@ public class MyRequestReader {
     }
 
     public boolean showMemory() {
-        Boolean s= (Boolean) VaadinSession.getCurrent().getAttribute(MyParameters.SHOW_MEMORY);
+        Boolean s = (Boolean) VaadinSession.getCurrent().getAttribute(MyParameters.SHOW_MEMORY);
         //System.err.println("is show?: "+s);
-        if(s==null)return false;
+        if (s == null) {
+            return false;
+        }
         return s;
     }
 }

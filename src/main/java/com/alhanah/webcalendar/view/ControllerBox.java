@@ -14,11 +14,15 @@ import com.vaadin.flow.component.ItemLabelGenerator;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H4;
-import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import nasiiCalendar.BasicCalendar;
 import static nasiiCalendar.BasicCalendar.DAY;
@@ -29,30 +33,33 @@ import nasiiCalendar.PeriodType;
  *
  * @author hmulh
  */
-public class ControllerBox extends com.vaadin.flow.component.orderedlayout.HorizontalLayout implements Datable {
+public class ControllerBox extends VerticalLayout implements Datable {
 
     BasicDate selectedDate;
     List<Datable> datableList;
-
-    public ControllerBox(BasicDate bd) {
-
+    
+    List<BasicCalendar> list;
+    public ControllerBox(BasicDate bd, List<BasicCalendar>list) {
+        this.list=list;
         this.selectedDate = bd;
         datableList = new ArrayList<>();
-        //add(getSelectDatePanel(changeSource));
-        //    updateView();
-        //   notifyListeners();
+        
     }
 
+    public ControllerBox(BasicDate bd) {
+        this(bd, Arrays.asList(bd.getCalendar()));
+    }
+    
     private Select<BasicCalendar> getCalendarSelect() {
 
         Select<BasicCalendar> calSelect = new Select<BasicCalendar>();
-
+        
         calSelect.setItems(Application.getFactory().getCalendars());
         calSelect.setValue(selectedDate.getCalendar());
         calSelect.setLabel(getT("cal-type"));
         calSelect.setItemLabelGenerator(
                 new LabelCalendarGenerator());
-
+        
         return calSelect;
 
     }
@@ -75,7 +82,7 @@ public class ControllerBox extends com.vaadin.flow.component.orderedlayout.Horiz
                 calSelectFrom.setValue(b.getCalendar());
             }
         };
-
+        calSelectFrom.setValue(selectedDate.getCalendar());
         addDatable(s);
         return calSelectFrom;
     }
@@ -98,6 +105,8 @@ public class ControllerBox extends com.vaadin.flow.component.orderedlayout.Horiz
                 calSelectTo.setHelperText(dateToString(calSelectTo.getValue().getDate(selectedDate.getDate())));
             }
         });
+        if(list.size()>1)
+        calSelectTo.setValue(list.get(1));
         return calSelectTo;
     }
     String width = "150px";
@@ -187,11 +196,9 @@ public class ControllerBox extends com.vaadin.flow.component.orderedlayout.Horiz
                 daysSelect.setHelperText(selectedDate.getCalendar().getMonthLength(selectedDate) + " " + getT("days"));
             }
         };
-        
-        s.add(
-                new H4(getT("select-day-month-year")));
-        s.add(
-                new Div(yearsSelect, monthsSelect, daysSelect));//, submit));
+
+        //s.add(new H4(getT("select-day-month-year")));
+        s.add(new Div(yearsSelect, monthsSelect, daysSelect));//, submit));
 
         addDatable(s);
         s.setDate(selectedDate);
@@ -200,38 +207,121 @@ public class ControllerBox extends com.vaadin.flow.component.orderedlayout.Horiz
 
     public Component getDayChangePanel() {
         WeekDay weekDayTfext = new WeekDay(selectedDate);
-        final TextField weekDayText=new TextField(getT("selected-date"));
+        final TextField weekDayText = new TextField(getT("selected-date"));
         weekDayText.setReadOnly(true);
         MySpan c = new MySpan() {
             public void setDate(BasicDate d) {
                 String dateString = Application.getFactory().getWeekDay(d);
-                weekDayText.setLabel(getT("selected-date")+" "+getT(dateString));
+                weekDayText.setLabel(getT("selected-date") + " " + getT(dateString));
                 weekDayText.setValue(dateToString(d));
                 weekDayText.setHelperText(dateToString(Application.getFactory().getGregoryCalendar().getDate(d.getDate())));
             }
         };
-        Button nextDay = new Button(getT("next-day"), (event) -> {
+        Button nextDay = new Button("D",new Icon(VaadinIcon.ANGLE_UP), (event) -> {
             selectedDate = selectedDate.getCalendar().nextDay(selectedDate);
 
             notifyListeners();
         });
-        Button currentDay = new Button(getT("current-day"), (event) -> {
+        Button currentDay = new Button(new Icon(VaadinIcon.CALENDAR), (event) -> {
             selectedDate = selectedDate.getCalendar().getDate(System.currentTimeMillis());
 
             notifyListeners();
         });
-        Button previousDay = new Button(getT("previous-day"), (event) -> {
+        Button previousDay = new Button("D",new Icon(VaadinIcon.ANGLE_DOWN), (event) -> {
             selectedDate = selectedDate.getCalendar().getDate(selectedDate.getDate() - DAY);
             notifyListeners();
         });
-        c.add(previousDay, currentDay, nextDay, weekDayText);
+        c.add(previousDay, currentDay, nextDay);//, weekDayText);
+        addDatable(c);
+        c.setDate(selectedDate);
+        return c;
+
+    }
+    public Component getQuickDateChangePanel() {
+        WeekDay weekDayTfext = new WeekDay(selectedDate);
+        final TextField weekDayText = new TextField(getT("selected-date"));
+        weekDayText.setReadOnly(true);
+        MySpan c = new MySpan() {
+            public void setDate(BasicDate d) {
+                String dateString = Application.getFactory().getWeekDay(d);
+                weekDayText.setLabel(getT("selected-date") + " " + getT(dateString));
+                weekDayText.setValue(dateToString(d));
+                weekDayText.setHelperText(dateToString(Application.getFactory().getGregoryCalendar().getDate(d.getDate())));
+            }
+        };
+        Button nextDay = new Button(new Icon(VaadinIcon.ANGLE_UP), (event) -> {
+            selectedDate = selectedDate.getCalendar().nextDay(selectedDate);
+
+            notifyListeners();
+        });
+        Button currentDay = new Button(new Icon(VaadinIcon.CALENDAR), (event) -> {
+            selectedDate = selectedDate.getCalendar().getDate(System.currentTimeMillis());
+
+            notifyListeners();
+        });
+        Button previousDay = new Button(new Icon(VaadinIcon.ANGLE_DOWN), (event) -> {
+            selectedDate = selectedDate.getCalendar().getDate(selectedDate.getDate() - DAY);
+            notifyListeners();
+        });
+        Button nextYear = new Button(new Icon(VaadinIcon.ANGLE_DOUBLE_UP), (event) -> {
+            selectedDate = selectedDate.getCalendar().getDate(selectedDate.getYear() + 1, selectedDate.getMonth(), selectedDate.getDay());
+
+            notifyListeners();
+        });
+       
+        
+        Button previousYear = new Button(new Icon(VaadinIcon.ANGLE_DOUBLE_DOWN), (event) -> {
+            selectedDate = selectedDate.getCalendar().getDate(selectedDate.getYear() - 1, selectedDate.getMonth(), selectedDate.getDay());
+            notifyListeners();
+        });
+        c.setPadding(false);
+        c.add(previousYear,previousDay, currentDay, nextDay, nextYear);//, weekDayText);
         addDatable(c);
         c.setDate(selectedDate);
         return c;
 
     }
 
-    class MySpan extends Span implements Datable {
+    public HorizontalLayout getYearChangePanel() {
+        final TextField weekDayText = new TextField(getT("selected-date"));
+        weekDayText.setReadOnly(true);
+        MySpan c = new MySpan() {
+            public void setDate(BasicDate d) {
+                String dateString = Application.getFactory().getWeekDay(d);
+                weekDayText.setLabel(getT("selected-date") + " " + getT(dateString));
+                weekDayText.setValue(dateToString(d));
+                weekDayText.setHelperText(dateToString(Application.getFactory().getGregoryCalendar().getDate(d.getDate())));
+            }
+        };
+        
+        //Button nextDay = new Button(getT("next-year"), (event) -> {
+        Button nextDay = new Button("Y",new Icon(VaadinIcon.ANGLE_DOUBLE_UP), (event) -> {
+            selectedDate = selectedDate.getCalendar().getDate(selectedDate.getYear() + 1, selectedDate.getMonth(), selectedDate.getDay());
+
+            notifyListeners();
+        });
+        Button currentDay = new Button(new Icon(VaadinIcon.CALENDAR), (event) -> {
+            BasicDate b = selectedDate.getCalendar().getDate(System.currentTimeMillis());
+
+            selectedDate = selectedDate.getCalendar().getDate(b.getYear(), selectedDate.getMonth(), selectedDate.getDay());
+
+            notifyListeners();
+        });
+        
+        Button previousDay = new Button("Y",new Icon(VaadinIcon.ANGLE_DOUBLE_DOWN), (event) -> {
+            selectedDate = selectedDate.getCalendar().getDate(selectedDate.getYear() - 1, selectedDate.getMonth(), selectedDate.getDay());
+            notifyListeners();
+        });
+        
+        c.add(previousDay, currentDay, nextDay);
+        addDatable(c);
+        c.setDate(selectedDate);
+        return c;
+
+    }
+
+
+    class MySpan extends HorizontalLayout implements Datable {
 
         @Override
         public void setDate(BasicDate bd) {

@@ -5,7 +5,11 @@
  */
 package com.alhanah.webcalendar.view;
 
+import com.alhanah.webcalendar.Application;
+import static com.alhanah.webcalendar.HanahI18NProvider.AR;
+import com.alhanah.webcalendar.comments.CommentHTML;
 import com.vaadin.flow.component.Html;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H4;
@@ -19,6 +23,7 @@ public class CommentBox extends Div {
     public CommentBox() {
         //prepare();
        // showExportedComp();
+       addFaceBook();
     }
 
     public void prepare() {
@@ -54,6 +59,17 @@ public class CommentBox extends Div {
         add(h2);
         add(h3);
         add(new H4("Finished Testing Component"));
+    }
+
+    private void addFaceBook() {
+        add(CommentHTML.getMeta());
+        add(Application.getSelectedLocale().equals(AR)?CommentHTML.getArabicCommentImportHead():CommentHTML.getEnglishCommentImportHead());
+        UI.getCurrent().addAfterNavigationListener((ane) -> {
+            String page=ane.getLocation().getPath();
+            
+            add(CommentHTML.getCommmentBox(page));
+            //anchor.setHref(ane.getLocation().getPath()+"?" + MyParameters.LANG + "=" + Application.getOtherLocale().getLanguage());
+        });
     }
 
 }

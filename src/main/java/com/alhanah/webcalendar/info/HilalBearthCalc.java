@@ -21,9 +21,9 @@ import nasiiCalendar.locationBasid.UmAlquraStandardV1423;
  */
 public class HilalBearthCalc extends Span implements Datable {
 
-    LunerIdentifier hilalCal;
-    LunerIdentifier blackCal;
-    LunerIdentifier fajrCal;
+    LunerIdentifier calHilal;
+    LunerIdentifier calBlack;
+    LunerIdentifier calFajr;
     LunerIdentifier calHilal_0;
     
     int margin=5;
@@ -36,21 +36,21 @@ public class HilalBearthCalc extends Span implements Datable {
 
     public HilalBearthCalc(City city) {
         calHilal_0 = new HilalByMinutesStandard(0, city, Application.getUserZoneId());
-        hilalCal = new HilalByMinutesStandard(city, Application.getUserZoneId());
-        blackCal = new UmAlquraStandardV1423(city, Application.getUserZoneId());
-        fajrCal = new BlackFajrStandard(city, Application.getUserZoneId());
+        calHilal = new HilalByMinutesStandard(city, Application.getUserZoneId());
+        calBlack = new UmAlquraStandardV1423(city, Application.getUserZoneId());
+        calFajr = new BlackFajrStandard(city, Application.getUserZoneId());
     }
     public long getNextHilal0(){
         return calHilal_0.getNextMonth(base.getDate()-margin*DAY);
     }
     public long getNextHilal30(){
-        return hilalCal.getNextMonth(base.getDate()-margin*DAY);
+        return calHilal.getNextMonth(base.getDate()-margin*DAY);
     }
     public long getNextBlack(){
-        return blackCal.getNextMonth(base.getDate()-margin*DAY);
+        return calBlack.getNextMonth(base.getDate()-margin*DAY);
     }
     public long getNextBlackFajr(){
-        return fajrCal.getNextMonth(base.getDate()-margin*DAY);
+        return calFajr.getNextMonth(base.getDate()-margin*DAY);
     }
     @Override
     public void setDate(BasicDate bd2) {
@@ -63,9 +63,9 @@ public class HilalBearthCalc extends Span implements Datable {
     }
     public void setCity(City c){
         calHilal_0.setCity(c);
-        hilalCal.setCity(c);
-        blackCal.setCity(c);
-        fajrCal.setCity(c);
+        calHilal.setCity(c);
+        calBlack.setCity(c);
+        calFajr.setCity(c);
     }
 
     public City getCity() {

@@ -35,27 +35,16 @@ public class MyGeoLocation extends GeoLocation{
         
     }
     
-    
-
-    public static City getCity() {
-        City city = (City) VaadinSession.getCurrent().getAttribute("city");
-        if (city == null) {
-            return City.MAKKA;
-        }
-        return city;
-    }
-
     private void setup() {
         GeoLocation geoLocation=this;
         geoLocation.setWatch(true);
         geoLocation.setHighAccuracy(true);
         geoLocation.setTimeout(100000);
         geoLocation.setMaxAge(200000);
-        System.err.println("I think geo is called");
         geoLocation.addValueChangeListener(e -> {
             City city = Application.getCityList().getClosestCity(e.getValue().getLatitude(), e.getValue().getLongitude());
-            VaadinSession.getCurrent().setAttribute("city", city);
-            System.err.println("MainGeo Updated!..");
+            Application.setUserCity(city);
+            
         });//*/
         geoLocation.addErrorListener(e -> {
             System.err.println("GeoLocation wnet wrong......." + e.getMessage() + "\n" + e.getCode() + "\n" + e.toString());

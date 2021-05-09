@@ -3,6 +3,7 @@ package com.alhanah.webcalendar.views.main;
 import com.alhanah.webcalendar.Application;
 import static com.alhanah.webcalendar.Application.getT;
 import com.alhanah.webcalendar.info.MyRequestReader;
+import com.alhanah.webcalendar.view.HasBox;
 import java.util.Optional;
 
 import com.vaadin.flow.component.Component;
@@ -27,8 +28,10 @@ import com.alhanah.webcalendar.views.AboutView;
 import com.alhanah.webcalendar.view.MyParameters;
 import com.alhanah.webcalendar.views.FatimiView;
 import com.alhanah.webcalendar.views.InfoView;
+import com.alhanah.webcalendar.views.PrivacyPolicy;
 import com.alhanah.webcalendar.views.RamadhanView;
 import com.alhanah.webcalendar.views.SamiView;
+import com.alhanah.webcalendar.views.ToS;
 import com.alhanah.webcalendar.views.TodaydateView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.JsModule;
@@ -41,7 +44,6 @@ import com.vaadin.flow.router.RouteData;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.flow.server.VaadinRequest;
-import static com.vaadin.flow.server.VaadinRequest.getCurrent;
 import java.util.List;
 
 /**
@@ -49,21 +51,26 @@ import java.util.List;
  */
 @PWA(name = "Taqueem.net", shortName = "Taqueem", enableInstallPrompt = true)
 @JsModule("./styles/shared-styles.js")
-@Theme(value = Lumo.class, variant = Lumo.DARK)
+@Theme(value = Lumo.class, variant = Lumo.LIGHT)
 @CssImport("./views/main/main-view.css")
 public class MainView extends AppLayout implements PageConfigurator {
 
     private final Tabs menu;
     private H1 viewTitle;
-
+    public static MainView instance;
+    
+    HorizontalLayout panel;
     public MainView() {
         MyRequestReader reader = new MyRequestReader(VaadinRequest.getCurrent().getParameterMap());
         Application.setLocale(reader.getLocale());
         setPrimarySection(AppLayout.Section.DRAWER);
+        panel=new HorizontalLayout();
         addToNavbar(true, createHeaderContent());
+        //System.err.println("called addToNavBar!"+(++count)+"\t"+(++coo));
         menu = createMenu();
         addToDrawer(createDrawerContent(menu));
         this.setDrawerOpened(true);
+        instance=this;
         
     }
     
@@ -77,10 +84,17 @@ public class MainView extends AppLayout implements PageConfigurator {
         layout.add(new DrawerToggle());
         viewTitle = new H1();
         layout.add(viewTitle);
-        layout.add(new Avatar());
+        layout.add(panel);
+     
+        
+        layout.add(new Avatar("name"));
+        
         return layout;
     }
-
+    public void setPanel(Component c){
+        panel.removeAll();
+        if(c!=null)panel.add(c);
+    }
     private Component createDrawerContent(Tabs menu) {
         VerticalLayout layout = new VerticalLayout();
         layout.setSizeFull();
@@ -108,7 +122,9 @@ public class MainView extends AppLayout implements PageConfigurator {
         UI.getCurrent().addAfterNavigationListener((ane) -> {
             
             anchor.setHref(ane.getLocation().getPath()+"?" + MyParameters.LANG + "=" + Application.getOtherLocale().getLanguage());
+            
         });
+        
         List<RouteData> routes = RouteConfiguration.forSessionScope().getAvailableRoutes();
         
         return tabs;
@@ -125,7 +141,10 @@ public class MainView extends AppLayout implements PageConfigurator {
           //  createTab(getT("map-view"), MapView.class),
             //    createTab(getT("calendarList"), CalendarListView.class),
             //   createTab(getT("Master-Detail"), MasterDetailView.class), 
-            createTab(getT("About_page"), AboutView.class)};
+            createTab(getT("About_page"), AboutView.class),
+            createTab(getT("view-terms-of-service"), ToS.class),
+            createTab(getT("view-privacy"), PrivacyPolicy.class)};
+        
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {

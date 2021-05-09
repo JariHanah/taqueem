@@ -46,10 +46,10 @@ public class AgeOfMoon extends HorizontalLayout implements Datable , CalendarsUp
     MyRequestReader reader;
     BasicCalendar displayCalendar;
     
-    final String AGE_OF_HILAL_0="age-of-hilal_0";
-    final String AGE_OF_HILAL="age-of-hilal";
-    final String AGE_OF_BLACK="age-of-black";
-    final String AGE_OF_FAJR="age-of-fajr";
+    public static final String AGE_OF_HILAL_0="age-of-hilal_0";
+    public static final String AGE_OF_HILAL="age-of-hilal";
+    public static final String AGE_OF_BLACK="age-of-black";
+    public static final String AGE_OF_FAJR="age-of-fajr";
     H3 h3;
     public AgeOfMoon() {
         this(City.MAKKA, Application.getFactory().getGregoryCalendar());
@@ -147,6 +147,7 @@ public class AgeOfMoon extends HorizontalLayout implements Datable , CalendarsUp
     }
 
     public void setCity(City city) {
+        if(moonCalc.getCity().equals(city))return;
         moonCalc.setCity(city);
         h3.removeAll();
         h3.setText(getT("age-of-moon") + " " + getT("based-on") + " " + getCityName());

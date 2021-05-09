@@ -15,6 +15,7 @@ import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.TextField;
+import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
 import nasiiCalendar.locationBasid.City;
 
@@ -38,7 +39,7 @@ public class HilalBearth extends com.vaadin.flow.component.orderedlayout.Horizon
 
     public HilalBearth(City city) {
         calc=new HilalBearthCalc(city);
-        
+        calc.setDate(Application.getFactory().getCalendar(BasicCalendar.GREG_ID).getDate(System.currentTimeMillis()));
         textHilalAge_0 = new TextField(getT("age-of-hilal_0"), "", "what");
         hilalAgeText = new TextField(getT("age-of-hilal"), "", "what");
         blackAgeText = new TextField(getT("age-of-black"), "", "what");
@@ -74,12 +75,17 @@ public class HilalBearth extends com.vaadin.flow.component.orderedlayout.Horizon
     }
 
     public void setCity(City city) {
+        if(calc.getCity().equals(city))return;
         calc.setCity(city);
         setDate(calc.getDate());
     }
 
     public HilalBearthCalc getCalc() {
         return calc;
+    }
+
+    public City getCity() {
+        return calc.getCity();
     }
 
 }

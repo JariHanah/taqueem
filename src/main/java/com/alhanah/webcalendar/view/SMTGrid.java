@@ -7,9 +7,11 @@ package com.alhanah.webcalendar.view;
 
 import com.alhanah.webcalendar.Application;
 import static com.alhanah.webcalendar.Application.getT;
-import com.alhanah.webcalendar.info.ClientTimeZone;
+import com.alhanah.webcalendar.info.AgeOfMoonCalc;
 import com.alhanah.webcalendar.info.Datable;
 import com.alhanah.webcalendar.info.SMTData;
+import static com.alhanah.webcalendar.view.AgeOfMoon.AGE_OF_HILAL;
+import static com.alhanah.webcalendar.view.AgeOfMoon.AGE_OF_HILAL_0;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.dnd.GridDragEndEvent;
@@ -23,7 +25,6 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,7 +51,7 @@ public class SMTGrid extends Grid<SMTData> implements Datable, CalendarsUpdatedL
         setRowsDraggable(true);
         setSelectionMode(Grid.SelectionMode.NONE);
         setClassName("longcalendar");
- /*       Grid.Column<SMTData> sort = addComponentColumn((source) -> {
+        /*       Grid.Column<SMTData> sort = addComponentColumn((source) -> {
             Icon edit = new Icon(VaadinIcon.SORT);
             return edit;
 
@@ -58,14 +59,14 @@ public class SMTGrid extends Grid<SMTData> implements Datable, CalendarsUpdatedL
 //*/
         Grid.Column<SMTData> selectedColumn = addComponentColumn((source) -> {
             SMTData item = source;
-            //System.err.println("item: "+item.getCity()+" "+item.getFajrRiseText());
-            VerticalLayout v=new VerticalLayout();
+            //System.err.println("item: "+item.getCity()+" "+item.getFajrRise());
+            VerticalLayout v = new VerticalLayout();
             v.add(new Icon(VaadinIcon.SORT));
             v.add(new Label(Util.getCityName(item.getCity())));
             Label l = new Label();
-        //    l.setWidth(width);
-            l.setText(new Date(item.getFajrRiseText()).toString());
-            l.setText(getT("fajrrise-time")+" "+Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(item.getFajrRiseText()), Application.getUserZoneId())));
+            //    l.setWidth(width);
+            l.setText(new Date(item.getFajrRise()).toString());
+            l.setText(getT("fajrrise-time") + " " + Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(item.getFajrRise()), Application.getUserZoneId())));
 
             Util.makeLTR(l);
             v.add(l);
@@ -80,21 +81,21 @@ public class SMTGrid extends Grid<SMTData> implements Datable, CalendarsUpdatedL
             Label l1 = new Label();
             Label l2 = new Label();
             Label l3 = new Label();
-        //    l1.setWidth(width);
-          //  l2.setWidth(width);
+            //    l1.setWidth(width);
+            //  l2.setWidth(width);
             //l3.setWidth(width);
-            
+
             try {
                 long info = item.getSunText();
-                l1.setText(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(info), Application.getUserZoneId()))+" "+getT("sun"));
-            }catch(RuntimeException e){
+                l1.setText(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(info), Application.getUserZoneId())) + " " + getT("sun"));
+            } catch (RuntimeException e) {
                 l1.setText(getT("sun-not-set"));
             }
-            try{
-                long info = item.getMoonText();
-                l2.setText(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(info), Application.getUserZoneId()))+" "+getT("moon"));
-                int day = (int) ((item.getMoonText() - item.getSunText()) / MINUTE);
-                l3.setText(day +" "+ getT("minutes"));
+            try {
+                long info = item.getMoonSet();
+                l2.setText(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(info), Application.getUserZoneId())) + " " + getT("moon"));
+                int day = (int) ((item.getMoonSet() - item.getSunText()) / MINUTE);
+                l3.setText(day + " " + getT("minutes"));
             } catch (RuntimeException e) {
                 l2.setText(getT("moon-not-set"));
                 l3.setText(getT("moon-not-set"));
@@ -104,32 +105,31 @@ public class SMTGrid extends Grid<SMTData> implements Datable, CalendarsUpdatedL
             v.add(l2);
             v.add(l3);
 
-            
             return v;
 
         }).setHeader(getT("time-moon-sun-set")).setFlexGrow(1).setAutoWidth(true);
-        
+
         Grid.Column<SMTData> rise = addComponentColumn((source) -> {
             SMTData item = source;
             VerticalLayout v = new VerticalLayout();
             Label l1 = new Label();
             Label l2 = new Label();
             Label l3 = new Label();
-        //    l1.setWidth(width);
-          //  l2.setWidth(width);
+            //    l1.setWidth(width);
+            //  l2.setWidth(width);
             //l3.setWidth(width);
-            
+
             try {
-                long info = item.getSunRiseText();
-                l1.setText(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(info), Application.getUserZoneId()))+" "+getT("sun"));
-            }catch(RuntimeException e){
+                long info = item.getSunRise();
+                l1.setText(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(info), Application.getUserZoneId())) + " " + getT("sun"));
+            } catch (RuntimeException e) {
                 l1.setText(getT("sun-not-rise"));
             }
-            try{
-                long info = item.getMoonRiseText();
-                l2.setText(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(info), Application.getUserZoneId()))+" "+getT("moon"));
-                int day = (int) ((item.getMoonRiseText()- item.getSunRiseText()) / MINUTE);
-                l3.setText(day +" "+ getT("minutes"));
+            try {
+                long info = item.getMoonRise();
+                l2.setText(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(info), Application.getUserZoneId())) + " " + getT("moon"));
+                int day = (int) ((item.getMoonRise() - item.getSunRise()) / MINUTE);
+                l3.setText(day + " " + getT("minutes"));
             } catch (RuntimeException e) {
                 l2.setText(getT("moon-not-rise"));
                 l3.setText(getT("moon-not-rise"));
@@ -139,18 +139,47 @@ public class SMTGrid extends Grid<SMTData> implements Datable, CalendarsUpdatedL
             v.add(l2);
             v.add(l3);
 
-            
             return v;
 
         }).setHeader(getT("time-moon-sun-rise")).setFlexGrow(1).setAutoWidth(true);
-        
-      /*  Grid.Column<SMTData> calendarNameColumn = addComponentColumn((source) -> {
+        Grid.Column<SMTData> hilalBeath = addComponentColumn((source) -> {
+            SMTData item2 = source;
+            AgeOfMoonCalc moonCalc = item2.getAgeOfMoonCalc();
+            VerticalLayout v = new VerticalLayout();
+            Label l1 = new Label();
+            Label l2 = new Label();
+            Label l3 = new Label();
+            Label l4 = new Label();
+            BasicDate h1 = null;
+            //System.err.println(item2.getDate()+"\n\t"+item2.getAgeMoonCalc().getDate());
+            h1 = moonCalc.getHilalCycle().getDate(item2.getDate().getDate());
+            l1.setText(getCalc(h1) + " " + getT(AGE_OF_HILAL));
+
+            h1 = moonCalc.getHilal0Cycle().getDate(item2.getDate().getDate());
+            l2.setText(getCalc(h1) + " " + getT(AGE_OF_HILAL_0));
+
+            h1 = moonCalc.getBlackCycle().getDate(item2.getDate().getDate());
+            l3.setText(getCalc(h1) + " " + getT(AgeOfMoon.AGE_OF_BLACK));
+
+            h1 = moonCalc.getBlackFajrCycle().getDate(item2.getDate().getDate());
+            l4.setText(getCalc(h1) + " " + getT(AgeOfMoon.AGE_OF_FAJR));
+
+            v.add(l1);
+            v.add(l2);
+            v.add(l3);
+            v.add(l4);
+
+            return v;
+
+        }).setHeader(getT("moon-bearth")).setFlexGrow(1).setAutoWidth(true);
+        this.setColumnReorderingAllowed(true);
+        /*  Grid.Column<SMTData> calendarNameColumn = addComponentColumn((source) -> {
             SMTData item = source;
             Label l = new Label();
           //  l.setWidth(width);
             try {
-                //l.setText(new Date(item.getMoonText()).toString());
-                l.setText(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(item.getMoonText()), ZoneId.of(ClientTimeZone.getClientZoneId()))));
+                //l.setText(new Date(item.getMoonSet()).toString());
+                l.setText(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(item.getMoonSet()), ZoneId.of(ClientTimeZone.getClientZoneId()))));
 
             } catch (RuntimeException e) {
                 l.setText(getT("moon-not-set"));
@@ -164,7 +193,7 @@ public class SMTGrid extends Grid<SMTData> implements Datable, CalendarsUpdatedL
             Label l = new Label();
         //    l.setWidth(width);
             try {
-                int day = (int) ((item.getMoonText() - item.getSunText()) / MINUTE);
+                int day = (int) ((item.getMoonSet() - item.getSunText()) / MINUTE);
 
                 l.setText(day + "");
             } catch (RuntimeException e) {
@@ -179,7 +208,7 @@ public class SMTGrid extends Grid<SMTData> implements Datable, CalendarsUpdatedL
             SMTData item = source;
             Label l = new Label();
         //    l.setWidth(width);
-            l.setText(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(item.getSunRiseText()), ZoneId.of(ClientTimeZone.getClientZoneId()))));
+            l.setText(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(item.getSunRise()), ZoneId.of(ClientTimeZone.getClientZoneId()))));
 
             Util.makeLTR(l);
             return l;
@@ -190,7 +219,7 @@ public class SMTGrid extends Grid<SMTData> implements Datable, CalendarsUpdatedL
             Label l = new Label();
        //     l.setWidth(width);
             try {
-                l.setText(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(item.getMoonRiseText()), ZoneId.of(ClientTimeZone.getClientZoneId()))));
+                l.setText(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(item.getMoonRise()), ZoneId.of(ClientTimeZone.getClientZoneId()))));
 
             } catch (RuntimeException e) {
                 l.setText(getT("moon-not-set"));
@@ -204,15 +233,15 @@ public class SMTGrid extends Grid<SMTData> implements Datable, CalendarsUpdatedL
             SMTData item = source;
             Label l = new Label();
         //    l.setWidth(width);
-            l.setText(new Date(item.getFajrRiseText()).toString());
-            l.setText(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(item.getFajrRiseText()), Application.getUserZoneId())));
+            l.setText(new Date(item.getFajrRise()).toString());
+            l.setText(Util.getTimeFormatter().format(LocalDateTime.ofInstant(Instant.ofEpochMilli(item.getFajrRise()), Application.getUserZoneId())));
 
             Util.makeLTR(l);
             return l;
 
         }).setHeader(getT("fajrrise-time")).setFlexGrow(1).setAutoWidth(true);
 //*/
-        /*Grid.Column<CalendarBean> calendarNameColumn = addColumn(new ComponentRenderer<Label, CalendarBean>() {
+ /*Grid.Column<CalendarBean> calendarNameColumn = addColumn(new ComponentRenderer<Label, CalendarBean>() {
             @Override
             public Label createComponent(CalendarBean item) {
                 System.err.println("trying to create label: " + item);
@@ -294,4 +323,7 @@ public class SMTGrid extends Grid<SMTData> implements Datable, CalendarsUpdatedL
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    private String getCalc(BasicDate h1) {
+        return h1.getDay() + " " + getT("from-hilal") + " " + h1.getCalendar().getMonthLength(h1);
+    }
 }

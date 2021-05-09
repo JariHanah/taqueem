@@ -8,7 +8,8 @@ package com.alhanah.webcalendar.view;
 import com.alhanah.webcalendar.Application;
 import static com.alhanah.webcalendar.Application.getT;
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.HasStyle;
+import com.vaadin.flow.component.textfield.TextField;
 import java.util.Date;
 import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.BasicDate;
@@ -32,8 +33,9 @@ public class CellFormatter {
     private static final String HIJRI = getT(BasicCalendar.OMARI_ID_16 + BasicCalendar.INFO_CLASS);
     private static final String SAMI = getT(BasicCalendar.SAMI_FIXED_ID + BasicCalendar.INFO_CLASS);
 
-    public static void prepareSpecialPeriods(BasicDate b, Label l) {
+    public static void prepareSpecialPeriods(BasicDate b, HasStyle l) {
         l.getStyle().set("color", "black");
+        //l.getStyle().set("--lumo-secondary-text-color", "black");
         String type = getT(b.getCalendar().getName() + BasicCalendar.INFO_CLASS);
         PeriodType pt = b.getCalendar().getMonthName(b);
         Months p = null;
@@ -49,12 +51,13 @@ public class CellFormatter {
                 l.setClassName("month-haram");
                 l.getStyle().set("background", "red");
                 l.getStyle().set("color", "white");
+                l.getStyle().set("--lumo-secondary-text-color", "white");
                 break;
             case RAMADHAN:
                 l.setClassName("month-ramadhan");
                 l.getStyle().set("background", "pink");
                 l.getStyle().set("color", "black");
-        
+                l.getStyle().set("--lumo-secondary-text-color", "black");
                 break;
             case RABEI1:
             case RABEI2:
@@ -64,7 +67,7 @@ public class CellFormatter {
                     l.addClassName("month-no-hunting");
                     l.getStyle().set("background", "cyan");
                     l.getStyle().set("color", "black");
-        
+                    l.getStyle().set("--lumo-secondary-text-color", "black");
                 }
                 break;
             //l.getElement().getStyle().set("background", "red");break;
@@ -75,7 +78,7 @@ public class CellFormatter {
                     l.setClassName("month-hajj-season");
                     l.getStyle().set("background", "brown");
                     l.getStyle().set("color", "white");
-                    
+                    l.getStyle().set("--lumo-secondary-text-color", "white");
                 }
                 break;
             case RAJAB:
@@ -84,6 +87,7 @@ public class CellFormatter {
                     l.setClassName("month-haram");
                     l.getStyle().set("background", "red");
                     l.getStyle().set("color", "white");
+                    l.getStyle().set("--lumo-secondary-text-color", "white");
                 }
                 break;
 
@@ -93,18 +97,21 @@ public class CellFormatter {
             l.setClassName("day-eid");
             l.getStyle().set("background", "green");
             l.getStyle().set("color", "black");
+            l.getStyle().set("--lumo-secondary-text-color", "black");
         
         }
         if ((p.equals(Months.THO_HIJA) && b.getDay() == 9)) {
             l.setClassName("day-arafah");
             l.getStyle().set("background", "black");
             l.getStyle().set("color", "white");
+            l.getStyle().set("--lumo-secondary-text-color", "white");
         
         }
         if ((p.equals(Months.MUHARRAM) || p.equals(Months.TISHREI)) && b.getDay()== 10) {
             l.setClassName("day-aashora");
             l.getStyle().set("background", "black");
             l.getStyle().set("color", "white");
+            l.getStyle().set("--lumo-secondary-text-color", "white");
         
         }
         if (type.equals(SAMI)
@@ -114,18 +121,36 @@ public class CellFormatter {
             l.setClassName("day-aashora");
             l.getStyle().set("background", "black");
             l.getStyle().set("color", "white");
+            l.getStyle().set("--lumo-secondary-text-color", "white");
         
         }
-        if (b.getDate() == Application.getFactory().dayStart(System.currentTimeMillis())) {
+        if (Application.getFactory().dayStart(b.getDate()) == Application.getFactory().dayStart(System.currentTimeMillis())) {
             l.setClassName("day-today");
             l.getStyle().set("background", "yellow");
             l.getStyle().set("color", "black");
-        
+            l.getStyle().set("--lumo-secondary-text-color", "black");
         }
     }
 
     public static String getType(BasicDate b) {
         return b.getCalendar().getName() + BasicCalendar.INFO_CLASS;
+    }
+
+    public static void prepareYearType(BasicDate result, HasStyle text) {
+        PeriodType y=result.getCalendar().getYearType(result);
+        
+        if(y.isSmallLeap()){
+            text.getStyle().set("background", "yellow");
+            text.getStyle().set("color", "black");
+            text.getStyle().set("--lumo-secondary-text-color", "black");
+        }
+        if(y.isBigLeap()){
+            text.getStyle().set("background", "red");
+            text.getStyle().set("color", "white");
+            text.getStyle().set("--lumo-secondary-text-color", "white");
+            
+        }
+        
     }
 
     /*    public static final Font largeFont = Font.createSystemFont(Font.FACE_PROPORTIONAL, Font.STYLE_PLAIN, Font.SIZE_LARGE);

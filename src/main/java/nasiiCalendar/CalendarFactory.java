@@ -81,7 +81,15 @@ public class CalendarFactory {
         prepare();
 
     }
-
+    public GregoryCalendar getGregory(){
+        return (GregoryCalendar) getCalendar(BasicCalendar.GREG_ID);
+    }
+    public AdCalendar getAD(){
+        return (AdCalendar) getCalendar(BasicCalendar.AD_ID);
+    }
+    public SamiFixed getSamiFixed(){
+        return (SamiFixed) getCalendar(BasicCalendar.SAMI_FIXED_ID);
+    }
     protected void prepare() {
 
         addCalendar(new SamiFixed(zoneId));

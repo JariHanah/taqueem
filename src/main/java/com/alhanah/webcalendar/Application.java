@@ -9,13 +9,18 @@ import com.vaadin.flow.server.VaadinServlet;
 import com.vaadin.flow.server.VaadinSession;
 import static java.lang.System.setProperty;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import static java.util.Locale.ENGLISH;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import nasiiCalendar.BasicCalendar;
 import nasiiCalendar.CalendarFactory;
+import nasiiCalendar.locationBasid.City;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -68,7 +73,15 @@ public class Application extends SpringBootServletInitializer {
         }
         return list;
     }
-    
+    static final String USER_CITY="userCity";
+    public static City getUserCity(){
+        City city=(City) VaadinServlet.getCurrent().getServletConfig().getServletContext().getAttribute(USER_CITY); // add to application context
+        if(city==null)return City.MAKKA;
+        return city;
+    }
+    public static void setUserCity(City c){
+        VaadinServlet.getCurrent().getServletConfig().getServletContext().setAttribute(USER_CITY, c); // add to application context
+    }
 
     private static void prepareLog() {
 
@@ -86,7 +99,7 @@ public class Application extends SpringBootServletInitializer {
     public static Locale getSelectedLocale() {
         return VaadinSession.getCurrent().getLocale();
     }
-
+    
     public static Locale getOtherLocale() {
         if (getSelectedLocale() == HanahI18NProvider.AR) {
             return ENGLISH;
@@ -119,6 +132,39 @@ public class Application extends SpringBootServletInitializer {
     public static String getT(String key) {
         return transInstance.getTranslation(key, getSelectedLocale());
 
+    }
+    static String USER_CALS="userCalcs";
+    public static void setSelectedCalendars(List<BasicCalendar> list) {
+        VaadinSession.getCurrent().setAttribute(USER_CALS, list);
+    }
+    public static List<BasicCalendar> getSelectedCalendars(){
+        List<BasicCalendar>list= (List<BasicCalendar>) VaadinSession.getCurrent().getAttribute(USER_CALS);
+        if(list==null){
+            return new ArrayList<>(Arrays.asList(Application.getFactory().getCalendar(BasicCalendar.AD_ID),Application.getFactory().getCalendar(BasicCalendar.OMARI_ID_16), Application.getFactory().getCalendar(BasicCalendar.SAMI_FIXED_ID)));
+        }
+        return new ArrayList<>(list);
+    }
+    static String USER_CITIES="userCities";
+    
+    public static void setSelectedCities(List<City> cities) {
+        VaadinSession.getCurrent().setAttribute(USER_CITIES, cities);
+    }
+    public static List<City> getSelectedCities(){
+        List<City>list= (List<City>) VaadinSession.getCurrent().getAttribute(USER_CITIES);
+        if(list==null){
+            return new ArrayList<>();
+        }
+        return new ArrayList<City>(list);
+    }
+    static String USER_SELECTED_TIME="selectedTime";
+    public static long getSelectedTime() {
+        Long l=(Long) VaadinSession.getCurrent().getAttribute(USER_SELECTED_TIME);
+        if(l==null)return System.currentTimeMillis();
+        return l;
+    }
+    public static void setSelectedTime(long t) {
+        VaadinSession.getCurrent().setAttribute(USER_SELECTED_TIME, t);
+        
     }
 
 }
